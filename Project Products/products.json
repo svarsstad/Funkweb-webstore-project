@@ -1,0 +1,259 @@
+{
+  "0000": {
+    "productName": "Chrono-Flux Core: The QFC-7, Event \"Horizon Edition\"",
+    "productStyle": "cyberpunk",
+    "productCategory": "measuring device",
+    "productSlogan": "Control the flow, or get swept away by it.",
+    "description": "The QFC-7 Chrono-Flux Core isn't just a chronometer—it’s a localized anchor for reality. Designed for deep-sector explorers and temporal data miners, this device stabilizes the erratic fluctuations of the \"Grey Stream.\" Whether you’re trying to prevent a paradox or simply ensure your personal timeline remains \"Secure,\" the QFC-7 provides the highest fidelity of temporal synchronization available on the black market.\n\nThe central glass sphere contains a suspended Quantum Singularity, providing a real-time visual of the local time-stream's health. When the vortex turns violet, it's time to run. When it’s steady cyan, you’re the master of your own era.",
+    "specs": {
+      "Product Specifications": {
+        "Model": "QFC-7 [ \"Quantum\", \"Flux\" ] – Anniversary Edition",
+        "Chassis": "Hand-burnished Copper-Iridium Alloy with Matte Carbon-Fiber Reinforcement.",
+        "Core": "Class-4 Micro-Singularity (Stable-Flux rated)",
+        "Display": "Dual-mode Holographic Projector (supports T-Cube data visualization)",
+        "Cooling": "Quad-loop Blue Plasma Refrigerant Tubes",
+        "Interface": "Analog tactile knobs for Fine-Tune Drift and Temporal Lockdown",
+        "Safety": "Status Auto-Chrono Sync (Active) \"\" Flux Level: Stable"
+      },
+      "Technical Data Table": {
+        "Temporal Precision": "±10^{-18}$ seconds per millennium",
+        "Flux Stability": "99.9% (Max Rated)",
+        "Battery Life": "400 Standard Galactic Years",
+        "Weight": "1.4 kg (messured at 8.7g, varies by local gravity)",
+        "Connectivity": "Neural-Link & Deep-Space Mesh compatible"
+      }
+    },
+    "Images": {
+      "000": ".\\Images\\Gemini_Generated_Image_eafw26eafw26eafw.png",
+      "001": ".\\Images\\Gemini_Generated_Image_jgcjxpjgcjxpjgcj.png"
+    },
+    "Warrenty disclaimber": "Warranty is void if used near a black hole",
+    "price": 42500.00,
+    "currency": "CZK-IID" /// czech intergalactic imperial dogecoin is standard
+  },
+
+  "0001": {
+    "productName": "Aether-Flux Orrery: The Divinator Model",
+    "productStyle": "steampunk",
+    "productCategory": "measuring device",
+    "productSlogan": "Chart the unseen currents of the Aether.",
+    "description": "The Divinator Model Aether-Flux Orrery is a masterpiece of clockwork precision and esoteric engineering. Designed to track celestial aetheric currents and local quantum equilibrium, this device allows the discerning navigator to read the invisible forces shaping the cosmos. With its manual override capabilities, you are no longer bound by automated synchronizations; take the helm of your own destiny with every turn of the brass calibration crank. The central luminescence chamber provides a direct visual representation of the aetheric pressure, glowing with raw, unrefined energy.",
+    "specs": {
+      "Product Specifications": {
+        "Model": "Divinator [ \"Aether\", \"Flux\" ] – Equilibrium Edition",
+        "Chassis": "Polished Celestial Brass with Copper Piping and Engraved Base.",
+        "Core": "Class-2 Luminescent Aether Chamber",
+        "Display": "Multi-Axial Armillary Sphere with Aetheric Projection Lens",
+        "Cooling": "Exposed Copper Heat Sinks and Aether-Venting Vacuum Tubes",
+        "Interface": "Tactile Toggle Switches, Brass Calibration Crank, and Analog Dial Gauges",
+        "Safety": "Status Quantum Synchronization (Off-Line) \"\" Manual Override: Engaged"
+      },
+      "Technical Data Table": {
+        "Temporal Precision": "Calculated by manual rotational resonance (operator dependent)",
+        "Flux Stability": "Requires daily aetheric venting",
+        "Battery Life": "Kinetic Spring-Loaded (Winding required every 48 hours)",
+        "Weight": "8.2 kg (measured at 1G, solid brass construction)",
+        "Connectivity": "Direct Manual Interface & Esoteric Aetheric Resonance"
+      }
+    },
+    "Images": {
+      "000": ".\\Images\\Gemini_Generated_Image_jmba3gjmba3gjmba.png",
+      "001": ".\\Images\\Gemini_Generated_Image_klm7faklm7faklm7.png"
+    },
+    "Warrenty disclaimber": "Warranty is void if kinetic mainspring is overwound or exposed to corrosive plasma",
+    "price": 28500.00,
+    "currency": "CZK-IID"
+  },
+  "0002": {
+    "productName": "The Harmonics Engine: Brass-Bellows Resonator Cart",
+    "productStyle": "steampunk",
+    "productCategory": "cleaner",
+    "productSlogan": "Clear the streets, the air, and the aether.",
+    "description": "A heavy-duty, manually propelled cart designed for dispersing localized aetheric miasma and physical impediments. Equipped with quad-directional brass dispersal horns and pressurized glass vapor-chambers, this rig is an industrial marvel. The central galvanic induction coil powers the sonic resonance, driven by pure kinetic push-force and pressurized steam. Perfect for clearing heavy fog, dispersing mechanical pests, or safely navigating the lower clockwork districts.",
+    "specs": {
+      "Product Specifications": {
+        "Model": "BBR-4 [ \"Sonic\", \"Vapor\" ] – Trolley Edition",
+        "Chassis": "Riveted Brass and Iron Tube Frame with Leather-Wrapped Push Handles",
+        "Locomotion": "Manual-Push, Multi-Axle Solid Rubber Carriage Tyres",
+        "Emission Array": "Four-Fluted Brass Acoustic and Vapor Projectors",
+        "Power Source": "Pressurized Boiler Tanks & Central Galvanic Dynamo",
+        "Reservoirs": "Tri-Chambered Heavy Glass Vats for Luminescent Aetheric Fluid",
+        "Control Interface": "Analog Brass Petcocks, Manifold Valves, and Steam Gauges"
+      },
+      "Technical Data Table": {
+        "Operating Pressure": "120 PSI (Nominal), 180 PSI (Redline)",
+        "Acoustic Output": "Up to 140 Decibels at full boiler compression",
+        "Vapor Dispersal Radius": "15 Meters (Directional front-facing)",
+        "Boiler Capacity": "15 Gallons per primary tank",
+        "Dry Weight": "48 kg (Unfueled and empty)"
+      }
+    },
+    "Images": {
+      "000": ".\\Images\\Gemini_Generated_Image_fgrc6xfgrc6xfgrc.png",
+      "001": ".\\Images\\Gemini_Generated_Image_to4fzto4fzto4fzt.png",
+      "002": ".\\Images\\Gemini_Generated_Image_b4u1sjb4u1sjb4u1.png"
+    },
+    "Warrenty disclaimber": "Warranty void if boiler pressure exceeds 200 PSI or if unregistered volatile fluids are introduced to the combustion chamber.",
+    "price": 18500.00,
+    "currency": "CZK-IID"
+  },
+  "0003": {
+    "productName": "Xeno-Crawler V-9: Bio-Flux Harvester Drone",
+    "productStyle": "cyberpunk",
+    "productCategory": "cleaner",
+    "productSlogan": "Harvest the unknown, before it harvests you.",
+    "description": "The Xeno-Crawler V-9 is an autonomous, quad-pedal harvesting unit designed for hazardous environmental sampling and xenobiotic fluid extraction. Featuring a reinforced carbon-alloy chassis and anti-grav hover-pads, this drone navigates the most treacherous urban decay or off-world bio-zones with eerie silence. Its central Bio-Flux core synthesizes and stabilizes volatile samples in real-time, storing them safely in lateral cryogenic ampoules. Perfect for rogue alchemists, black-market gene-splicers, and independent terraformers.",
+    "specs": {
+      "Product Specifications": {
+        "Model": "V-9 [ \"Xeno\", \"Crawler\" ] – Harvester Edition",
+        "Chassis": "Titanium-Polymer composite with Carbon-Fiber leg reinforcements",
+        "Core": "Class-3 Bio-Flux Synthesis Chamber (Isotope-Stable)",
+        "Sensor Array": "Forward-facing multi-spectrum optical cluster with localized telemetry readout",
+        "Mobility": "Quadrupedal articulation with Cyan-Plasma Micro-Hover emitters",
+        "Storage": "Four lateral high-pressure cryogenic ampoules (borosilicate glass)",
+        "AI Status": "Autonomous / Neural-Tether (Selectable) \"\" Threat Protocol: Passive"
+      },
+      "Technical Data Table": {
+        "Top Speed": "45 km/h (terrestrial), 15 km/h (vertical scaling)",
+        "Payload Capacity": "4 Liters of volatile organic compounds (VOCs)",
+        "Power Source": "High-Yield Micro-Fusion Cell (120 Standard Hours continuous operation)",
+        "Weight": "32 kg (unloaded)",
+        "Connectivity": "Encrypted Dark-Net Uplink & Bio-Signature Tracking"
+      }
+    },
+    "Images": {
+      "000": ".\\Images\\Gemini_Generated_Image_4bq38q4bq38q4bq3.png",
+      "001": ".\\Images\\Gemini_Generated_Image_6ks25g6ks25g6ks2.png",
+      "002": ".\\Images\\Gemini_Generated_Image_hvplnhhvplnhhvpl.png"
+    },
+    "Warrenty disclaimber": "Warranty is void if drone achieves sentience and attempts to unionize, or if highly acidic bio-matter breaches the inner containment seal.",
+    "price": 85000.00,
+    "currency": "CZK-IID"
+  },
+  "0004": {
+    "productName": "Gore-Crawler Construct: The \"Marrow-Drinker\" Pattern",
+    "productStyle": "reaver-tech",
+    "productCategory": "cleaner",
+    "productSlogan": "Waste not, want not.",
+    "description": "A horrifying triumph of Reaver flesh-smithing, the Gore-Crawler is an autonomous biological drone stitched together from scavenged organic matter and reinforced bone-struts. It requires no traditional power source; instead, it operates via raw, necrotic muscle spasms triggered by the luminescent vital-fluids stored in its crude lateral ampoules. Designed for psychological warfare and deep-sump scavenging, it navigates via ambient biological resonance. Warning: The smell is permanent.",
+    "specs": {
+      "Product Specifications": {
+        "Model": "GC-0 [ \"Bone\", \"Flesh\" ] – Scavenger Edition",
+        "Chassis": "Re-articulated skeletal struts bound with cured synth-gut and iron wire.",
+        "Core": "Reanimated Central Ganglion Sac (protected by hardened cartilage)",
+        "Sensory Array": "Ambient thermal-tracking and acute olfactory receptors",
+        "Locomotion": "Quadrupedal scuttling via galvanic muscle contraction",
+        "Storage": "Leather-bound glass vials holding processed bio-luminescent fluids",
+        "Accessories": "Dangling bone-fetishes and effigies (primarily for psychological impact)"
+      },
+      "Technical Data Table": {
+        "Top Speed": "A terrifyingly erratic 30 km/h",
+        "Fuel Source": "Bi-weekly infusions of nutrient-slurry and raw protein",
+        "Lifespan": "Indefinite, provided tissue necrosis is kept in check",
+        "Odor Level": "Class-4 Biohazard (requires rebreather in enclosed spaces)",
+        "Temperament": "Aggressively Twitchy"
+      }
+    },
+    "Images": {
+      "000": ".\\Images\\Gemini_Generated_Image_55vjr655vjr655vj.png",
+      "001": ".\\Images\\Gemini_Generated_Image_dr6aqodr6aqodr6a.png"
+    },
+    "Warrenty disclaimber": "Warranty is strictly void if the construct develops a taste for its owner or is confiscated by Imperial Inquisitors as a biological abomination.",
+    "price": 14200.00,
+    "currency": "CZK-IID"
+  },
+  "0005": {
+    "productName": "Flesh-Bound Necro-Lumen: The \"Wraith-Eye\" Pattern",
+    "productStyle": "reaver-tech",
+    "productCategory": "illumination",
+    "productSlogan": "Shed light on the darkest corners of the void.",
+    "description": "A morbidly functional piece of Reaver-tech, the Necro-Lumen serves as both an articulated desk lamp and a minor aetheric rift projector. Crafted from harvested bone-struts, tensioned sinew, and a cured flayed-hide shade, this bio-mechanical atrocity projects a mesmerizing, gaseous light. The symbiotic ocular gland housed within the shade feeds off the ecto-plasmic slurry in the attached glass vial, casting an eerie spectral glow that reveals hidden aetheric markers on any surface. Ideal for dark-arts scholars and black-market flesh-smiths working late into the night.",
+    "specs": {
+      "Product Specifications": {
+        "Model": "WL-1 [ \"Wraith\", \"Lumen\" ] – Scholar's Edition",
+        "Chassis": "Cured flayed-hide shade, marrow-bone struts, and iron-tensioned springs.",
+        "Core": "Symbiotic bio-luminescent ocular gland",
+        "Power Source": "Lateral glass vial for ecto-plasmic slurry infusions",
+        "Articulation": "Three-point sinew-tensioned flexible arm",
+        "Base": "Quad-pegged muscular anchor with bone-spur stabilizers"
+      },
+      "Technical Data Table": {
+        "Luminosity Output": "Variable (Necrotic Green to Deep Void Violet)",
+        "Fuel Consumption": "1 standard vial of ecto-slurry per 72 hours of continuous use",
+        "Articulation Range": "180-degree hemispherical pivot",
+        "Maintenance Requirement": "Daily saline misting to prevent tissue desiccation",
+        "Environmental Hazard": "Class-2 Ectoplasmic Emission (Mild hallucinogenic properties)"
+      }
+    },
+    "Images": {
+      "000": ".\\Images\\Gemini_Generated_Image_i6b6lfi6b6lfi6b6.png",
+      "001": ".\\Images\\Gemini_Generated_Image_8jofri8jofri8jof.png"
+    },
+    "Warrenty disclaimber": "Warranty void if the hide-shade begins to whisper, or if the user stares directly into the projection rift for longer than three consecutive minutes.",
+    "price": 9800.00,
+    "currency": "CZK-IID"
+  },
+  "0006": {
+    "productName": "Cryo Viper X1",
+    "productStyle": "cyberpunk",
+    "productCategory": "illumination",
+    "productSlogan": "Freeze the air, not just the view.",
+    "description": "Engineered for clandestine operations in subterranean data havens and the upper levels of corporate skyscrapers, the CV-X1 is more than a flashlight—it's an environmental manipulation unit. Its triple LED array punches through digital distortion and atmospheric fog with 20,000 lumens of focusable light. Crucially, the side-mounted 'Cryo-Canister' can be supercharged via the galvanic control pad to inject micro-fractal snow particles directly into the beam. This allows for instant visualization of laser tripwires, localized surface stabilization, or flash-freezing electronic security points. Mounts comfortably to standard-issue tactical gloves or mag-boots.",
+    "specs": {
+      "Product Specifications": {
+        "Model": "CV-X1 [ \"Cryo\", \"Viper\" ] – X1",
+        "Mounting System": "Dual Adjustable Nylon-Fiber Straps with Magnesium Buckles",
+        "Chassis": "Graphene-Reinforced Carbon Fiber with Titanium Alloy plating.",
+        "Emitter Array": "Focusable Triple high-output LED cluster (Cool Blue spectrum)",
+        "Cryo-Canister": "10ml R-600 Type-B Micro-Refrigerant Vial (visible blue fluid)",
+        "Interface": "1.5” Tacti-OLED Display and neon-magenta control pads",
+        "Power Cell": "High-Yield Micro-Fusion Capacitor (Internal)"
+      },
+      "Technical Data Table": {
+        "Luminous Flux": "20,000 Lumens (Max Peak)",
+        "Cryo-Effect Temperature": "-40°C at 5 meters (localized to beam)",
+        "Cryo-Charge Rate": "1 minute per canister (Full Refill)",
+        "Operating Environments": "-60°C to +85°C rated",
+        "Weight": "350g (without straps), 362g (fueled)"
+      }
+    },
+    "Images": {
+      "000": ".\\Images\\Gemini_Generated_Image_7oqwpj7oqwpj7oqw.png",
+      "001": ".\\Images\\Gemini_Generated_Image_wf36odwf36odwf36.png",
+      "002": ".\\Images\\Gemini_Generated_Image_eoq5ipeoq5ipeoq5.png"
+    },
+    "Warrenty disclaimber": "Warranty void if the micro-cryo generator achieves localized absolute zero, or if exposed to standard gravitational forces greater than 2.5G.",
+    "price": 38500.00,
+    "currency": "CZK-IID"
+  },
+  "0007": {
+    "productName": "Lumina-Forge Kinetic Strike-Lantern",
+    "productStyle": "steampunk",
+    "productCategory": "illumination",
+    "productSlogan": "Punch a hole in the dark. Literally.",
+    "description": "The Lumina-Forge Kinetic Strike-Lantern turns brute force into brilliant luminescence. Designed for subterranean brawlers and hazard-miners, this heavy brass-and-leather gauntlet features a piezoelectric aether-chamber that requires physical impact to ignite. Simply punch a solid surface—or a stubborn adversary—to compress the internal brass pistons, forcing volatile aether-fluid through the palmar arc-emitter in a blinding flash of sustained light. The harder the strike, the brighter and longer the burn. Leave a glowing impression wherever your fist lands.",
+    "specs": {
+      "Product Specifications": {
+        "Model": "LF-KSL [ \"Kinetic\", \"Strike\" ] – Brawler's Edition",
+        "Chassis": "Reinforced heavy leather glove with solid brass knuckle strike-plates",
+        "Light Source": "Impact-Ignited Palmar Aether-Plasma Arc Emitter",
+        "Primary Power": "Kinetic Piston-Chamber (Impact Activated)",
+        "Reserve Power": "Suspended secondary phial for capturing residual kinetic-aether bleed",
+        "Interface": "Analog brass pressure gauge and manual venting valve"
+      },
+      "Technical Data Table": {
+        "Luminosity Output": "Scales with impact force (Up to 25,000 candlepower per heavy strike)",
+        "Ignition Requirement": "Minimum 400 Newtons of kinetic force applied to knuckle-plate",
+        "Burn Time": "Variable (Approx. 2 hours of sustained light per maximum-force impact)",
+        "Fuel Capacity": "250ml refined aether-fluid (Auto-cycles upon impact)",
+        "Weight": "2.4 kg (Weighted for maximum kinetic force transfer)"
+      }
+    },
+    "Images": {
+      "000": ".\\Images\\Gemini_Generated_Image_fxn9a9fxn9a9fxn9.png"
+    },
+    "Warrenty disclaimber": "Warranty is strictly void if the kinetic strike-plate is used to dismantle load-bearing Imperial architecture, or if the resulting aetheric flash-bang blinds the operator.",
+    "price": 19200.00,
+    "currency": "CZK-IID"
+  }
+}
