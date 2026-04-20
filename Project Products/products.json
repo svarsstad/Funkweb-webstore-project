@@ -255,5 +255,313 @@
     "Warrenty disclaimber": "Warranty is strictly void if the kinetic strike-plate is used to dismantle load-bearing Imperial architecture, or if the resulting aetheric flash-bang blinds the operator.",
     "price": 19200.00,
     "currency": "CZK-IID"
+  },
+  "0008": {
+    "productName": "Neuro-Tap Whisper-Bug",
+    "productStyle": "cyberpunk",
+    "productCategory": "communication",
+    "productSlogan": "Hear what they don't say.",
+    "description": "The Neuro-Tap Whisper-Bug is an ultra-concealable sub-dermal audio and telemetry interceptor. Designed for corporate espionage and data-broker intercepts, this tiny device adheres to the mastoid bone behind the ear, translating ambient electromagnetic signals and sub-vocalizations into encrypted neural feed data. The bug is virtually undetectable by standard security sweeps and dissolving into harmless bio-sludge if tampered with.",
+    "specs": {
+      "Product Specifications": {
+        "Model": "NT-WB [ \"Whisper\", \"Bug\" ] – Espionage Edition",
+        "Chassis": "Bio-mimetic silicone coating over graphene micro-circuitry",
+        "Sensor Array": "Multi-band EM receiver and sub-vocal kinetic transducer",
+        "Power Cell": "Ambient body-heat thermal siphon (Indefinite standby)",
+        "Interface": "Direct Neural Interface (DNI) via standard 3-pin cranial jack",
+        "Stealth Rating": "Class-5 Ghost (Bypasses Mil-Spec Scanners)"
+      },
+      "Technical Data Table": {
+        "Intercept Range": "15 Meters (Line of Sight), 3 Meters (Through plasteel)",
+        "Storage Capacity": "500 Petabytes of compressed audio/telemetry",
+        "Data Transfer": "Burst-transmission via dark-net mesh networks",
+        "Weight": "0.4 grams",
+        "Self-Destruct": "Corrosive enzyme trigger upon unauthorized removal"
+      }
+    },
+    "Images": {
+      "000": ".\\Images\\Gemini_Generated_Image_d8l3m2d8l3m2d8l3.png",
+      "001": ".\\Images\\Gemini_Generated_Image_ytki01ytki01ytki.png"
+    },
+    "Warrenty disclaimber": "Warranty void if the user is caught by corporate security, or if the bio-mimetic coating triggers an auto-immune response.",
+    "price": 62000.00,
+    "currency": "CZK-IID"
+  },
+  "0009": {
+    "productName": "Telluric Resonance Seismometer",
+    "productStyle": "steampunk",
+    "productCategory": "measuring device",
+    "productSlogan": "Listen to the heartbeat of the underground.",
+    "description": "An essential tool for subterranean navigators and ruin scavengers, the Telluric Resonance Seismometer detects micro-fractures, hidden caverns, and dormant aether-veins deep within the earth. Driven by a precisely weighted pendulum and a series of acoustic amplification cones, it prints real-time topological readouts onto a continuous spool of waxed paper. The brass casing ensures durability even when dropped down a ventilation shaft.",
+    "specs": {
+      "Product Specifications": {
+        "Model": "TRS-12 [ \"Telluric\", \"Resonance\" ] – Delver's Model",
+        "Chassis": "Solid cast brass with riveted iron corners and a glass viewing dome",
+        "Core": "Suspended lead-core pendulum on a frictionless diamond bearing",
+        "Display": "Analog needle graph via wax-paper spool dispenser",
+        "Amplification": "Triple copper acoustic intake cones",
+        "Power Source": "Hand-cranked kinetic mainspring"
+      },
+      "Technical Data Table": {
+        "Detection Depth": "Up to 300 meters through solid bedrock",
+        "Resolution": "Capable of detecting movement as light as a rat at 50 meters",
+        "Paper Spool Length": "10 meters per standard roll",
+        "Operating Time": "4 hours per full wind of the mainspring",
+        "Weight": "5.6 kg"
+      }
+    },
+    "Images": {
+      "000": ".\\Images\\Gemini_Generated_Image_yl0iopyl0iopyl0i.png"
+    },
+    "Warrenty disclaimber": "Warranty void if the diamond bearing is shattered by seismic events exceeding a 7.0 magnitude, or if the device is submerged in acid.",
+    "price": 12500.00,
+    "currency": "CZK-IID"
+  },
+  "0010": {
+    "productName": "Marrow-Filter Sump-Mask",
+    "productStyle": "reaver-tech",
+    "productCategory": "survival gear",
+    "productSlogan": "Breathe easy in the rot.",
+    "description": "When navigating the toxic underbellies of collapsed hive cities, standard rebreathers clog within minutes. The Marrow-Filter Sump-Mask relies on a morbid but highly effective biological filtration system. Spongy, genetically altered bone marrow housed within the dual facial canisters actively consumes airborne toxins, spores, and acidic smog. The mask is strapped to the user's face using cured synth-leather and rusty iron buckles, providing an airtight, if slightly sticky, seal.",
+    "specs": {
+      "Product Specifications": {
+        "Model": "MF-SM [ \"Marrow\", \"Filter\" ] – Scavenger Pattern",
+        "Chassis": "Cured leather face-seal with iron rebar framing",
+        "Filtration System": "Dual frontal canisters packed with living necrotic marrow",
+        "Valve Type": "Flayed-sinew one-way exhalation flutter valve",
+        "Straps": "Adjustable barbed-wire and leather harness",
+        "Ocular Protection": "Thick, mismatched glass lenses sealed with pitch"
+      },
+      "Technical Data Table": {
+        "Toxin Resistance": "Class-5 Biohazard, Heavy Smog, and Corrosive Vapors",
+        "Filter Lifespan": "3 weeks of continuous use (Requires feeding with nutrient paste)",
+        "Airflow Restrictiveness": "High (Requires strong lungs to draw breath)",
+        "Weight": "1.8 kg",
+        "Odor Profile": "Slight metallic tang of old blood"
+      }
+    },
+    "Images": {
+      "000": ".Images\\Gemini_Generated_Image_xeca4wxeca4wxeca.png"
+    },
+    "Warrenty disclaimber": "Warranty void if the marrow filters starve and begin digesting the user's facial tissues.",
+    "price": 8400.00,
+    "currency": "CZK-IID"
+  },
+  "0011": {
+    "productName": "Trench-Breaker Pneumatic Ram",
+    "productStyle": "dieselpunk",
+    "productCategory": "personal defense",
+    "productSlogan": "When knocking isn't an option.",
+    "description": "The Trench-Breaker is a heavy-duty, arm-mounted pneumatic ram designed for boarding actions and urban pacification. Fueled by a backpack-mounted micro-diesel compressor, this crude but devastating gauntlet drives a solid steel piston forward with enough kinetic force to shatter ferro-crete blast doors or disable an armored vehicle. It is loud, messy, and requires significant physical strength to aim, but nothing argues with a diesel-powered punch.",
+    "specs": {
+      "Product Specifications": {
+        "Model": "TB-PR [ \"Pneumatic\", \"Ram\" ] – Siege Variant",
+        "Chassis": "Welded pig-iron and reinforced steel plating",
+        "Power Source": "Backpack-mounted diesel micro-compressor with braided rubber hosing",
+        "Actuator": "Dual-stage high-pressure pneumatic cylinder",
+        "Striker": "Interchangeable solid steel flat-head or armor-piercing spike",
+        "Ignition": "Manual pull-cord start for compressor motor"
+      },
+      "Technical Data Table": {
+        "Impact Force": "12,000 Newtons per strike",
+        "Cycle Rate": "1 strike per 4 seconds (compressor recharge time)",
+        "Fuel Capacity": "2 Liters high-octane diesel (approx. 50 strikes)",
+        "Operating Noise": "130 Decibels (Hearing protection mandatory)",
+        "Weight": "18 kg (Gauntlet), 12 kg (Compressor Backpack)"
+      }
+    },
+    "Images": {
+      "000": ".\\Images\\Generated_Image_PneumaticRam_01.png",
+      "001": ".\\Images\\Generated_Image_PneumaticRam_02.png"
+    },
+    "Warrenty disclaimber": "Warranty void if the compressor exceeds redline RPM and shrapnelizes the user's spine.",
+    "price": 26000.00,
+    "currency": "CZK-IID"
+  },
+  "0012": {
+    "productName": "Mirage V-3 Holo-Decoy",
+    "productStyle": "cyberpunk",
+    "productCategory": "personal defense",
+    "productSlogan": "Be everywhere and nowhere.",
+    "description": "A life-saving tool for street samurai and corporate infiltrators, the Mirage V-3 is a deployable tactical projector that creates a hyper-realistic, volumetric holographic clone of the user. Once tossed onto the ground, the puck scans the user's biometrics and immediate loadout, generating an interactive decoy that simulates footsteps, muzzle flashes, and thermal blooming. Perfect for drawing sniper fire or confusing automated turrets.",
+    "specs": {
+      "Product Specifications": {
+        "Model": "V-3 [ \"Mirage\", \"Decoy\" ] – Tactical Puck",
+        "Chassis": "Shock-absorbent polymer puck with deployable stabilization fins",
+        "Projector Array": "Hex-directional hard-light emitters with thermal overlay",
+        "Scanner": "Instantaneous 360-degree biometric snapshot lens",
+        "Audio Component": "Directional micro-speakers for simulating footfalls and gunfire",
+        "Power Cell": "Single-use burst-discharge plasma battery"
+      },
+      "Technical Data Table": {
+        "Decoy Duration": "45 Seconds (Continuous projection)",
+        "Holographic Fidelity": "99.8% visual and thermal match to user",
+        "Deployment Range": "Can be thrown up to 30 meters",
+        "Durability": "Puck is crush-proof up to 1 ton before activation",
+        "Weight": "450 grams"
+      }
+    },
+    "Images": {
+      "000": ".\\Images\\Generated_Image_HoloDecoy_01.png",
+      "001": ".\\Images\\Generated_Image_HoloDecoy_02.png"
+    },
+    "Warrenty disclaimber": "Warranty void if the decoy is used to commit fraud, or if the enemy is equipped with standard magnetic-resonance imaging.",
+    "price": 15500.00,
+    "currency": "CZK-IID"
+  },
+  "0013": {
+    "productName": "Chitin-Courier Gene-Moth",
+    "productStyle": "bio-punk",
+    "productCategory": "communication",
+    "productSlogan": "Nature's encrypted messenger.",
+    "description": "When digital channels are monitored and radio frequencies are jammed, the Chitin-Courier provides an un-hackable alternative. This genetically engineered, synthetic-biological insect acts as a living data drive. The user encodes their message into the moth's DNA via a specialized micro-syringe. The moth then flies to its imprinted destination based on pheromone tracking. Upon arrival, the recipient uses a decoding centrifuge to extract the message. Undetectable by electronic surveillance.",
+    "specs": {
+      "Product Specifications": {
+        "Model": "CC-GM [ \"Courier\", \"Moth\" ] – Stealth Strain",
+        "Chassis": "Genetically reinforced chitin exoskeleton (bullet-ant spliced)",
+        "Wingspan": "12 centimeters",
+        "Navigation": "Bio-magnetic field sensitivity and pheromone lock-on",
+        "Storage Mechanism": "Rapidly mutating synthetic RNA strands",
+        "Interface": "Micro-syringe encoding station (included)"
+      },
+      "Technical Data Table": {
+        "Flight Range": "Up to 500 Kilometers on a single nutrient-feed",
+        "Data Capacity": "10 Gigabytes of DNA-encoded text/audio",
+        "Flight Speed": "60 km/h (Capable of high-altitude stealth gliding)",
+        "Lifespan": "14 Days post-activation",
+        "Security Feature": "Spontaneous combustion upon capture by non-target individuals"
+      }
+    },
+    "Images": {
+      "000": ".\\Images\\Generated_Image_GeneMoth_01.png",
+      "001": ".\\Images\\Generated_Image_GeneMoth_02.png"
+    },
+    "Warrenty disclaimber": "Warranty void if the moth is eaten by local avian predators or distracted by unusually bright streetlamps.",
+    "price": 18000.00,
+    "currency": "CZK-IID"
+  },
+  "0014": {
+    "productName": "Iron-Sun Combustion Beacon",
+    "productStyle": "dieselpunk",
+    "productCategory": "illumination",
+    "productSlogan": "Turn night into noon, loud and clear.",
+    "description": "A brutally loud and incredibly bright illumination tool used for signaling aircraft, blinding enemy advances, or lighting up massive excavation sites. The Iron-Sun Combustion Beacon relies on a miniature two-stroke diesel engine to spin a high-friction dynamo, feeding an oversized magnesium-arc bulb. It spews thick black smoke from its exhaust pipe, vibrates aggressively, and produces a blinding, stark white light that cuts through the thickest weather.",
+    "specs": {
+      "Product Specifications": {
+        "Model": "IS-CB [ \"Iron-Sun\", \"Beacon\" ] – Heavy Portable",
+        "Chassis": "Cast-iron engine block with a stamped steel parabolic reflector",
+        "Light Source": "Twin Magnesium-Arc Electrodes (Replaceable)",
+        "Power Source": "Integrated 50cc two-stroke combustion engine",
+        "Cooling": "Exposed cooling fins and a massive belt-driven fan",
+        "Mounting": "Heavy steel tripod with dampening springs"
+      },
+      "Technical Data Table": {
+        "Luminosity Output": "150,000 Lumens (Visible from orbit under clear conditions)",
+        "Fuel Consumption": "1 Liter of mixed diesel/oil per 45 minutes",
+        "Operating Noise": "115 Decibels (Idling), 125 Decibels (Full output)",
+        "Heat Emission": "Warning: Lens face reaches 400°C during operation",
+        "Weight": "34 kg (Including tripod)"
+      }
+    },
+    "Images": {
+      "000": ".\\Images\\Generated_Image_IronSun_01.png",
+      "001": ".\\Images\\Generated_Image_IronSun_02.png"
+    },
+    "Warrenty disclaimber": "Warranty void if the operator uses the exhaust heat to cook rations, resulting in engine seizure.",
+    "price": 21000.00,
+    "currency": "CZK-IID"
+  },
+  "0015": {
+    "productName": "Corpse-Crawler Acid Drone",
+    "productStyle": "reaver-tech",
+    "productCategory": "cleaner",
+    "productSlogan": "Erase the evidence, bone by bone.",
+    "description": "A grotesque marvel of Reaver bio-mechanics, the Corpse-Crawler is an elongated, multi-segmented drone built from fused spinal columns and plated with scavenged chitin. Primarily used as an autonomous 'clean-up' unit, it scurries over organic matter or industrial locks, spewing a highly concentrated, bio-luminescent gastric acid from its primary mandibles. It dissolves evidence, bodies, and barricades with disturbing efficiency, leaving nothing but a bubbling puddle of green sludge.",
+    "specs": {
+      "Product Specifications": {
+        "Model": "CC-AD [ \"Corpse\", \"Crawler\" ] – Eraser Variant",
+        "Chassis": "Articulated skeletal segments bound with industrial rubber and wire",
+        "Propulsion": "Dozens of motorized, scuttling iron-spike legs",
+        "Payload": "Internal bio-reactor producing Class-V necro-acid",
+        "Sensor Array": "Thermal pits and pheromone-tracking antennae",
+        "Control Interface": "Requires a crude bone-whistle for basic directional commands"
+      },
+      "Technical Data Table": {
+        "Acid Potency": "Dissolves 10kg of organic matter or 5cm of plasteel in 60 seconds",
+        "Storage Capacity": "5 Liters of compressed gastric acid",
+        "Mobility": "Can scale vertical walls and ceilings",
+        "Lifespan": "Requires monthly injections of base alkaline to prevent self-digestion",
+        "Weight": "14 kg"
+      }
+    },
+    "Images": {
+      "000": ".\\Images\\Generated_Image_AcidDrone_01.png",
+      "001": ".\\Images\\Generated_Image_AcidDrone_02.png"
+    },
+    "Warrenty disclaimber": "Warranty void if the crawler is not properly fed, causing it to attempt to dissolve the owner's boots while they sleep.",
+    "price": 16800.00,
+    "currency": "CZK-IID"
+  },
+  "0016": {
+    "productName": "Sanguine-Purge Symbiote",
+    "productStyle": "bio-punk",
+    "productCategory": "survival gear",
+    "productSlogan": "Let it drink your poison.",
+    "description": "A must-have for venturing into chemically saturated wastelands or attending highly toxic corporate banquets. The Sanguine-Purge Symbiote is a genetically modified, palm-sized organism resembling a luminescent, armored leech. When applied to the radial artery, it interfaces directly with the user's bloodstream, rapidly identifying and filtering out heavy metals, neurotoxins, and radiation. As it cleans the blood, the symbiote's translucent sac glows brighter, turning from pale blue to a sickly yellow when full.",
+    "specs": {
+      "Product Specifications": {
+        "Model": "SP-S [ \"Sanguine\", \"Purge\" ] – Filter Leech",
+        "Physiology": "Translucent bio-polymer skin over a high-density renal matrix",
+        "Attachment Method": "Painless micro-barb arterial tap (Self-sealing upon detachment)",
+        "Capacity Indicator": "Visual biometrics via internal fluid color shifting",
+        "Metabolism": "Sustains itself on trace amounts of host blood sugar",
+        "Storage": "Comes in a sterile, temperature-controlled glass stasis jar"
+      },
+      "Technical Data Table": {
+        "Filtration Rate": "Purifies 1 Liter of blood per minute",
+        "Toxin Affinities": "Cyanide, Arsenic, Rad-X isotopes, Synthetic Narcotics",
+        "Capacity": "Can absorb 3 lethal doses of toxins before requiring manual 'milking'",
+        "Host Dependency": "Dies within 24 hours if removed from a host or stasis jar",
+        "Weight": "200 grams"
+      }
+    },
+    "Images": {
+      "000": ".\\Images\\Generated_Image_Symbiote_01.png",
+      "001": ".\\Images\\Generated_Image_Symbiote_02.png"
+    },
+    "Warrenty disclaimber": "Warranty void if the symbiote is exposed to concentrated alcohol, resulting in erratic filtration and symbiote intoxication.",
+    "price": 28000.00,
+    "currency": "CZK-IID"
+  },
+  "0017": {
+    "productName": "Aetheric Whisper-Graph",
+    "productStyle": "steampunk",
+    "productCategory": "communication",
+    "productSlogan": "Send a letter through the void.",
+    "description": "Long-distance communication without laying a single copper wire. The Aetheric Whisper-Graph is a heavy desktop terminal that translates typed messages into pure aetheric vibrations, effectively shooting telegrams through the astral plane to a paired receiver. Featuring a full typewriter keyboard, a network of brass vacuum tubes, and a small boiler to power the transmission coils, it is the pinnacle of esoteric communication for the discerning Victorian-era space merchant.",
+    "specs": {
+      "Product Specifications": {
+        "Model": "AW-G [ \"Aetheric\", \"Whisper\" ] – Diplomatic Terminal",
+        "Chassis": "Mahogany base with brass fixtures and glass vacuum tube arrays",
+        "Input Interface": "40-key analog typewriter mechanism",
+        "Transmission Core": "Phased Quartz Crystal Matrix",
+        "Power Source": "Integrated mini-boiler (Requires distilled water and coal)",
+        "Receiver Modulator": "Dial-tuned brass frequency selector"
+      },
+      "Technical Data Table": {
+        "Transmission Range": "Inter-planetary (Depends on local aetheric weather conditions)",
+        "Data Rate": "Approx. 15 words per minute (Manual typing speed)",
+        "Warm-up Time": "20 minutes to reach optimal boiler pressure and tube heat",
+        "Security": "Messages exist outside standard time-space (Un-interceptable by radio)",
+        "Weight": "22 kg"
+      }
+    },
+    "Images": {
+      "000": ".\\Images\\Generated_Image_WhisperGraph_01.png",
+      "001": ".\\Images\\Generated_Image_WhisperGraph_02.png"
+    },
+    "Warrenty disclaimber": "Warranty void if the transmission frequency is set to the 'Nether-Band', resulting in the accidental summoning of non-euclidean entities.",
+    "price": 45000.00,
+    "currency": "CZK-IID"
   }
 }
