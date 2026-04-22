@@ -341,7 +341,8 @@
       }
     },
     "Images": {
-      "000": ".Images\\Gemini_Generated_Image_xeca4wxeca4wxeca.png"
+      "000": ".\\Images\\Gemini_Generated_Image_xeca4wxeca4wxeca.png",
+      "001": ".\\Images\\Gemini_Generated_Image_jiwx4qjiwx4qjiwx.png"
     },
     "Warrenty disclaimber": "Warranty void if the marrow filters starve and begin digesting the user's facial tissues.",
     "price": 8400.00,
@@ -371,8 +372,8 @@
       }
     },
     "Images": {
-      "000": ".\\Images\\Generated_Image_PneumaticRam_01.png",
-      "001": ".\\Images\\Generated_Image_PneumaticRam_02.png"
+      "000": ".\\Images\\Gemini_Generated_Image_qiyddoqiyddoqiyd.png",
+      "001": ".\\Images\\Gemini_Generated_Image_nw1g2nw1g2nw1g2n.png"
     },
     "Warrenty disclaimber": "Warranty void if the compressor exceeds redline RPM and shrapnelizes the user's spine.",
     "price": 26000.00,
@@ -402,8 +403,8 @@
       }
     },
     "Images": {
-      "000": ".\\Images\\Generated_Image_HoloDecoy_01.png",
-      "001": ".\\Images\\Generated_Image_HoloDecoy_02.png"
+      "000": ".\\Images\\Gemini_Generated_Image_z6g91yz6g91yz6g9.png",
+      "001": ".\\Images\\Gemini_Generated_Image_ogyojcogyojcogyo.png"
     },
     "Warrenty disclaimber": "Warranty void if the decoy is used to commit fraud, or if the enemy is equipped with standard magnetic-resonance imaging.",
     "price": 15500.00,
@@ -433,8 +434,8 @@
       }
     },
     "Images": {
-      "000": ".\\Images\\Generated_Image_GeneMoth_01.png",
-      "001": ".\\Images\\Generated_Image_GeneMoth_02.png"
+      "000": ".\\Images\\ChatGPT Image 22. apr. 2026, 11_23_16.png",
+      "001": ".\\Images\\ChatGPT Image 22. apr. 2026, 11_26_46.png"
     },
     "Warrenty disclaimber": "Warranty void if the moth is eaten by local avian predators or distracted by unusually bright streetlamps.",
     "price": 18000.00,
@@ -464,8 +465,9 @@
       }
     },
     "Images": {
-      "000": ".\\Images\\Generated_Image_IronSun_01.png",
-      "001": ".\\Images\\Generated_Image_IronSun_02.png"
+      "000": ".\\Images\\ChatGPT Image 22. apr. 2026, 11_31_04.png",
+      "001": ".\\Images\\ChatGPT Image 22. apr. 2026, 11_34_01.png",
+      "002": ".\\Images\\ChatGPT Image 22. apr. 2026, 11_43_35.png"
     },
     "Warrenty disclaimber": "Warranty void if the operator uses the exhaust heat to cook rations, resulting in engine seizure.",
     "price": 21000.00,
@@ -495,8 +497,8 @@
       }
     },
     "Images": {
-      "000": ".\\Images\\Generated_Image_AcidDrone_01.png",
-      "001": ".\\Images\\Generated_Image_AcidDrone_02.png"
+      "000": ".\\Images\\ChatGPT Image 22. apr. 2026, 11_48_32.png",
+      "001": ".\\Images\\ChatGPT Image 22. apr. 2026, 11_50_10.png"
     },
     "Warrenty disclaimber": "Warranty void if the crawler is not properly fed, causing it to attempt to dissolve the owner's boots while they sleep.",
     "price": 16800.00,
@@ -526,8 +528,7 @@
       }
     },
     "Images": {
-      "000": ".\\Images\\Generated_Image_Symbiote_01.png",
-      "001": ".\\Images\\Generated_Image_Symbiote_02.png"
+      "000": ".\\Images\\ChatGPT Image 22. apr. 2026, 11_57_42.png"
     },
     "Warrenty disclaimber": "Warranty void if the symbiote is exposed to concentrated alcohol, resulting in erratic filtration and symbiote intoxication.",
     "price": 28000.00,
@@ -557,11 +558,42 @@
       }
     },
     "Images": {
-      "000": ".\\Images\\Generated_Image_WhisperGraph_01.png",
-      "001": ".\\Images\\Generated_Image_WhisperGraph_02.png"
+      "000": ".\\Images\\ChatGPT Image 22. apr. 2026, 12_01_28.png"
     },
     "Warrenty disclaimber": "Warranty void if the transmission frequency is set to the 'Nether-Band', resulting in the accidental summoning of non-euclidean entities.",
     "price": 45000.00,
+    "currency": "CZK-IID"
+  },
+  "0018": {
+    "productName": "The Snuggle-Sack Symbiote: \"Cuddle-Kin\" Pattern",
+    "productStyle": "reaver-tech",
+    "productCategory": "companion",
+    "productSlogan": "Because even Reavers need a hug.",
+    "description": "An unprecedented, cheerful deviation from standard Reaver manufacturing, the \"Cuddle-Kin\" is a bio-engineered companion construct designed specifically to boost morale in bleak void-stations and sump-city hideouts. Stitched from the softest, neutralized flayed-hide and stuffed with warm, insulating adipose tissue, this unsettlingly adorable lump is pure comfort. Once draped over a shoulder or torso, it utilizes gentle, persistent kinetic spasms to simulate a warm hug, while synthesized vocal organs emit a deep, soothing purr fueled entirely by the host's ambient body heat. Warning: While delightful, it may still trigger deeply unsettling psychological responses in unconditioned observers.",
+    "specs": {
+      "Product Specifications": {
+        "Model": "SS-CK [ \"Snuggle\", \"Kin\" ] – Morale Pattern",
+        "Chassis": "Ultra-soft, neutralized flayed-hide exterior with redundant, smooth-stitch seams.",
+        "Filling": "Stabilized, sterilized adipose warmth-cells.",
+        "Attachment Method": "Galvanic adhesive pads for \"gentle-cling\" technology (adjustable).",
+        "Vocalization": "Twin synthesized vocal-sacs tuned to the 20Hz \"healing purr\" frequency.",
+        "Hygiene Rating": "Antimicrobial hide-treatment prevents rot for standard tour duration (approx. 6 months)."
+      },
+      "Technical Data Table": {
+        "Happiness Output": "+75% Self-Reported Morale increase upon contact.",
+        "Operating Temperature": "Generates 38°C of warmth",
+        "(100.4°F).\",": null,
+        "Purr Duration": "Continuous, scales intensity with host's resting heart rate.",
+        "Nutrient Need": "Minimal; absorption of dead skin cells and body oils keeps internal cells stable.",
+        "Weight": "2.1 kg (Feels like a very sleepy child).",
+        "Cling Strength": "Adjustable from \"gentle nuzzle\" to \"reassuring grip\" via sub-dermal spinal tap."
+      }
+    },
+    "Images": {
+      "000": ".\\Images\\ChatGPT Image 22. apr. 2026, 12_07_57.png"
+    },
+    "Warrenty disclaimber": "Warranty void if the construct becomes infested with parasites, starts leaking its insulating fat due to \"rough play,\" or if the purr mechanism is modified to broadcast battle cries.",
+    "price": 12000.00,
     "currency": "CZK-IID"
   }
 }
