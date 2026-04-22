@@ -581,7 +581,7 @@
       },
       "Technical Data Table": {
         "Happiness Output": "+75% Self-Reported Morale increase upon contact.",
-        "Operating Temperature": "Generates 38°C of warmth",
+        "Operating Temperature": "Generates a steady 38°C of warmth",
         "(100.4°F).\",": null,
         "Purr Duration": "Continuous, scales intensity with host's resting heart rate.",
         "Nutrient Need": "Minimal; absorption of dead skin cells and body oils keeps internal cells stable.",
@@ -594,6 +594,38 @@
     },
     "Warrenty disclaimber": "Warranty void if the construct becomes infested with parasites, starts leaking its insulating fat due to \"rough play,\" or if the purr mechanism is modified to broadcast battle cries.",
     "price": 12000.00,
+    "currency": "CZK-IID"
+  },
+  "0019": {
+    "productName": "Dynasty-Flux Sun-Scarab: The \"Joy-Bringer\" Pattern",
+    "productStyle": "aether-dynasty",
+    "productCategory": "companion",
+    "productSlogan": "A thousand years of sunshine, wrapped up just for you.",
+    "description": "Designed by the eternal, spacefaring stargazers of the Aether-Tombs, the Sun-Scarab is a relentlessly cheerful, hovering construct. Crafted from polished solar-gold and ethereal lapis lazuli, it emits a soft, warm flux-field that perfectly mimics a breezy summer afternoon, no matter how cold the void gets. When it senses its user is lonely or stressed, it playfully unravels a weightless ribbon of pure, cozy aether-light, gently wrapping them in a comforting, glowing 'bandage' of warmth. It flutters around like a happy puppy, humming ancient, uplifting melodies and chiming affectionately.",
+    "specs": {
+      "Product Specifications": {
+        "Model": "SS-JB [ \"Sun\", \"Scarab\" ] – Joy-Bringer Variant",
+        "Chassis": "Polished Solar-Gold with self-repairing Ethereal Lapis Lazuli inlay",
+        "Core": "Captured miniature star-fragment held in a cheerful flux-stasis bubble",
+        "Locomotion": "Anti-gravity flutter-wings composed of golden hard-light",
+        "Embrace Mechanism": "Projected 'Aether-Weave' light ribbons for weightless, snug hugs",
+        "Vocalization": "Multi-tonal crystal chimes capable of 500+ happy ancient lullabies"
+      },
+      "Technical Data Table": {
+        "Warmth Output": "Localized 22°C (72°F) comfort-bubble (Radius: 3 meters)",
+        "Ribbon Length": "Up to 15 meters of pure, cozy light-weave per hug",
+        "Luminosity": "Constant, soothing 'golden hour' glow (Auto-dims when you sleep)",
+        "Power Lifespan": "Powered by eternal flux-resonance (Estimated 5,000 standard years)",
+        "Weight": "Lighter than a feather (Maintains neutral buoyancy in standard gravity)",
+        "Temperament": "Aggressively Affectionate"
+      }
+    },
+    "Images": {
+      "000": ".\\Images\\ChatGPT Image 22. apr. 2026, 13_25_34.png",
+      "001": ".\\Images\\ChatGPT Image 22. apr. 2026, 13_39_07.png"
+    },
+    "Warrenty disclaimber": "Warranty void if the scarab is fed organic insects, or if the user attempts to weaponize the ancient comfort-ribbons into tactical restraints.",
+    "price": 32000.00,
     "currency": "CZK-IID"
   }
 }
