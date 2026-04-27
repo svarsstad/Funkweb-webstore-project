@@ -1,0 +1,58 @@
+﻿@page "/productDatabase"
+@rendermode InteractiveServer
+
+<PageTitle>Product Database</PageTitle>
+
+<h1>Product Database</h1>
+@if (loadedProducts == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th aria-label="Product Id">Product Id</th>
+                <th aria-label="Name">Name</th>
+                <th aria-label="Price">Price</th>
+                <th aria-label="Stock">Stock</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var product in loadedProducts)
+            {
+                <tr>
+                    <td>@product.ProductId</td>
+                    <td>@product.Name</td>
+                    <td>@product.Price</td>
+                    <td>@product.Stock</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private Product[]? loadedProducts;
+
+    protected override async Task OnInitializedAsync()
+    {
+        // Simulate asynchronous loading to demonstrate streaming rendering
+        await Task.Delay(50);
+        loadedProducts = Enumerable.Range(1, 5).Select(index => new Product
+        {
+
+            ProductId = index,
+            Name = "Spacial Captricator XIV v0." + index
+        }).ToArray();
+    }
+
+    private class Product
+    {
+        public int ProductId { get; set; }
+        public string? Name { get; set; }
+        public int Price => 10000 + (int)(Random.Shared.Next(1, 550) * 100);
+        public int Stock => 10 + (int)(Random.Shared.Next(1, 550) * 100);
+    }
+}
