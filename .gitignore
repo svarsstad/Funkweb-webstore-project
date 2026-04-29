@@ -54,3 +54,4 @@ TestResult.xml
 nunit-*.xml
 /Project Products/Images
 /.vs
+privatesettings.txt
