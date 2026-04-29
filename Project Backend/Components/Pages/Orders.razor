@@ -1,0 +1,66 @@
+﻿@page "/orders"
+@rendermode InteractiveServer
+
+<PageTitle>Orders</PageTitle>
+
+<h1>Orders</h1>
+@if (loadedOrders == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th aria-label="Order Id">Order Id</th>
+                <th aria-label="Client Id">Client Id</th>
+                <th aria-label="Product Name">Product</th>
+                <th aria-label="Product Id">Product Id</th>
+                <th aria-label="Price">Price</th>
+                <th aria-label="Number">Number</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var order in loadedOrders)
+            {
+                <tr>
+                    <td>@order.OrderId</td>
+                    <td>@order.ClientId</td>
+                    <td>@order.ProductName</td>
+                    <td>@order.ProductId</td>
+                    <td>@order.Price</td>
+                    <td>@order.Number</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private Order[]? loadedOrders;
+
+    protected override async Task OnInitializedAsync()
+    {
+        // Simulate asynchronous loading to demonstrate streaming rendering
+        await Task.Delay(50);
+        loadedOrders = Enumerable.Range(1, 10).Select(index => new Order
+        {
+
+            OrderId = index,
+            ClientId = 0,
+            ProductName = "Spacial Captricator XIV v" + index * 0.1f,
+            ProductId = index
+        }).ToArray();
+    }
+
+    private class Order
+    {
+        public int OrderId { get; set; }
+        public int ClientId;
+        public string? ProductName;
+        public int ProductId;
+        public int Price => 10000 + (int)(Random.Shared.Next(1, 550) * 100);
+        public int Number => 10 + (int)(Random.Shared.Next(1, 5));
+    }
+}
