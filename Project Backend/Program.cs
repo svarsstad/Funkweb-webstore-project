@@ -7,6 +7,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 builder.Services.AddSingleton<ProductService>();
+// add private settings file to program
+builder.Configuration.AddJsonFile("appsettings.private.json", optional: true, reloadOnChange: true);
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
