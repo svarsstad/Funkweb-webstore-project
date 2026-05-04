@@ -1,12 +1,38 @@
-﻿namespace Project_Backend.Services
+﻿using MongoDB.Bson;
+using MongoDB.Driver;
+using Project_Backend.Models;
+
+namespace Project_Backend.Services
 {
     public class ProductService
     {
-        /*What goes here: The actual business logic and background workers.
+        private readonly IMongoCollection<Product> _productsCollection;
 
-Why it's important: You never want to write code that directly accesses the database inside your .razor files. Instead, you create a service (like ProductService.cs). The service talks to the database, and your .razor pages just ask the service for the data. This keeps your UI lightning-fast and your code clean.
-        */
-        /**/
+        public ProductService(IConfiguration config)
+        {
+            // Read the settings from appsettings.json
+            var connectionString = config["MongoDbSettings:ConnectionString"];
+            var databaseName = config["MongoDbSettings:DatabaseName"];
+            var collectionName = config["MongoDbSettings:ProductsCollectionName"];
 
+            // Connect to MongoDB
+            var mongoClient = new MongoClient(connectionString);
+            var mongoDatabase = mongoClient.GetDatabase(databaseName);
+            _productsCollection = mongoDatabase.GetCollection<Product>(collectionName);
+        }
+
+        // 1. Get ALL products for the dashboard
+        public async Task<List<Product>> GetAllProductsAsync()
+        {
+            return await _productsCollection.Find(_ => true).ToListAsync();
+        }
+
+        // 2. Search function (e.g., search by name)
+        public async Task<List<Product>> SearchProductsAsync(string searchTerm)
+        {
+            // This does a case-insensitive search anywhere in the product name
+            var filter = Builders<Product>.Filter.Regex("Name", new BsonRegularExpression(searchTerm, "i"));
+            return await _productsCollection.Find(filter).ToListAsync();
+        }
     }
 }

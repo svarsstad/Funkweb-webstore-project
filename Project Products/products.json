@@ -1,5 +1,6 @@
-{
-  "0000": {
+[
+
+  {
     "productName": "Chrono-Flux Core: The QFC-7, Event \"Horizon Edition\"",
     "productStyle": "cyberpunk",
     "productCategory": "measuring device",
@@ -29,10 +30,9 @@
     },
     "Warrenty disclaimber": "Warranty is void if used near a black hole",
     "price": 42500.00,
-    "currency": "CZK-IID" /// czech intergalactic imperial dogecoin is standard
+    "currency": "CZK-IID, czech intergalactic imperial dogecoin"
   },
-
-  "0001": {
+  {
     "productName": "Aether-Flux Orrery: The Divinator Model",
     "productStyle": "steampunk",
     "productCategory": "measuring device",
@@ -64,7 +64,7 @@
     "price": 28500.00,
     "currency": "CZK-IID"
   },
-  "0002": {
+  {
     "productName": "The Harmonics Engine: Brass-Bellows Resonator Cart",
     "productStyle": "steampunk",
     "productCategory": "cleaner",
@@ -97,7 +97,7 @@
     "price": 18500.00,
     "currency": "CZK-IID"
   },
-  "0003": {
+  {
     "productName": "Xeno-Crawler V-9: Bio-Flux Harvester Drone",
     "productStyle": "cyberpunk",
     "productCategory": "cleaner",
@@ -130,7 +130,7 @@
     "price": 85000.00,
     "currency": "CZK-IID"
   },
-  "0004": {
+  {
     "productName": "Gore-Crawler Construct: The \"Marrow-Drinker\" Pattern",
     "productStyle": "reaver-tech",
     "productCategory": "cleaner",
@@ -162,7 +162,7 @@
     "price": 14200.00,
     "currency": "CZK-IID"
   },
-  "0005": {
+  {
     "productName": "Flesh-Bound Necro-Lumen: The \"Wraith-Eye\" Pattern",
     "productStyle": "reaver-tech",
     "productCategory": "illumination",
@@ -193,7 +193,7 @@
     "price": 9800.00,
     "currency": "CZK-IID"
   },
-  "0006": {
+  {
     "productName": "Cryo Viper X1",
     "productStyle": "cyberpunk",
     "productCategory": "illumination",
@@ -226,7 +226,7 @@
     "price": 38500.00,
     "currency": "CZK-IID"
   },
-  "0007": {
+  {
     "productName": "Lumina-Forge Kinetic Strike-Lantern",
     "productStyle": "steampunk",
     "productCategory": "illumination",
@@ -256,7 +256,7 @@
     "price": 19200.00,
     "currency": "CZK-IID"
   },
-  "0008": {
+  {
     "productName": "Neuro-Tap Whisper-Bug",
     "productStyle": "cyberpunk",
     "productCategory": "communication",
@@ -287,7 +287,7 @@
     "price": 62000.00,
     "currency": "CZK-IID"
   },
-  "0009": {
+  {
     "productName": "Telluric Resonance Seismometer",
     "productStyle": "steampunk",
     "productCategory": "measuring device",
@@ -317,7 +317,7 @@
     "price": 12500.00,
     "currency": "CZK-IID"
   },
-  "0010": {
+  {
     "productName": "Marrow-Filter Sump-Mask",
     "productStyle": "reaver-tech",
     "productCategory": "survival gear",
@@ -348,7 +348,7 @@
     "price": 8400.00,
     "currency": "CZK-IID"
   },
-  "0011": {
+  {
     "productName": "Trench-Breaker Pneumatic Ram",
     "productStyle": "dieselpunk",
     "productCategory": "personal defense",
@@ -379,7 +379,7 @@
     "price": 26000.00,
     "currency": "CZK-IID"
   },
-  "0012": {
+  {
     "productName": "Mirage V-3 Holo-Decoy",
     "productStyle": "cyberpunk",
     "productCategory": "personal defense",
@@ -410,7 +410,7 @@
     "price": 15500.00,
     "currency": "CZK-IID"
   },
-  "0013": {
+  {
     "productName": "Chitin-Courier Gene-Moth",
     "productStyle": "bio-punk",
     "productCategory": "communication",
@@ -441,7 +441,7 @@
     "price": 18000.00,
     "currency": "CZK-IID"
   },
-  "0014": {
+  {
     "productName": "Iron-Sun Combustion Beacon",
     "productStyle": "dieselpunk",
     "productCategory": "illumination",
@@ -473,7 +473,7 @@
     "price": 21000.00,
     "currency": "CZK-IID"
   },
-  "0015": {
+  {
     "productName": "Corpse-Crawler Acid Drone",
     "productStyle": "reaver-tech",
     "productCategory": "cleaner",
@@ -504,7 +504,7 @@
     "price": 16800.00,
     "currency": "CZK-IID"
   },
-  "0016": {
+  {
     "productName": "Sanguine-Purge Symbiote",
     "productStyle": "bio-punk",
     "productCategory": "survival gear",
@@ -534,7 +534,7 @@
     "price": 28000.00,
     "currency": "CZK-IID"
   },
-  "0017": {
+  {
     "productName": "Aetheric Whisper-Graph",
     "productStyle": "steampunk",
     "productCategory": "communication",
@@ -564,7 +564,7 @@
     "price": 45000.00,
     "currency": "CZK-IID"
   },
-  "0018": {
+  {
     "productName": "The Snuggle-Sack Symbiote: \"Cuddle-Kin\" Pattern",
     "productStyle": "reaver-tech",
     "productCategory": "companion",
@@ -596,7 +596,7 @@
     "price": 12000.00,
     "currency": "CZK-IID"
   },
-  "0019": {
+  {
     "productName": "Dynasty-Flux Sun-Scarab: The \"Joy-Bringer\" Pattern",
     "productStyle": "aether-dynasty",
     "productCategory": "companion",
@@ -628,4 +628,4 @@
     "price": 32000.00,
     "currency": "CZK-IID"
   }
-}
+]

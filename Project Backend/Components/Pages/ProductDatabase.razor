@@ -1,32 +1,33 @@
 ﻿@page "/productDatabase"
 @rendermode InteractiveServer
+@using Project_Backend.Models
+@using Project_Backend.Services
+@inject ProductService ProductService
 
 <PageTitle>Product Database</PageTitle>
 
 <h1>Product Database</h1>
-@if (loadedProducts == null)
+@if (products == null)
 {
-    <p><em>Loading...</em></p>
+    <p><em>Loading products from MongoDB...</em></p>
 }
 else
 {
     <table class="table">
         <thead>
             <tr>
-                <th aria-label="Product Id">Product Id</th>
-                <th aria-label="Name">Name</th>
-                <th aria-label="Price">Price</th>
-                <th aria-label="Stock">Stock</th>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Price</th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var product in loadedProducts)
+            @foreach (var product in products)
             {
                 <tr>
-                    <td>@product.ProductId</td>
+                    <td>@product.Id</td>
                     <td>@product.Name</td>
-                    <td>@product.Price</td>
-                    <td>@product.Stock</td>
+                    <td>$@product.Price</td>
                 </tr>
             }
         </tbody>
@@ -34,25 +35,11 @@ else
 }
 
 @code {
-    private Product[]? loadedProducts;
+    private List<Product>? products;
 
+    // This runs automatically when the page loads
     protected override async Task OnInitializedAsync()
     {
-        // Simulate asynchronous loading to demonstrate streaming rendering
-        await Task.Delay(50);
-        loadedProducts = Enumerable.Range(1, 5).Select(index => new Product
-        {
-
-            ProductId = index,
-            Name = "Spacial Captricator XIV v0." + index
-        }).ToArray();
-    }
-
-    private class Product
-    {
-        public int ProductId { get; set; }
-        public string? Name { get; set; }
-        public int Price => 10000 + (int)(Random.Shared.Next(1, 550) * 100);
-        public int Stock => 10 + (int)(Random.Shared.Next(1, 550) * 100);
+        products = await ProductService.GetAllProductsAsync();
     }
 }

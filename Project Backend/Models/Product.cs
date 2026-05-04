@@ -1,10 +1,54 @@
-﻿namespace Project_Backend.Models
+﻿using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
+
+namespace Project_Backend.Models
 {
+    [BsonIgnoreExtraElements]
     public class Product
     {
-        /*What goes here: This is where you define the "shape" of your data using plain C# classes.
+        [BsonId]
+        [BsonRepresentation(BsonType.ObjectId)]
+        public string? Id { get; set; }
 
-Examples: User.cs, Product.cs, Order.cs.
-        */
+        // Put the EXACT spelling/capitalization from MongoDB inside the quotes here
+        [BsonElement("productName")] // <--- mongodb name
+        public string Name { get; set; } = string.Empty; // <--- C# class member variable tied to the mongodb name
+
+        [BsonElement("productStyle")] // <--- mongodb name
+        public string ProductStyle { get; set; } = string.Empty;
+
+        [BsonElement("productCategory")] // <--- mongodb name
+        public string ProductCategory { get; set; } = string.Empty;
+
+        [BsonElement("productSlogan")] // <--- mongodb name
+        public string ProductSlogan { get; set; } = string.Empty;
+
+        [BsonElement("description")] // <--- mongodb name
+        public string description { get; set; } = string.Empty;
+
+
+        [BsonElement("specs")]
+        public Dictionary<string, Dictionary<string, string>> Specs { get; set; } = new();
+
+        [BsonElement("images")]
+        public List<string> Images { get; set; } = new();
+
+        [BsonElement("Warrenty disclaimber")] // <--- mongodb name
+        public string Disclaimber { get; set; } = string.Empty;
+
+
+        [BsonElement("price")]
+        public decimal Price { get; set; }
+
+        [BsonElement("currency")]
+        public string Curruency { get; set; } = "CZK-IID";
+
+        [BsonElement("stock")]
+        public decimal Stock { get; set; }
+
+
+       /* [BsonExtraElements]
+        public BsonDocument? ExtraData { get; set; }
+       */
     }
 }
