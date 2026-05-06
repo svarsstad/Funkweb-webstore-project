@@ -7,36 +7,152 @@
 <PageTitle>Product Database</PageTitle>
 
 <h1>Product Database</h1>
+
 @if (products == null)
 {
     <p><em>Loading products from MongoDB...</em></p>
 }
 else
 {
-    <table class="table">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Stock</th>
-                <th>Price</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var product in products)
+    <div style="display: flex; gap: 20px; align-items: flex-start;">
+        
+        <div style="flex: 1; max-height: 80vh; overflow-y: auto;">
+            <table class="table table-hover">
+                <thead style="position: sticky; top: 0; background: white; z-index: 1;">
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Stock</th>
+                        <th>Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var product in products)
+                    {
+                        // The @onclick makes the row selectable, and we change the cursor to a pointer so you know it's clickable
+                        <tr @onclick="() => SelectProduct(product)" style="cursor: pointer; background-color: @(selectedProduct?.Id == product.Id ? "#f0f8ff" : "transparent")">
+                            <td>@product.Id</td>
+                            <td>@product.Name</td>
+                            <td>@product.Stock</td>
+                            <td>$@product.Price</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <div style="flex: 1; padding: 20px; border: 1px solid #ccc; border-radius: 8px; background-color: #f9f9f9;">
+            @if (selectedProduct == null)
             {
-                <tr>
-                    <td>@product.Id</td>
-                    <td>@product.Name</td>
-                    <td>@product.Stock</td>
-                    <td>$@product.Price</td>
-                </tr>
+                <h3 style="color: gray; text-align: center;">Select a product to view details</h3>
             }
-        </tbody>
-    </table>
+            else
+            {
+                <h2>@selectedProduct.Name</h2>
+                <p><em>@selectedProduct.ProductSlogan</em></p>
+                <hr />
+
+                <div style="text-align: center; margin-bottom: 20px;">
+                    @if (selectedProduct.Images != null && selectedProduct.Images.Count > 0)
+                    {
+                        <img src="@GetCurrentImageUrl()" alt="Product Image" style="max-width: 100%; max-height: 300px; border-radius: 8px; margin-bottom: 10px;" />
+                        <br />
+                        @if (selectedProduct.Images.Count > 1)
+                        {
+                            <button class="btn btn-secondary" @onclick="PreviousImage">Previous</button>
+                        }
+                        <span style="margin: 0 15px;">Image @(currentImageIndex + 1) of @selectedProduct.Images.Count</span>
+                        @if (selectedProduct.Images.Count > 1)
+                        {
+                            <button class="btn btn-secondary" @onclick="NextImage">Next</button>
+                        }
+                    }
+                    else
+                    {
+                        <div style="height: 200px; background: #eee; display: flex; align-items: center; justify-content: center;">
+                            <span>No images available</span>
+                        </div>
+                    }
+                </div>
+
+                <p><strong>Style:</strong> @selectedProduct.ProductStyle</p>
+                <p><strong>Category:</strong> @selectedProduct.ProductCategory</p>
+                <p><strong>Price:</strong> @selectedProduct.Price @selectedProduct.Curruency</p>
+                <p><strong>Stock:</strong> @selectedProduct.Stock</p>
+                <p><strong>Description:</strong> @selectedProduct.description</p>
+                <p><strong>Warranty:</strong> @selectedProduct.Disclaimber</p>
+
+                @if (selectedProduct.Specs != null && selectedProduct.Specs.Count > 0)
+                {
+                    <hr />
+                    <h3>Specifications</h3>
+                    @foreach (var specCategory in selectedProduct.Specs)
+                    {
+                        <h5 style="margin-top: 15px;">@specCategory.Key</h5>
+                        <ul style="margin-bottom: 10px;">
+                            @foreach (var spec in specCategory.Value)
+                            {
+                                <li><strong>@spec.Key:</strong> @spec.Value</li>
+                            }
+                        </ul>
+                    }
+                }
+            }
+        </div>
+    </div>
 }
 
 @code {
+    // ... Your existing variables (like List<Product> products) and OnInitializedAsync ...
+
+    // State variables for the Inspector
+    private Product? selectedProduct;
+    private int currentImageIndex = 0;
+
+    // Called when a user clicks a row
+    private void SelectProduct(Product product)
+    {
+        selectedProduct = product;
+        currentImageIndex = 0; // Reset to the first image when a new product is selected
+    }
+
+    // Carousel Logic: Next Button
+    private void NextImage()
+    {
+        if (selectedProduct?.Images != null && selectedProduct.Images.Count > 0)
+        {
+            currentImageIndex++;
+            // Loop back to the start if we go past the last image
+            if (currentImageIndex >= selectedProduct.Images.Count)
+            {
+                currentImageIndex = 0;
+            }
+        }
+    }
+
+    // Carousel Logic: Previous Button
+    private void PreviousImage()
+    {
+        if (selectedProduct?.Images != null && selectedProduct.Images.Count > 0)
+        {
+            currentImageIndex--;
+            // Loop to the end if we go backwards past the first image
+            if (currentImageIndex < 0)
+            {
+                currentImageIndex = selectedProduct.Images.Count - 1;
+            }
+        }
+    }
+
+    // Dynamically fixes the image path for the browser
+    private string GetCurrentImageUrl()
+    {
+        if (selectedProduct?.Images == null || selectedProduct.Images.Count == 0) return "";
+        
+        string rawPath = selectedProduct.Images[currentImageIndex];
+        return rawPath;
+    }
+
     private List<Product>? products;
 
     // This runs automatically when the page loads

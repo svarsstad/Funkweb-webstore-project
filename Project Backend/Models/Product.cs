@@ -30,8 +30,8 @@ namespace Project_Backend.Models
         [BsonElement("specs")]
         public Dictionary<string, Dictionary<string, string>> Specs { get; set; } = new();
 
-        [BsonElement("images")]
-        public List<string> Images { get; set; } = new();
+        [BsonElement("Images")]
+        public Dictionary<int, string> Images { get; set; } = new();
 
         [BsonElement("Warrenty disclaimber")] // <--- mongodb name
         public string Disclaimber { get; set; } = string.Empty;
