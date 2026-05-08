@@ -6,6 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
+builder.Services.AddSingleton<OrderService>();
 builder.Services.AddSingleton<ProductService>();
 // add private settings file to program
 builder.Configuration.AddJsonFile("appsettings.private.json", optional: true, reloadOnChange: true);

@@ -1,10 +1,12 @@
 ﻿@page "/orders"
 @rendermode InteractiveServer
-
+@using Project_Backend.Models
+@using Project_Backend.Services
+@inject OrderService OrderService
 <PageTitle>Orders</PageTitle>
 
 <h1>Orders</h1>
-@if (loadedOrders == null)
+@if (orders == null)
 {
     <p><em>Loading...</em></p>
 }
@@ -15,22 +17,28 @@ else
             <tr>
                 <th aria-label="Order Id">Order Id</th>
                 <th aria-label="Client Id">Client Id</th>
-                <th aria-label="Product Name">Product</th>
-                <th aria-label="Product Id">Product Id</th>
+                @* <th aria-label="Product Name">Product</th> *@
+                <th aria-label="Date">Date</th>
                 <th aria-label="Price">Price</th>
-                <th aria-label="Number">Number</th>
+                <th aria-label="Products">Products</th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var order in loadedOrders)
+            @foreach (var order in orders)
             {
                 <tr>
-                    <td>@order.OrderId</td>
-                    <td>@order.ClientId</td>
-                    <td>@order.ProductName</td>
-                    <td>@order.ProductId</td>
-                    <td>@order.Price</td>
-                    <td>@order.Number</td>
+                    <td>@order.Id</td>
+                    @if (order.UserId == null ||order.UserId == string.Empty)
+                    {
+                        <td>Test</td>
+                    }
+                    else{
+                        <td>@order.UserId</td>
+                    }
+                    @* <td>@order.ProductName</td> *@
+                    <td>@order.OrderDate</td>
+                    <td>@order.TotalOrderValue</td>
+                    <td>@order.Items.Count()</td>
                 </tr>
             }
         </tbody>
@@ -38,29 +46,13 @@ else
 }
 
 @code {
-    private Order[]? loadedOrders;
 
+    private List<Order>? orders;
+
+    // This runs automatically when the page loads
     protected override async Task OnInitializedAsync()
     {
-        // Simulate asynchronous loading to demonstrate streaming rendering
-        await Task.Delay(50);
-        loadedOrders = Enumerable.Range(1, 10).Select(index => new Order
-        {
-
-            OrderId = index,
-            ClientId = 0,
-            ProductName = "Spacial Captricator XIV v" + index * 0.1f,
-            ProductId = index
-        }).ToArray();
+        orders = await OrderService.GetAllOrdersAsync();
     }
 
-    private class Order
-    {
-        public int OrderId { get; set; }
-        public int ClientId;
-        public string? ProductName;
-        public int ProductId;
-        public int Price => 10000 + (int)(Random.Shared.Next(1, 550) * 100);
-        public int Number => 10 + (int)(Random.Shared.Next(1, 5));
-    }
 }
