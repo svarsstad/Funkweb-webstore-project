@@ -29,9 +29,13 @@ namespace Project_Backend.Models
 
         [BsonElement("specs")]
         public Dictionary<string, Dictionary<string, string>> Specs { get; set; } = new();
+        // specs contain a dictionary of 2: Product Specifications and Technical Data Table
+        // which each contain dictionary-lists of characteristics and their descriptions
+        // I thought I could later use this to make search tags or propose similar products based on shared characteristics
 
         [BsonElement("Images")]
         public Dictionary<int, string> Images { get; set; } = new();
+        //image paths, the key is just an index for the image, the value is the path to the image in the file system, relative to /wwwroot/
 
         [BsonElement("Warrenty disclaimber")] // <--- mongodb name
         public string Disclaimber { get; set; } = string.Empty;

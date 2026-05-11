@@ -6,6 +6,9 @@ namespace Project_Backend.Models
     [BsonIgnoreExtraElements]
     public class Order
     {
+        /// <summary>
+        /// This is the main class for orders, it contains the user id of the user who made the order, the date of the order, the status of the order, an array of OrderItems and the total value of the order
+        /// </summary>
         private OrderItem[] items = new OrderItem[0];
 
         [BsonId]
@@ -28,6 +31,9 @@ namespace Project_Backend.Models
         public double TotalOrderValue { get; set; } = 0.0;
 
     }
+    /// <summary>
+    /// There is one OrderItem per unique product in each order of products, and it contains the product id, quantity, price at purchase and discount percentage at purchase
+    /// </summary>
     public class OrderItem
     {
         [BsonRepresentation(BsonType.ObjectId)]
