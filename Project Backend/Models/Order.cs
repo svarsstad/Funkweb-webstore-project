@@ -44,5 +44,7 @@ namespace Project_Backend.Models
         public double PriceAtPurchase { get; set; } = 0;
         [BsonElement("discountPercentage")]
         public double DiscountPercentage { get; set; } = 0;
+
+        public string? ProductName { get; set; } = "";
     }
 }

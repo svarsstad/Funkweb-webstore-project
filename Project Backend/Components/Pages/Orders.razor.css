@@ -1,0 +1,82 @@
+﻿/* PAGE TITLE */
+
+h1 {
+    margin-bottom: 1.5rem;
+}
+
+/* MAIN TABLE */
+
+table {
+    width: 100%;
+}
+
+/* CLICKABLE ORDER ROWS */
+
+tr.clickable-row {
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+}
+
+    tr.clickable-row:hover td {
+        background-color: #555b5b !important;
+    }
+
+/* SELECTED ROW */
+
+tr.selected-row td {
+    background-color: #555b5b !important;
+}
+
+/* TABLE CELL ALIGNMENT */
+
+tbody td {
+    vertical-align: middle;
+}
+
+/* STATUS DROPDOWN */
+
+select {
+    background-color: #555b5b;
+    color: #05ebeb;
+    border: 1px solid #2a2f36;
+    border-radius: 6px;
+    padding: 0.35rem 0.5rem;
+    min-width: 140px;
+}
+
+/* ORDER DETAIL PANEL */
+
+.order-details {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    background-color: #555b5b;
+    border: 1px solid #2a2f36;
+    border-radius: 10px;
+    color: #05ebeb;
+    box-shadow: 0 0 12px rgba(50, 184, 255, 0.08), inset 0 0 8px rgba(255, 255, 255, 0.02);
+}
+
+    /* DETAIL PANEL HEADERS */
+
+    .order-details h2,
+    .order-details h3 {
+        margin-bottom: 1rem;
+    }
+
+    /* DETAIL TABLE */
+
+    .order-details table {
+        margin-top: 1rem;
+    }
+
+    /* DETAIL TABLE HEADERS */
+
+    .order-details th {
+        border-bottom: 1px solid #2a2f36;
+    }
+
+    /* DETAIL TABLE ROWS */
+
+    .order-details td {
+        vertical-align: middle;
+    }

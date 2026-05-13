@@ -2,11 +2,78 @@
 @rendermode InteractiveServer
 @using Project_Backend.Models
 @using Project_Backend.Services
-@inject OrderService OrderService
-<PageTitle>Orders</PageTitle>
 
+@inject ProductService ProductService
+@inject OrderService OrderService
+
+@code {
+
+    private List<Order>? orders;
+
+    private Order? selectedOrder;
+
+    private List<string> statuses = new()
+    {
+        "Pending Payment",
+        "Processing",
+        "Shipped",
+        "Delivered",
+        "Cancelled"
+    };
+
+    protected override async Task OnInitializedAsync()
+    {
+        orders = await OrderService.GetAllOrdersAsync();
+        await ProductService.GetAllProductsAsync();
+        if (ProductService.Products == null || ProductService.Products.Count == 0)
+        {
+            return;
+        }
+        foreach (Order order in orders)
+        {
+            foreach (OrderItem item in order.Items)
+            {
+                foreach (var product in ProductService.Products)
+                {
+                    if (item.ProductId == product.Id)
+                    {
+                        item.ProductName = product.Name;
+                        break;
+                    }
+                }
+                if (item.ProductId == null)
+                {
+                    item.ProductName = "Unknown Product";
+                    continue;
+                }
+            }
+        }
+    }
+
+    private void SelectOrder(Order order)
+    {
+        selectedOrder = order;
+    }
+
+    private async Task OnStatusChanged(ChangeEventArgs e, Order order)
+    {
+        var newStatus = e.Value?.ToString();
+
+        if (!string.IsNullOrWhiteSpace(newStatus))
+        {
+            order.OrderStatus = newStatus;
+
+            await OrderService.UpdateOrderStatusAsync(
+                order.Id!,
+                newStatus);
+        }
+    }
+}
+
+<PageTitle>Orders</PageTitle>
 <h1>Orders</h1>
-@if (orders == null)
+
+@if (orders == null || orders.Count() < 1)
 {
     <p><em>Loading...</em></p>
 }
@@ -15,44 +82,116 @@ else
     <table class="table">
         <thead>
             <tr>
-                <th aria-label="Order Id">Order Id</th>
-                <th aria-label="Client Id">Client Id</th>
-                @* <th aria-label="Product Name">Product</th> *@
-                <th aria-label="Date">Date</th>
-                <th aria-label="Price">Price</th>
-                <th aria-label="Products">Products</th>
+                <th>Order Id</th>
+                <th>Client Id</th>
+                <th>Date</th>
+                <th>Price</th>
+                <th>Products</th>
+                <th>Status</th>
             </tr>
         </thead>
+
         <tbody>
+
             @foreach (var order in orders)
             {
-                <tr>
+                <tr class="clickable-row"
+                    @onclick="(() => SelectOrder(order))">
+
                     <td>@order.Id</td>
-                    @if (order.UserId == null ||order.UserId == string.Empty)
+
+                    @if (string.IsNullOrWhiteSpace(order.UserId))
                     {
                         <td>TEST</td>
                     }
-                    else{
+                    else
+                    {
                         <td>@order.UserId</td>
                     }
-                    @* <td>@order.ProductName</td> *@
+
                     <td>@order.OrderDate</td>
+
                     <td>@order.TotalOrderValue</td>
+
                     <td>@order.Items.Count()</td>
+
+                    <td>
+
+                        <select value="@order.OrderStatus"
+                                @onchange="(e => OnStatusChanged(e, order))">
+
+                            @foreach (var status in statuses)
+                            {
+                                <option value="@status">
+                                    @status
+                                </option>
+                            }
+
+                        </select>
+
+                    </td>
+
                 </tr>
             }
+
         </tbody>
     </table>
 }
 
-@code {
+<!-- RIGHT SIDE -->
+<div class="order-details">
 
-    private List<Order>? orders;
-
-    // This runs automatically when the page loads
-    protected override async Task OnInitializedAsync()
+    @if (selectedOrder == null)
     {
-        orders = await OrderService.GetAllOrdersAsync();
+        <p>Select an order.</p>
+    }
+    else
+    {
+        <h2>Order Details</h2>
+
+        <p>
+            <strong>Order:</strong>
+            @selectedOrder.Id
+        </p>
+
+        <p>
+            <strong>Status:</strong>
+            @selectedOrder.OrderStatus
+        </p>
+
+        <p>
+            <strong>Total:</strong>
+            @selectedOrder.TotalOrderValue
+        </p>
+
+        <h3>Items</h3>
+
+        <table class="table">
+
+            <thead>
+                <tr>
+                    <th>Product Id</th>
+                    <th>Product Name</th>
+                    <th>Quantity</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                @foreach (OrderItem item in selectedOrder.Items)
+                {
+                    <tr>
+                        <td>@item.ProductId</td>
+                        <td>@item.ProductName</td>
+                        <td>@item.Quantity</td>
+                    </tr>
+                }
+
+            </tbody>
+
+        </table>
     }
 
-}
+</div>
+
+

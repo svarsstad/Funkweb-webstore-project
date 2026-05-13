@@ -6,6 +6,7 @@ namespace Project_Backend.Services
 {
     public class ProductService
     {
+        public List<Product>? Products = new List<Product>();
         private readonly IMongoCollection<Product> _productsCollection;
 
         public ProductService(IConfiguration config)
@@ -24,7 +25,12 @@ namespace Project_Backend.Services
         // 1. Get ALL products for the dashboard
         public async Task<List<Product>> GetAllProductsAsync()
         {
-            return await _productsCollection.Find(_ => true).ToListAsync();
+            if (Products == null || Products.Count == 0)
+            {
+                Products = await _productsCollection.Find(_ => true).ToListAsync();
+            }
+
+            return Products;
         }
 
         // 2. Search function (e.g., search by name)
