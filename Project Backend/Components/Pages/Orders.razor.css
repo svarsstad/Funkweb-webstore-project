@@ -1,4 +1,12 @@
-﻿/* PAGE TITLE */
+﻿/* 
+    #555b5b - dark grey (background)
+    #6b6b6b - less dark grey (background)
+    #05ebeb - bright cyan (text)
+    #2a2f36 - dark border color
+    #32b8ff - light blue (shadow)
+
+    
+    PAGE TITLE */
 
 h1 {
     margin-bottom: 1.5rem;
@@ -8,6 +16,7 @@ h1 {
 
 table {
     width: 100%;
+    background-color: #6b6b6b !important;
 }
 
 /* CLICKABLE ORDER ROWS */
@@ -15,6 +24,7 @@ table {
 tr.clickable-row {
     cursor: pointer;
     transition: background-color 0.15s ease;
+    background-color: #6b6b6b !important;
 }
 
     tr.clickable-row:hover td {
@@ -36,7 +46,7 @@ tbody td {
 /* STATUS DROPDOWN */
 
 select {
-    background-color: #555b5b;
+    background-color: #6b6b6b !important;
     color: #05ebeb;
     border: 1px solid #2a2f36;
     border-radius: 6px;
@@ -73,10 +83,14 @@ select {
 
     .order-details th {
         border-bottom: 1px solid #2a2f36;
+        background-color: #6b6b6b !important;
+        color: #05ebeb;
     }
 
     /* DETAIL TABLE ROWS */
 
     .order-details td {
         vertical-align: middle;
+        background-color: #696969 !important;
+        color: #01e9e9;
     }
