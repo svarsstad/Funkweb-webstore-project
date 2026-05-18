@@ -1,4 +1,5 @@
 ﻿/* 
+    #505757 - more dark grey (hover)
     #555b5b - dark grey (background)
     #6b6b6b - less dark grey (background)
     #05ebeb - bright cyan (text)
@@ -20,6 +21,12 @@ table {
 }
 
 /* CLICKABLE ORDER ROWS */
+thead th {
+    background-color: #555b5b !important;
+    color: #05ebeb;
+    border-bottom: 2px solid #2a2f36;
+}
+
 
 tr.clickable-row {
     cursor: pointer;
@@ -28,19 +35,23 @@ tr.clickable-row {
 }
 
     tr.clickable-row:hover td {
-        background-color: #555b5b !important;
+        background-color: #505757 !important;
+        color: #05ebeb;
     }
 
 /* SELECTED ROW */
 
 tr.selected-row td {
     background-color: #555b5b !important;
+    color: #05ebeb;
 }
 
 /* TABLE CELL ALIGNMENT */
 
 tbody td {
     vertical-align: middle;
+    background-color: #6b6b6b !important;
+    color: #05ebeb;
 }
 
 /* STATUS DROPDOWN */

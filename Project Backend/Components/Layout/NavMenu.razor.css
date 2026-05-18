@@ -1,3 +1,21 @@
+/*
+    #05abab - dulled cyan (text)
+    #05dbdb - less bright cyan (text hover)
+    #05ebeb - bright cyan (text)
+    #555b5b - dark grey (background)
+    #6b6b6b - less dark grey (background)
+    #2a2f36 - dark border color
+    #32b8ff - light blue (shadow)
+    #505757 - more dark grey (hover)
+    
+
+    
+
+*/
+
+
+
+
 .navbar-toggler {
     appearance: none;
     cursor: pointer;
@@ -60,7 +78,7 @@
     }
 
     .nav-item ::deep .nav-link {
-        color: #d7d7d7;
+        color: #05abab;
         background: none;
         border: none;
         border-radius: 4px;
@@ -71,15 +89,16 @@
         width: 100%;
     }
 
-.nav-item ::deep a.active {
-    background-color: rgba(255,255,255,0.37);
-    color: white;
-}
+    .nav-item ::deep a.active {
+        background-color: rgba(255,255,255,0.37);
+        color: #05ebeb
+    }
 
-.nav-item ::deep .nav-link:hover {
-    background-color: rgba(255,255,255,0.1);
-    color: white;
-}
+    .nav-item ::deep .nav-link:hover {
+        background-color: rgba(255,255,255,0.1);
+        
+        color: #05dbdb
+    }
 
 .nav-scrollable {
     display: none;
