@@ -1,4 +1,6 @@
-﻿body {
+﻿/* PAGE */
+
+body {
     background-color: #555b5b;
     color: #05abab;
 }
@@ -7,13 +9,20 @@
 
 h1 {
     color: #05ebeb;
-    margin-bottom: 1.5rem;
+    margin-bottom: 0.5rem;
     text-shadow: 0 0 8px rgba(50, 184, 255, 0.25);
+}
+
+/* SUBTITLE */
+
+.users-subtitle {
+    color: #05abab;
+    margin-bottom: 1.5rem;
 }
 
 /* TABLE CONTAINER */
 
-.orders-list {
+.users-list {
     max-height: 80vh;
     overflow-y: auto;
     background-color: #555b5b;
@@ -55,22 +64,22 @@ h1 {
         transition: background-color 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
     }
 
-/* ORDER ROWS */
+/* USER ROWS */
 
-.order-row {
+.user-row {
     cursor: pointer;
 }
 
     /* HOVER */
 
-    .order-row:hover td {
+    .user-row:hover td {
         background-color: #505757 !important;
         color: #05dbdb !important;
     }
 
 /* SELECTED */
 
-tr.selected-order td {
+tr.selected-user td {
     background-color: #4b5252 !important;
     color: #05ebeb !important;
     box-shadow: inset 0 0 0 1px rgba(5, 235, 235, 0.25), inset 0 0 14px rgba(50, 184, 255, 0.08);
@@ -78,82 +87,29 @@ tr.selected-order td {
 
 /* SELECTED HOVER */
 
-tr.selected-order:hover td {
+tr.selected-user:hover td {
     background-color: #434949 !important;
     color: #05ebeb !important;
     box-shadow: inset 0 0 0 1px rgba(5, 235, 235, 0.35), inset 0 0 18px rgba(50, 184, 255, 0.12);
 }
 
-/* DROPDOWNS */
-
-select {
-    background-color: #505757 !important;
-    color: #05ebeb !important;
-    border: 1px solid #2a2f36;
-    border-radius: 6px;
-    padding: 0.35rem 0.5rem;
-    min-width: 140px;
-}
-
-/* DETAIL PANEL */
-
-.order-details {
-    margin-top: 2rem;
-    padding: 1.5rem;
-    background-color: #6b6b6b;
-    border: 1px solid #2a2f36;
-    border-radius: 10px;
-    color: #05ebeb;
-    box-shadow: 0 0 12px rgba(50, 184, 255, 0.08), inset 0 0 8px rgba(255, 255, 255, 0.02);
-}
-
-    /* DETAIL TEXT */
-
-    .order-details p,
-    .order-details span,
-    .order-details li,
-    .order-details strong {
-        color: #05ebeb;
-    }
-
-    /* DETAIL HEADINGS */
-
-    .order-details h2,
-    .order-details h3 {
-        color: #05ebeb;
-        margin-bottom: 1rem;
-    }
-
-    /* DETAIL TABLE */
-
-    .order-details table {
-        margin-top: 1rem;
-    }
-
-    /* DETAIL TABLE CELLS */
-
-    .order-details td {
-        background-color: #555b5b !important;
-        color: #05ebeb !important;
-    }
-
 /* SCROLLBAR */
 
-.orders-list::-webkit-scrollbar {
+.users-list::-webkit-scrollbar {
     width: 12px;
     background-color: #505757;
 }
 
-.orders-list::-webkit-scrollbar-track {
+.users-list::-webkit-scrollbar-track {
     background: #555b5b;
 }
 
-.orders-list::-webkit-scrollbar-thumb {
+.users-list::-webkit-scrollbar-thumb {
     background: #6b6b6b;
     border-radius: 10px;
     border: 2px solid #555b5b;
 }
 
-    .orders-list::-webkit-scrollbar-thumb:hover {
+    .users-list::-webkit-scrollbar-thumb:hover {
         background: #05abab;
     }

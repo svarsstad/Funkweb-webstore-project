@@ -1,11 +1,16 @@
 ﻿@page "/users"
-@attribute [StreamRendering]
+@rendermode InteractiveServer
+@using Project_Backend.Models
+@using Project_Backend.Services
+@inject UserService UserService
 
 <PageTitle>Users</PageTitle>
 
 <h1>Users</h1>
 
-<p>This component shows users logged in the system</p>
+<p class="users-subtitle">
+    This component shows users logged in the system
+</p>
 
 @if (users == null)
 {
@@ -13,52 +18,57 @@
 }
 else
 {
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Date</th>
-                <th aria-label="Product Id">Product Id</th>
-                <th aria-label="Email">Email</th>
-                <th>Price</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var user in users)
-            {
+    <div class="users-list">
+
+        <table class="table">
+
+            <thead>
                 <tr>
-                    <td>@user.Date.ToShortDateString()</td>
-                    <td>@user.ProductId</td>
-                    <td>@user.Email</td>
-                    <td>@user.Price</td>
+                    <th>Id</th>
+                    <th>Display Name</th>
+                    <th>Email</th>
+                    <th>Orders</th>
+                    <th>Last Login</th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+
+            <tbody>
+
+                @foreach (var user in users)
+                {
+                    <tr class="user-row @(selectedUser?.Id == user.Id ? "selected-user" : "")"
+                        @onclick="(() => SelectUser(user))">
+
+                        <td>@user.Id</td>
+
+                        <td>@user.DisplayName</td>
+
+                        <td>@user.Email</td>
+
+                        <td>@user.Orders.Count()</td>
+
+                        <td>@user.LastLogin.ToString("yyyy-MM-dd HH:mm")</td>
+
+                    </tr>
+                }
+
+            </tbody>
+
+        </table>
+
+    </div>
 }
 
 @code {
-    private UsersHistory[]? users;
 
-    protected override async Task OnInitializedAsync()
+    private List<User>? users;
+
+    private User? selectedUser;
+
+    protected override async Task OnInitializedAsync() => users = await UserService.GetAllUsersAsync();
+
+    private void SelectUser(User user)
     {
-        // Simulate asynchronous loading to demonstrate streaming rendering
-        await Task.Delay(500);
-
-        var startDate = DateOnly.FromDateTime(DateTime.Now);
-        var summaries = new[] { "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching" };
-        users = Enumerable.Range(1, 5).Select(index => new UsersHistory
-        {
-            Date = startDate.AddDays(index),
-            ProductId = Random.Shared.Next(0, 550),
-            Email = "John.wick@yolo.com"
-        }).ToArray();
-    }
-
-    private class UsersHistory
-    {
-        public DateOnly Date { get; set; }
-        public int ProductId { get; set; }
-        public string? Email { get; set; }
-        public int Price => 32000 + (int)(ProductId * 100);
+        selectedUser = user;
     }
 }

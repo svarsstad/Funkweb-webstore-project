@@ -8,6 +8,7 @@ builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 builder.Services.AddSingleton<OrderService>();
 builder.Services.AddSingleton<ProductService>();
+builder.Services.AddSingleton<UserService>();
 // add private settings file to program
 builder.Configuration.AddJsonFile("appsettings.private.json", optional: true, reloadOnChange: true);
 var app = builder.Build();

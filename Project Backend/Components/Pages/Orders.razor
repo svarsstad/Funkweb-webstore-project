@@ -71,6 +71,7 @@
 }
 
 <PageTitle>Orders</PageTitle>
+
 <h1>Orders</h1>
 
 @if (orders == null || orders.Count() < 1)
@@ -79,66 +80,71 @@
 }
 else
 {
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Order Id</th>
-                <th>Client Id</th>
-                <th>Date</th>
-                <th>Price</th>
-                <th>Products</th>
-                <th>Status</th>
-            </tr>
-        </thead>
+    <div class="orders-list">
 
-        <tbody>
+        <table class="table">
 
-            @foreach (var order in orders)
-            {
-                <tr class="clickable-row"
-                    @onclick="(() => SelectOrder(order))">
-
-                    <td>@order.Id</td>
-
-                    @if (string.IsNullOrWhiteSpace(order.UserId))
-                    {
-                        <td>TEST</td>
-                    }
-                    else
-                    {
-                        <td>@order.UserId</td>
-                    }
-
-                    <td>@order.OrderDate</td>
-
-                    <td>@order.TotalOrderValue</td>
-
-                    <td>@order.Items.Count()</td>
-
-                    <td>
-
-                        <select value="@order.OrderStatus"
-                                @onchange="(e => OnStatusChanged(e, order))">
-
-                            @foreach (var status in statuses)
-                            {
-                                <option value="@status">
-                                    @status
-                                </option>
-                            }
-
-                        </select>
-
-                    </td>
-
+            <thead>
+                <tr>
+                    <th>Order Id</th>
+                    <th>Client Id</th>
+                    <th>Date</th>
+                    <th>Price</th>
+                    <th>Products</th>
+                    <th>Status</th>
                 </tr>
-            }
+            </thead>
 
-        </tbody>
-    </table>
+            <tbody>
+
+                @foreach (var order in orders)
+                {
+                    <tr class="order-row @(selectedOrder?.Id == order.Id ? "selected-order" : "")"
+                        @onclick="(() => SelectOrder(order))">
+
+                        <td>@order.Id</td>
+
+                        @if (string.IsNullOrWhiteSpace(order.UserId))
+                        {
+                            <td>TEST</td>
+                        }
+                        else
+                        {
+                            <td>@order.UserId</td>
+                        }
+
+                        <td>@order.OrderDate</td>
+
+                        <td>@order.TotalOrderValue</td>
+
+                        <td>@order.Items.Count()</td>
+
+                        <td>
+
+                            <select value="@order.OrderStatus"
+                                    @onchange="(e => OnStatusChanged(e, order))">
+
+                                @foreach (var status in statuses)
+                                {
+                                    <option value="@status">
+                                        @status
+                                    </option>
+                                }
+
+                            </select>
+
+                        </td>
+
+                    </tr>
+                }
+
+            </tbody>
+
+        </table>
+
+    </div>
 }
 
-<!-- RIGHT SIDE -->
 <div class="order-details">
 
     @if (selectedOrder == null)
@@ -193,5 +199,4 @@ else
     }
 
 </div>
-
 
