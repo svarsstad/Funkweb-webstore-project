@@ -16,9 +16,9 @@ else
 {
     <div style="display: flex; gap: 20px; align-items: flex-start;">
         
-        <div style="flex: 1; max-height: 80vh; overflow-y: auto;">
+        <div class="product-list"; style="flex: 1; max-height: 80vh; overflow-y: auto;">
             <table class="table table-hover">
-                <thead style="position: sticky; top: 0; background: white; z-index: 1;">
+                <thead style="position: sticky; top: 0; z-index: 1;">
                     <tr>
                         <th>ID</th>
                         <th>Name</th>
@@ -30,7 +30,8 @@ else
                     @foreach (var product in products)
                     {
                         // The @onclick makes the row selectable, and we change the cursor to a pointer so you know it's clickable
-                        <tr @onclick="() => SelectProduct(product)" style="cursor: pointer; background-color: @(selectedProduct?.Id == product.Id ? "#f0f8ff" : "transparent")">
+                        <tr class="product-row @(selectedProduct?.Id == product.Id ? "selected-product" : "")"
+                            @onclick="() => SelectProduct(product)">
                             <td>@product.Id</td>
                             <td>@product.Name</td>
                             <td>@product.Stock</td>
@@ -41,7 +42,7 @@ else
             </table>
         </div>
 
-        <div style="flex: 1; padding: 20px; border: 1px solid #ccc; border-radius: 8px; background-color: #f9f9f9;">
+        <div style="flex: 1; padding: 20px; border: 1px solid; border-radius: 8px;">
             @if (selectedProduct == null)
             {
                 <h3 style="color: gray; text-align: center;">Select a product to view details</h3>
@@ -69,7 +70,7 @@ else
                     }
                     else
                     {
-                        <div style="height: 200px; background: #eee; display: flex; align-items: center; justify-content: center;">
+                        <div style="height: 200px; display: flex; align-items: center; justify-content: center;">
                             <span>No images available</span>
                         </div>
                     }
