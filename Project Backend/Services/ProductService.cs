@@ -40,5 +40,23 @@ namespace Project_Backend.Services
             var filter = Builders<Product>.Filter.Regex("Name", new BsonRegularExpression(searchTerm, "i"));
             return await _productsCollection.Find(filter).ToListAsync();
         }
+
+        public async Task CreateProductAsync(Product product)
+        {
+            await _productsCollection.InsertOneAsync(product);
+        }
+
+        public async Task UpdateProductAsync(string id, Product updatedProduct)
+        {
+            await _productsCollection.ReplaceOneAsync(
+                p => p.Id == id,
+                updatedProduct);
+        }
+
+        public async Task DeleteProductAsync(string id)
+        {
+            await _productsCollection.DeleteOneAsync(
+                p => p.Id == id);
+        }
     }
 }

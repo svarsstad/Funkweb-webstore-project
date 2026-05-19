@@ -15,10 +15,61 @@ namespace Project_Backend.Controllers
             _productService = productService;
         }
 
+        // GET ALL
+
         [HttpGet]
         public async Task<List<Product>> Get()
         {
             return await _productService.GetAllProductsAsync();
+        }
+
+        // GET BY ID
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Product>> Get(string id)
+        {
+            var products = await _productService.GetAllProductsAsync();
+
+            var product = products.FirstOrDefault(p => p.Id == id);
+
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            return product;
+        }
+
+        // CREATE
+
+        [HttpPost]
+        public async Task<ActionResult> Create(Product product)
+        {
+            await _productService.CreateProductAsync(product);
+
+            return Ok();
+        }
+
+        // UPDATE
+
+        [HttpPut("{id}")]
+        public async Task<ActionResult> Update(string id, Product updatedProduct)
+        {
+            updatedProduct.Id = id;
+
+            await _productService.UpdateProductAsync(id, updatedProduct);
+
+            return Ok();
+        }
+
+        // DELETE
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> Delete(string id)
+        {
+            await _productService.DeleteProductAsync(id);
+
+            return Ok();
         }
     }
 }
