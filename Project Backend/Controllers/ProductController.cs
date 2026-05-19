@@ -1,12 +1,24 @@
-﻿namespace Project_Backend.Controllers
+﻿using Microsoft.AspNetCore.Mvc;
+using Project_Backend.Models;
+using Project_Backend.Services;
+
+namespace Project_Backend.Controllers
 {
-    public class ProductController
+    [ApiController]
+    [Route("api/[controller]")]
+    public class ProductController : ControllerBase
     {
+        private readonly ProductService _productService;
 
-        /*4. The Controllers Folder (For Later)
-What goes here: Your API endpoints (e.g., ProductsController.cs).
+        public ProductController(ProductService productService)
+        {
+            _productService = productService;
+        }
 
-Why it's important: When you eventually build your separate customer-facing webstore frontend, those pages will call these controllers to get their JSON data.*/
-
+        [HttpGet]
+        public async Task<List<Product>> Get()
+        {
+            return await _productService.GetAllProductsAsync();
+        }
     }
 }
