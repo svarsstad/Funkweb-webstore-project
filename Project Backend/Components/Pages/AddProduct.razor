@@ -1,0 +1,227 @@
+﻿@page "/add_product"
+@using Project_Backend.Models
+@using Project_Backend.Services
+@using System.Text.Json
+@using System.IO
+@using Microsoft.AspNetCore.Components.Forms
+@using Microsoft.AspNetCore.Components.Web
+@inject ProductService ProductService
+@inject OrderService OrderService
+@inject IWebHostEnvironment Env
+<div class="page">
+
+    <div class="title">
+        Add Product
+    </div>
+
+    <div class="split">
+
+        <!-- LEFT -->
+        <div class="drop-panel"
+             @ondragover="PreventDefault"
+             @ondrop="HandleJsonDrop">
+
+            <div class="drop-title">
+                Product JSON
+            </div>
+
+            <div class="drop-subtitle">
+                Drop JSON file or paste raw JSON
+            </div>
+
+            <textarea class="json-area"
+                      @bind="JsonText"
+                      placeholder="Paste product JSON here..."></textarea>
+
+            <InputFile OnChange="HandleJsonFile"
+                       class="file-input"
+                       accept=".json" />
+
+            @if (JsonLoaded)
+            {
+                <div class="status">
+                    JSON loaded successfully
+                </div>
+            }
+
+        </div>
+
+        <!-- RIGHT -->
+        <div class="drop-panel"
+             @ondragover="PreventDefault"
+             @ondrop="HandleImageDrop">
+
+            <div class="drop-title">
+                Product Images
+            </div>
+
+            <div class="drop-subtitle">
+                Drop one or more images
+            </div>
+
+            <InputFile OnChange="HandleImages"
+                       multiple
+                       accept="image/*"
+                       class="file-input" />
+
+            <div class="image-grid">
+
+                @foreach (var image in PreviewImages)
+                {
+                    <div class="image-preview">
+                        <img src="@image" />
+                    </div>
+                }
+
+            </div>
+
+            @if (ImagesLoaded)
+            {
+                <div class="status">
+                    @TempProduct.Images.Count images loaded
+                </div>
+            }
+
+        </div>
+
+    </div>
+
+    @if (CanSave)
+    {
+        <div class="button-row">
+
+            <button class="save-btn"
+                    @onclick="SaveProduct">
+
+                Add Product
+
+            </button>
+
+        </div>
+    }
+</div>
+@code {
+
+    private Product TempProduct = new();
+
+    private string JsonText = "";
+
+    private bool JsonLoaded;
+    private bool ImagesLoaded;
+
+    private bool CanSave =>
+        JsonLoaded &&
+        ImagesLoaded;
+
+    private List<string> PreviewImages = new();
+
+    private async Task HandleJsonFile(InputFileChangeEventArgs e)
+    {
+        var file = e.File;
+
+        using var reader = new StreamReader(file.OpenReadStream());
+
+        JsonText = await reader.ReadToEndAsync();
+
+        await ParseJson();
+    }
+
+    private async Task ParseJson()
+    {
+        if (string.IsNullOrWhiteSpace(JsonText))
+            return;
+
+        var options = new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true
+        };
+
+        var product =
+            JsonSerializer.Deserialize<Product>(JsonText, options);
+
+        if (product == null)
+            return;
+
+        // Ignore incoming images
+        product.Images = new();
+
+        TempProduct = product;
+
+        JsonLoaded = true;
+
+        await InvokeAsync(StateHasChanged);
+    }
+
+    private async Task HandleImages(InputFileChangeEventArgs e)
+    {
+        var files = e.GetMultipleFiles();
+
+        var imageFolder =
+            Path.Combine(Env.WebRootPath, "Images");
+
+        if (!Directory.Exists(imageFolder))
+        {
+            Directory.CreateDirectory(imageFolder);
+        }
+
+        int index = 0;
+
+        foreach (var file in files)
+        {
+            var extension =
+                Path.GetExtension(file.Name);
+
+            var fileName =
+                $"{Guid.NewGuid()}{extension}";
+
+            var fullPath =
+                Path.Combine(imageFolder, fileName);
+
+            using var stream =
+                new FileStream(fullPath, FileMode.Create);
+
+            await file.OpenReadStream().CopyToAsync(stream);
+
+            var relativePath =
+                $"/Images/{fileName}";
+
+            // Product.Images is a Dictionary<int, string> in the Product model
+            TempProduct.Images.Add(index++, relativePath);
+
+            PreviewImages.Add(relativePath);
+        }
+
+        ImagesLoaded = true;
+    }
+
+    private async Task SaveProduct()
+    {
+        await ProductService.CreateProductAsync(TempProduct);
+
+        TempProduct = new();
+
+        JsonText = "";
+
+        JsonLoaded = false;
+        ImagesLoaded = false;
+
+        PreviewImages.Clear();
+    }
+
+    private void PreventDefault(DragEventArgs e)
+    {
+    }
+
+    private async Task HandleJsonDrop(DragEventArgs e)
+    {
+        // Optional JS enhancement later
+        await ParseJson();
+    }
+
+    private async Task HandleImageDrop(DragEventArgs e)
+    {
+        // Optional JS enhancement later
+        await Task.CompletedTask;
+    }
+
+}
