@@ -43,5 +43,22 @@ namespace Project_Backend.Services
 
             await _ordersCollection.UpdateOneAsync(filter, update);
         }
+        public async Task CreateOrderAsync(Order order)
+        {
+            await _ordersCollection.InsertOneAsync(order);
+        }
+
+        public async Task UpdateOrderAsync(string id, Order updatedOrder)
+        {
+            await _ordersCollection.ReplaceOneAsync(
+                o => o.Id == id,
+                updatedOrder);
+        }
+
+        public async Task DeleteOrderAsync(string id)
+        {
+            await _ordersCollection.DeleteOneAsync(
+                o => o.Id == id);
+        }
     }
 }
