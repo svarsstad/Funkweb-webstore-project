@@ -1,6 +1,7 @@
 ﻿@page "/add_product"
 @using Project_Backend.Models
 @using Project_Backend.Services
+@using Project_Backend.Helpers
 @using System.Text.Json
 @using System.IO
 @using Microsoft.AspNetCore.Components.Forms
@@ -19,7 +20,10 @@
         <!-- LEFT -->
         <div class="drop-panel"
              @ondragover="PreventDefault"
-             @ondrop="HandleJsonDrop">
+             @ondragenter="PreventDefault"
+             @ondrop="HandleJsonDrop"
+             @ondrop:preventDefault
+             @ondragover:preventDefault>
 
             <div class="drop-title">
                 Product JSON
@@ -49,7 +53,10 @@
         <!-- RIGHT -->
         <div class="drop-panel"
              @ondragover="PreventDefault"
-             @ondrop="HandleImageDrop">
+             @ondragenter="PreventDefault"
+             @ondrop="HandleImageDrop"
+             @ondrop:preventDefault
+             @ondragover:preventDefault>
 
             <div class="drop-title">
                 Product Images
@@ -86,16 +93,27 @@
 
     </div>
 
-    @if (CanSave)
+    @if (canSaveProduct())
     {
         <div class="button-row">
+            @if (!SaveSuccessful)
+            {
+                <button class="save-btn"
+                        @onclick="ClearProduct">
 
+                    Saved, clear?
+
+                </button>
+            }
+            )
+            else{
             <button class="save-btn"
                     @onclick="SaveProduct">
 
                 Add Product
 
             </button>
+            }
 
         </div>
     }
@@ -108,12 +126,27 @@
 
     private bool JsonLoaded;
     private bool ImagesLoaded;
-
-    private bool CanSave =>
-        JsonLoaded &&
-        ImagesLoaded;
+    private bool SaveSuccessful;
 
     private List<string> PreviewImages = new();
+
+    private void ClearProduct()
+    {
+        TempProduct = new Product();
+        JsonText = "";
+        JsonLoaded = false;
+        ImagesLoaded = false;
+        SaveSuccessful = false;
+        PreviewImages.Clear();
+    }
+    private async Task SaveProduct()
+    {
+        if (!canSaveProduct())
+            return;
+        SaveSuccessful = true;
+        await ProductService.CreateProductAsync(TempProduct);
+        
+    }
 
     private async Task HandleJsonFile(InputFileChangeEventArgs e)
     {
@@ -128,28 +161,33 @@
 
     private async Task ParseJson()
     {
+        Product? product = null;
         if (string.IsNullOrWhiteSpace(JsonText))
             return;
 
-        var options = new JsonSerializerOptions
+        try
         {
-            PropertyNameCaseInsensitive = true
-        };
+            var options = new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true
+                };
 
-        var product =
-            JsonSerializer.Deserialize<Product>(JsonText, options);
+            product = JsonSerializer.Deserialize<Product>(JsonText, options);
+        }
+        catch (JsonException ex)
+        {
+            Console.WriteLine($"JSON parse failed: {ex.Message}");
+
+        }
 
         if (product == null)
             return;
 
-        // Ignore incoming images
-        product.Images = new();
-
-        TempProduct = product;
-
-        JsonLoaded = true;
+        JsonLoaded = ProductHelper.ApplyNonImageChanges(TempProduct, product);
 
         await InvokeAsync(StateHasChanged);
+
+
     }
 
     private async Task HandleImages(InputFileChangeEventArgs e)
@@ -194,18 +232,9 @@
         ImagesLoaded = true;
     }
 
-    private async Task SaveProduct()
+    private bool canSaveProduct()
     {
-        await ProductService.CreateProductAsync(TempProduct);
-
-        TempProduct = new();
-
-        JsonText = "";
-
-        JsonLoaded = false;
-        ImagesLoaded = false;
-
-        PreviewImages.Clear();
+        return JsonLoaded && ImagesLoaded;
     }
 
     private void PreventDefault(DragEventArgs e)

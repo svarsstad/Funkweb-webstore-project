@@ -51,8 +51,8 @@ namespace Project_Backend.Models
         public decimal Stock { get; set; }
 
 
-       /* [BsonExtraElements]
-        public BsonDocument? ExtraData { get; set; }
-       */
+        /* [BsonExtraElements]
+         public BsonDocument? ExtraData { get; set; }
+        */
     }
 }
