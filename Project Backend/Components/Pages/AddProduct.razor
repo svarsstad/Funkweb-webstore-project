@@ -1,193 +1,142 @@
 ﻿@page "/add_product"
+@rendermode InteractiveServer
+@using Project_Backend.Helpers
 @using Project_Backend.Models
 @using Project_Backend.Services
-@using Project_Backend.Helpers
 @using System.Text.Json
-@using System.IO
 @using Microsoft.AspNetCore.Components.Forms
-@using Microsoft.AspNetCore.Components.Web
+
 @inject ProductService ProductService
-@inject OrderService OrderService
 @inject IWebHostEnvironment Env
-<div class="page">
 
-    <div class="title">
-        Add Product
-    </div>
+<PageTitle>Add Product</PageTitle>
 
-    <div class="split">
+<div class="page-container">
 
-        <!-- LEFT -->
-        <div class="drop-panel"
-             @ondragover="PreventDefault"
-             @ondragenter="PreventDefault"
-             @ondrop="HandleJsonDrop"
-             @ondrop:preventDefault
-             @ondragover:preventDefault>
+    <h1>Add Product</h1>
 
-            <div class="drop-title">
+    <div class="editor-layout">
+
+        <!-- LEFT PANEL -->
+        <div class="editor-panel">
+
+            <div class="panel-title">
                 Product JSON
             </div>
-
-            <div class="drop-subtitle">
-                Drop JSON file or paste raw JSON
-            </div>
-
-            <textarea class="json-area"
+            <div>
+                <textarea class="json-input"
                       @bind="JsonText"
                       placeholder="Paste product JSON here..."></textarea>
-
             <InputFile OnChange="HandleJsonFile"
-                       class="file-input"
                        accept=".json" />
-
-            @if (JsonLoaded)
-            {
-                <div class="status">
-                    JSON loaded successfully
-                </div>
-            }
-
+            </div>
         </div>
 
-        <!-- RIGHT -->
-        <div class="drop-panel"
-             @ondragover="PreventDefault"
-             @ondragenter="PreventDefault"
-             @ondrop="HandleImageDrop"
-             @ondrop:preventDefault
-             @ondragover:preventDefault>
+        <!-- RIGHT PANEL -->
+        <div class="panel">
 
-            <div class="drop-title">
+            <div class="panel-title">
                 Product Images
             </div>
 
-            <div class="drop-subtitle">
-                Drop one or more images
-            </div>
+            <div class="image-viewer">
 
-            <InputFile OnChange="HandleImages"
-                       multiple
-                       accept="image/*"
-                       class="file-input" />
-
-            <div class="image-grid">
-
-                @foreach (var image in PreviewImages)
+                @if (PreviewImages.Count > 0)
                 {
-                    <div class="image-preview">
-                        <img src="@image" />
+                    <img src="@PreviewImages[currentImageIndex]"
+                         class="preview-image" />
+                }
+                else
+                {
+                    <div class="no-image">
+                        No images selected
                     </div>
                 }
 
             </div>
 
-            @if (ImagesLoaded)
+            @if (PreviewImages.Count > 1)
             {
-                <div class="status">
-                    @TempProduct.Images.Count images loaded
+                <div class="image-controls">
+
+                    <button class="nav-btn"
+                            @onclick="PreviousImage">
+                        Previous
+                    </button>
+
+                    <span>
+                        @(currentImageIndex + 1) / @PreviewImages.Count
+                    </span>
+
+                    <button class="nav-btn"
+                            @onclick="NextImage">
+                        Next
+                    </button>
+
                 </div>
             }
+
+       
+
+            <InputFile OnChange="HandleImages"
+                       class="file-input"
+                       multiple
+                       accept="image/*" />
 
         </div>
 
     </div>
 
-    @if (canSaveProduct())
+    @if (CanSaveProduct())
     {
-        <div class="button-row">
+        <div class="save-row">
+
             @if (!SaveSuccessful)
+            {
+                <button class="save-btn"
+                        @onclick="SaveProduct">
+
+                    Save Product
+
+                </button>
+            }
+            else
             {
                 <button class="save-btn"
                         @onclick="ClearProduct">
 
-                    Saved, clear?
+                    Saved - Clear Form
 
                 </button>
-            }
-            )
-            else{
-            <button class="save-btn"
-                    @onclick="SaveProduct">
-
-                Add Product
-
-            </button>
             }
 
         </div>
     }
+
 </div>
+
 @code {
 
     private Product TempProduct = new();
 
     private string JsonText = "";
 
-    private bool JsonLoaded;
-    private bool ImagesLoaded;
-    private bool SaveSuccessful;
+    private bool SaveSuccessful = false;
 
-    private List<string> PreviewImages = new();
+    private readonly List<string> PreviewImages = new();
 
-    private void ClearProduct()
-    {
-        TempProduct = new Product();
-        JsonText = "";
-        JsonLoaded = false;
-        ImagesLoaded = false;
-        SaveSuccessful = false;
-        PreviewImages.Clear();
-    }
-    private async Task SaveProduct()
-    {
-        if (!canSaveProduct())
-            return;
-        SaveSuccessful = true;
-        await ProductService.CreateProductAsync(TempProduct);
-        
-    }
-
+    private int currentImageIndex = 0;
     private async Task HandleJsonFile(InputFileChangeEventArgs e)
     {
         var file = e.File;
-
-        using var reader = new StreamReader(file.OpenReadStream());
+        using var reader =
+            new StreamReader(file.OpenReadStream());
 
         JsonText = await reader.ReadToEndAsync();
 
         await ParseJson();
-    }
-
-    private async Task ParseJson()
-    {
-        Product? product = null;
-        if (string.IsNullOrWhiteSpace(JsonText))
-            return;
-
-        try
-        {
-            var options = new JsonSerializerOptions
-                {
-                    PropertyNameCaseInsensitive = true
-                };
-
-            product = JsonSerializer.Deserialize<Product>(JsonText, options);
-        }
-        catch (JsonException ex)
-        {
-            Console.WriteLine($"JSON parse failed: {ex.Message}");
-
-        }
-
-        if (product == null)
-            return;
-
-        JsonLoaded = ProductHelper.ApplyNonImageChanges(TempProduct, product);
 
         await InvokeAsync(StateHasChanged);
-
-
     }
 
     private async Task HandleImages(InputFileChangeEventArgs e)
@@ -201,6 +150,9 @@
         {
             Directory.CreateDirectory(imageFolder);
         }
+
+        TempProduct.Images.Clear();
+        PreviewImages.Clear();
 
         int index = 0;
 
@@ -218,39 +170,135 @@
             using var stream =
                 new FileStream(fullPath, FileMode.Create);
 
-            await file.OpenReadStream().CopyToAsync(stream);
+            await file.OpenReadStream()
+                .CopyToAsync(stream);
 
             var relativePath =
                 $"/Images/{fileName}";
 
-            // Product.Images is a Dictionary<int, string> in the Product model
-            TempProduct.Images.Add(index++, relativePath);
+            TempProduct.Images.Add(index, relativePath);
 
             PreviewImages.Add(relativePath);
+
+            index++;
         }
 
-        ImagesLoaded = true;
+        currentImageIndex = 0;
     }
 
-    private bool canSaveProduct()
+    private async Task SaveProduct()
     {
-        return JsonLoaded && ImagesLoaded;
+        if (!CanSaveProduct())
+            return;
+
+        try
+        {
+            var options =
+                new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true
+                };
+
+            var parsedProduct =
+                JsonSerializer.Deserialize<Product>(
+                    JsonText,
+                    options);
+
+            if (parsedProduct == null)
+                return;
+
+            parsedProduct.Images =
+                TempProduct.Images;
+
+            TempProduct = parsedProduct;
+
+            await ProductService.CreateProductAsync(TempProduct);
+
+            SaveSuccessful = true;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
     }
 
-    private void PreventDefault(DragEventArgs e)
+    private async Task ParseJson()
     {
+        if (string.IsNullOrWhiteSpace(JsonText))
+            return;
+
+        try
+        {
+            var options = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            };
+
+            var product =
+                JsonSerializer.Deserialize<Product>(
+                    JsonText,
+                    options);
+
+            if (product == null)
+                return;
+
+            ProductHelper.ApplyNonImageChanges(
+                TempProduct,
+                product);
+
+            StateHasChanged();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
     }
 
-    private async Task HandleJsonDrop(DragEventArgs e)
+    private void ClearProduct()
     {
-        // Optional JS enhancement later
-        await ParseJson();
+        TempProduct = new Product();
+
+        JsonText = "";
+
+        PreviewImages.Clear();
+
+        currentImageIndex = 0;
+
+        SaveSuccessful = false;
     }
 
-    private async Task HandleImageDrop(DragEventArgs e)
+    private void NextImage()
     {
-        // Optional JS enhancement later
-        await Task.CompletedTask;
+        if (PreviewImages.Count == 0)
+            return;
+
+        currentImageIndex++;
+
+        if (currentImageIndex >= PreviewImages.Count)
+        {
+            currentImageIndex = 0;
+        }
     }
 
+    private void PreviousImage()
+    {
+        if (PreviewImages.Count == 0)
+            return;
+
+        currentImageIndex--;
+
+        if (currentImageIndex < 0)
+        {
+            currentImageIndex =
+                PreviewImages.Count - 1;
+        }
+    }
+
+    private bool CanSaveProduct()
+    {
+        return
+            !string.IsNullOrWhiteSpace(JsonText)
+            && PreviewImages.Count > 0;
+    }
 }
+
