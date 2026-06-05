@@ -16,23 +16,22 @@
     <h1>Add Product</h1>
 
     <div class="editor-layout">
-
-        <!-- LEFT PANEL -->
-        <div class="editor-panel">
-
+        <!-- LEFT -->
+        <div class="panel">
             <div class="panel-title">
                 Product JSON
             </div>
-            <div>
-                <textarea class="json-input"
+            <textarea class="json-area"
                       @bind="JsonText"
                       placeholder="Paste product JSON here..."></textarea>
+
             <InputFile OnChange="HandleJsonFile"
-                       accept=".json" />
-            </div>
+                       accept=".json"
+                       class="theme-file-input" />
+
         </div>
 
-        <!-- RIGHT PANEL -->
+        <!-- RIGHT -->
         <div class="panel">
 
             <div class="panel-title">
@@ -55,33 +54,23 @@
 
             </div>
 
-            @if (PreviewImages.Count > 1)
-            {
-                <div class="image-controls">
+            <div class="image-controls">
 
-                    <button class="nav-btn"
-                            @onclick="PreviousImage">
-                        Previous
-                    </button>
+                <button class="nav-btn"
+                        @onclick="PreviousImage">
+                    Previous
+                </button>
 
-                    <span>
-                        @(currentImageIndex + 1) / @PreviewImages.Count
-                    </span>
-
-                    <button class="nav-btn"
-                            @onclick="NextImage">
-                        Next
-                    </button>
-
-                </div>
-            }
-
-       
-
-            <InputFile OnChange="HandleImages"
-                       class="file-input"
-                       multiple
-                       accept="image/*" />
+                <button class="nav-btn-next"
+                        @onclick="NextImage">
+                    Next
+                </button>
+            </div>
+            <div>
+                <InputFile OnChange="HandleJsonFile"
+                           accept=".json"
+                           class="theme-file-input" />
+            </div>
 
         </div>
 
