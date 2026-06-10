@@ -67,8 +67,9 @@
                 </button>
             </div>
             <div>
-                <InputFile OnChange="HandleJsonFile"
-                           accept=".json"
+                <InputFile OnChange="HandleImages"
+                           accept="image/*"
+                           multiple
                            class="theme-file-input" />
             </div>
 
@@ -111,7 +112,7 @@
     private string JsonText = "";
 
     private bool SaveSuccessful = false;
-
+    private List<string> TempImagePaths = new();
     private readonly List<string> PreviewImages = new();
 
     private int currentImageIndex = 0;
@@ -128,22 +129,26 @@
         await InvokeAsync(StateHasChanged);
     }
 
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        CleanupTempImages();
+    }
+
     private async Task HandleImages(InputFileChangeEventArgs e)
     {
+        CleanupTempImages();
         var files = e.GetMultipleFiles();
 
-        var imageFolder =
-            Path.Combine(Env.WebRootPath, "Images");
+        var tempFolder =
+            Path.Combine(
+                Env.WebRootPath,
+                "tempImages");
 
-        if (!Directory.Exists(imageFolder))
+        if (!Directory.Exists(tempFolder))
         {
-            Directory.CreateDirectory(imageFolder);
+            Directory.CreateDirectory(tempFolder);
         }
-
-        TempProduct.Images.Clear();
-        PreviewImages.Clear();
-
-        int index = 0;
 
         foreach (var file in files)
         {
@@ -154,25 +159,23 @@
                 $"{Guid.NewGuid()}{extension}";
 
             var fullPath =
-                Path.Combine(imageFolder, fileName);
+                Path.Combine(tempFolder, fileName);
 
-            using var stream =
+            await using var stream =
                 new FileStream(fullPath, FileMode.Create);
 
-            await file.OpenReadStream()
+            await file.OpenReadStream(
+                maxAllowedSize: 1024 * 1024 * 50)
                 .CopyToAsync(stream);
 
             var relativePath =
-                $"/Images/{fileName}";
+                $"/tempImages/{fileName}";
 
-            TempProduct.Images.Add(index, relativePath);
+            TempImagePaths.Add(relativePath);
 
             PreviewImages.Add(relativePath);
-
-            index++;
         }
 
-        currentImageIndex = 0;
     }
 
     private async Task SaveProduct()
@@ -196,8 +199,41 @@
             if (parsedProduct == null)
                 return;
 
-            parsedProduct.Images =
-                TempProduct.Images;
+
+            var finalFolder =
+                Path.Combine(
+                    Env.WebRootPath,
+                    "Images");
+
+            if (!Directory.Exists(finalFolder))
+            {
+                Directory.CreateDirectory(finalFolder);
+            }
+
+            int index = 0;
+
+            foreach (var tempPath in TempImagePaths)
+            {
+                var fileName =
+                    Path.GetFileName(tempPath);
+
+                var oldPath =
+                    Path.Combine(
+                        Env.WebRootPath,
+                        "TempImages",
+                        fileName);
+
+                var newPath =
+                    Path.Combine(
+                        finalFolder,
+                        fileName);
+
+                File.Move(oldPath, newPath);
+
+                TempProduct.Images.Add(
+                    index++,
+                    $"/Images/{fileName}");
+            }
 
             TempProduct = parsedProduct;
 
@@ -249,9 +285,24 @@
 
         JsonText = "";
 
-        PreviewImages.Clear();
+        foreach (var tempPath in TempImagePaths)
+        {
+            var fileName =
+                Path.GetFileName(tempPath);
 
-        currentImageIndex = 0;
+            var fullPath =
+                Path.Combine(
+                    Env.WebRootPath,
+                    "TempImages",
+                    fileName);
+
+            if (File.Exists(fullPath))
+            {
+                File.Delete(fullPath);
+            }
+        }
+
+        TempImagePaths.Clear();
 
         SaveSuccessful = false;
     }
@@ -288,6 +339,39 @@
         return
             !string.IsNullOrWhiteSpace(JsonText)
             && PreviewImages.Count > 0;
+    }
+
+    private void CleanupTempImages()
+    {
+        var tempFolder =
+            Path.Combine(
+                Env.WebRootPath,
+                "TempImages");
+
+        if (!Directory.Exists(tempFolder))
+            return;
+
+        var files =
+            Directory.GetFiles(tempFolder);
+
+        foreach (var file in files)
+        {
+            var created =
+                File.GetCreationTimeUtc(file);
+
+            if (DateTime.UtcNow - created
+                > TimeSpan.FromHours(1))
+            {
+                try
+                {
+                    File.Delete(file);
+                }
+                catch
+                {
+                    // ignore locked files
+                }
+            }
+        }
     }
 }
 
