@@ -33,7 +33,7 @@ else
                         <tr class="product-row @(selectedProduct?.Id == product.Id ? "selected-product" : "")"
                             @onclick="() => SelectProduct(product)">
                             <td>@product.Id</td>
-                            <td>@product.Name</td>
+                            <td>@product.productName</td>
                             <td>@product.Stock</td>
                             <td>$@product.Price</td>
                         </tr>
@@ -49,7 +49,7 @@ else
             }
             else
             {
-                <h2>@selectedProduct.Name</h2>
+                <h2>@selectedProduct.productName</h2>
                 <p><em>@selectedProduct.ProductSlogan</em></p>
                 <hr />
 

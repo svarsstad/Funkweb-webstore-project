@@ -21,9 +21,69 @@
             <div class="panel-title">
                 Product JSON
             </div>
-            <textarea class="json-area"
-                      @bind="JsonText"
-                      placeholder="Paste product JSON here..."></textarea>
+            <!-- BASIC FIELDS -->
+
+            <label>Product Name</label>
+            <input @bind="TempProduct.productName" />
+
+            <label>Style</label>
+            <input @bind="TempProduct.ProductStyle" />
+
+            <label>Category</label>
+            <input @bind="TempProduct.ProductCategory" />
+
+            <label>Slogan</label>
+            <input @bind="TempProduct.ProductSlogan" />
+
+            <label>Description</label>
+            <textarea @bind="TempProduct.description"></textarea>
+
+            <label>Price</label>
+            <input type="number" @bind="TempProduct.Price" />
+
+            <label>Currency</label>
+            <input @bind="TempProduct.Curruency" />
+
+            <label>Stock</label>
+            <input type="number" @bind="TempProduct.Stock" />
+
+            <label>Warranty Disclaimer</label>
+            <textarea @bind="TempProduct.Disclaimber"></textarea>
+
+
+            <!-- SPECS -->
+            @if (TempProduct.Specs != null)
+            {
+                <div class="specs-section">
+
+                    @foreach (var category in TempProduct.Specs)
+                    {
+                        <div class="spec-category">
+
+                            <h3>@category.Key</h3>
+
+                            @foreach (var item in category.Value)
+                            {
+                                <div class="spec-row">
+
+                                    <!-- NAME -->
+                                    <label class="spec-name">
+                                        @item.Key
+                                    </label>
+
+                                    <!-- VALUE -->
+                                    <input class="spec-value"
+                                           value="@item.Value"
+                                           @onchange="(e) => UpdateSpecValue(category.Key, item.Key, e.Value?.ToString())" />
+
+                                </div>
+                            }
+
+                        </div>
+                    }
+
+                </div>
+            }
 
             <InputFile OnChange="HandleJsonFile"
                        accept=".json"
@@ -156,7 +216,7 @@
                 Path.GetExtension(file.Name);
 
             var fileName =
-                $"{Guid.NewGuid()}{extension}";
+                $"{file.Name}";
 
             var fullPath =
                 Path.Combine(tempFolder, fileName);
@@ -372,6 +432,22 @@
                 }
             }
         }
+    }
+    private void UpdateSpecValue(
+    string category,
+    string key,
+    string? newValue)
+    {
+        if (TempProduct.Specs == null)
+            return;
+
+        if (!TempProduct.Specs.ContainsKey(category))
+            return;
+
+        if (!TempProduct.Specs[category].ContainsKey(key))
+            return;
+
+        TempProduct.Specs[category][key] = newValue ?? "";
     }
 }
 

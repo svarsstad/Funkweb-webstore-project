@@ -42,7 +42,7 @@ h1 {
 }
 
 
-/* TITLE */
+/* Json Area */
 
 .panel-title {
     margin-bottom: 1rem;
@@ -54,49 +54,63 @@ h1 {
     width: 80%
 }
 
-/* TEXTAREA */
+label {
+    color: #05ebeb;
+    margin-top: 1rem;
+    margin-bottom: 0.3rem;
+    display: block;
+}
 
-.json-area {
+input,
+textarea {
     width: 100%;
-    height: 60vh;
-    resize: vertical;
-    margin-bottom: 1rem;
     background: #6b6b6b;
     color: #05ebeb;
     border: 1px solid #05abab;
     border-radius: 10px;
-    padding: 1rem;
-    font-family: Consolas, monospace;
-    font-size: 1rem;
+    padding: 0.8rem;
     box-sizing: border-box;
 }
-    /* SCROLLBAR */
 
-    .json-area::-webkit-scrollbar {
-        width: 12px;
-        background-color: #6b6b6b;
+textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+.specs-section {
+    margin-top: 2rem;
+}
+
+.spec-category {
+    margin-bottom: 2rem;
+    padding: 1rem;
+    background: #505757;
+    border-radius: 12px;
+    border: 1px solid #2a2f36;
+}
+
+    .spec-category h3 {
+        color: #05ebeb;
+        margin-bottom: 1rem;
     }
 
-    /* TRACK */
+.spec-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 0.7rem;
+}
 
-    .json-area::-webkit-scrollbar-track {
-        background: #6b6b6b;
-        border-left: 1px solid #2a2f36;
-    }
+.spec-name {
+    width: 240px;
+    color: #05abab;
+    font-weight: bold;
+    flex-shrink: 0;
+}
 
-    /* THUMB */
-
-    .json-area::-webkit-scrollbar-thumb {
-        background: #05ebeb;
-        border-radius: 10px;
-        border: 2px solid #555b5b;
-    }
-
-        /* THUMB HOVER */
-
-        .json-area::-webkit-scrollbar-thumb:hover {
-            background: #05abab;
-        }
+.spec-value {
+    flex: 1;
+}
 
 
 

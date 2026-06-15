@@ -6,8 +6,8 @@ namespace Project_Backend.Helpers
     {
         public static bool ApplyNonImageChanges(Product target, Product source)
         {
-            target.Name = source.Name;
-            if (target.Name == null || target.Name.Length == 0) { return false; }
+            target.productName = source.productName;
+            if (target.productName == null || target.productName.Length == 0) { return false; }
             target.ProductStyle = source.ProductStyle;
             if (target.ProductStyle == null || target.ProductStyle.Length == 0) { return false; }
             target.Price = source.Price;
