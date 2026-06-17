@@ -221,6 +221,20 @@
             var fullPath =
                 Path.Combine(tempFolder, fileName);
 
+            var finalFolder =
+            Path.Combine(
+                Env.WebRootPath,
+                "Images"
+            );
+            var actualPath = Path.Combine(
+                finalFolder,
+                fileName
+            );
+            if (File.Exists(actualPath)){ 
+                TempImagePaths.Add(actualPath);
+                PreviewImages.Add(actualPath);    
+                continue; 
+            }
             await using var stream =
                 new FileStream(fullPath, FileMode.Create);
 
@@ -349,6 +363,11 @@
 
         foreach (var tempPath in TempImagePaths)
         {
+            if (!tempPath.ToLower().Contains("tempimages"))
+            {
+                //this is not a temp image, but an actual image reused as a temp, do not delete
+                continue;
+            }
             var fileName =
                 Path.GetFileName(tempPath);
 
