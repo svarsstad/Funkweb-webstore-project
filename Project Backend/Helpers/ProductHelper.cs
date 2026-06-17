@@ -34,7 +34,7 @@ namespace Project_Backend.Helpers
             return true;
         }
 
-        public static bool ApplyImageChanges(Product target, Dictionary<int, string> images)
+        public static bool ApplyImageChanges(Product target, Dictionary<string, string> images)
         {
             target.Images = images?.ToDictionary() ?? new();
             if (target.Images == null || target.Images.Count < 1) { return false; }

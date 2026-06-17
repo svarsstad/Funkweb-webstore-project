@@ -36,7 +36,7 @@ namespace Project_Backend.Models
         // I thought I could later use this to make search tags or propose similar products based on shared characteristics
 
         [BsonElement("Images")]
-        public Dictionary<int, string> Images { get; set; } = new();
+        public Dictionary<string, string> Images { get; set; } = new();
         //image paths, the key is just an index for the image, the value is the path to the image in the file system, relative to /wwwroot/
         [JsonPropertyName("Warrenty disclaimber")]
         [BsonElement("Warrenty disclaimber")] // <--- mongodb name

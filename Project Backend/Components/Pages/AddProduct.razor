@@ -287,15 +287,17 @@
                     Path.Combine(
                         finalFolder,
                         fileName);
-
-                File.Move(oldPath, newPath);
+                if (!File.Exists(newPath))
+                    File.Move(oldPath, newPath);
 
                 TempProduct.Images.Add(
-                    index++,
-                    $"/Images/{fileName}");
+                    $"{index:D3}",
+                    $"/Images/{fileName}"
+                );
+                index++;
             }
 
-            TempProduct = parsedProduct;
+            ProductHelper.ApplyNonImageChanges(TempProduct, parsedProduct);
 
             await ProductService.CreateProductAsync(TempProduct);
 
