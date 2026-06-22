@@ -85,9 +85,10 @@
                 </div>
             }
 
-            <InputFile OnChange="HandleJsonFile"
-                       accept=".json"
-                       class="theme-file-input" />
+            <InputFile @key="jsonInputKey" 
+                OnChange="HandleJsonFile"
+                accept=".json"
+                class="theme-file-input" />
 
         </div>
 
@@ -127,7 +128,8 @@
                 </button>
             </div>
             <div>
-                <InputFile OnChange="HandleImages"
+                <InputFile @key="imageInputKey" 
+                           OnChange="HandleImages"
                            accept="image/*"
                            multiple
                            class="theme-file-input" />
@@ -173,9 +175,11 @@
 
     private bool SaveSuccessful = false;
     private List<string> TempImagePaths = new();
-    private readonly List<string> PreviewImages = new();
-
+    private List<string> PreviewImages = new(); 
+    private int jsonInputKey = 0;
+    private int imageInputKey = 0;
     private int currentImageIndex = 0;
+    private List<bool> ImageExists = new();
     private async Task HandleJsonFile(InputFileChangeEventArgs e)
     {
         var file = e.File;
@@ -209,7 +213,7 @@
         {
             Directory.CreateDirectory(tempFolder);
         }
-
+        int index = 0;
         foreach (var file in files)
         {
             var extension =
@@ -232,8 +236,13 @@
             );
             if (File.Exists(actualPath)){ 
                 TempImagePaths.Add(actualPath);
-                PreviewImages.Add(actualPath);    
+                PreviewImages.Add($"/Images/{fileName}");
+                ImageExists.Add(true);
                 continue; 
+            }
+            else
+            {
+                ImageExists.Add(false);
             }
             await using var stream =
                 new FileStream(fullPath, FileMode.Create);
@@ -248,6 +257,7 @@
             TempImagePaths.Add(relativePath);
 
             PreviewImages.Add(relativePath);
+            index++;
         }
 
     }
@@ -355,7 +365,7 @@
         }
     }
 
-    private void ClearProduct()
+    async private void ClearProduct()
     {
         TempProduct = new Product();
 
@@ -382,10 +392,13 @@
                 File.Delete(fullPath);
             }
         }
-
+        jsonInputKey++;
+        imageInputKey++;
         TempImagePaths.Clear();
-
+        ImageExists.Clear();
+        PreviewImages.Clear();
         SaveSuccessful = false;
+        await InvokeAsync(StateHasChanged);
     }
 
     private void NextImage()
