@@ -51,7 +51,7 @@ h6 {
     .table thead th {
         position: sticky;
         top: 0;
-        z-index: 2;
+        z-index: 2; /*element rendering order, only works with certain positions like sticky*/
         background-color: #6b6b6b !important;
         color: #05ebeb !important;
         border-bottom: 2px solid #2a2f36 !important;

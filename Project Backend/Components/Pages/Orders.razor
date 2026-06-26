@@ -11,6 +11,7 @@
     private List<Order>? orders;
 
     private Order? selectedOrder;
+    private OrderItem? selectedProduct = null;
 
     private List<string> statuses = new()
     {
@@ -52,7 +53,12 @@
 
     private void SelectOrder(Order order)
     {
+        selectedProduct = null;
         selectedOrder = order;
+    }
+    private void SelectProduct(OrderItem product)
+    {
+        selectedProduct = product;
     }
 
     private async Task OnStatusChanged(ChangeEventArgs e, Order order)
@@ -186,7 +192,8 @@ else
 
                 @foreach (OrderItem item in selectedOrder.Items)
                 {
-                    <tr>
+                    <tr class="order-details-row @(selectedProduct?.ProductId == item.ProductId ? "selected-order" : "")"
+                        @onclick="(() => SelectProduct(item))">
                         <td>@item.ProductId</td>
                         <td>@item.ProductName</td>
                         <td>@item.Quantity</td>
