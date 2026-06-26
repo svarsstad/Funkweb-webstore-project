@@ -24,6 +24,7 @@ else
                         <th>Name</th>
                         <th>Stock</th>
                         <th>Price</th>
+                        <th>🗑</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -36,6 +37,18 @@ else
                             <td>@product.productName</td>
                             <td>@product.Stock</td>
                             <td>$@product.Price</td>
+                            <td class="delete-cell">
+
+                                @if (selectedProduct?.Id == product.Id)
+                                {
+                                    <button class="delete-btn"
+                                            @onclick:stopPropagation="true"
+                                            @onclick="() => DeleteProduct(product)">
+                                        🗑
+                                    </button>
+                                }
+
+                            </td>
                         </tr>
                     }
                 </tbody>
@@ -115,6 +128,18 @@ else
     {
         selectedProduct = product;
         currentImageIndex = 0; // Reset to the first image when a new product is selected
+    }
+    private async Task DeleteProduct(Product product)
+    {
+        if (products != null && product.Id != null)
+        {
+            await ProductService.DeleteProductAsync(product.Id);
+            products.Remove(product);
+            if (selectedProduct?.Id == product.Id)
+            {
+                selectedProduct = null; // Deselect if the deleted product was selected
+            }
+        }
     }
 
     // Carousel Logic: Next Button
