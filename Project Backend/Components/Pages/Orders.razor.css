@@ -178,3 +178,30 @@ tr.selected-order-details:hover td {
         .orders-list::-webkit-scrollbar-thumb:hover {
             background: #05abab;
         }
+
+/* delete cell */
+.delete-cell {
+    width: 50px;
+    text-align: center;
+}
+
+.delete-btn {
+    background: transparent;
+    border: none;
+    color: #aa1111;
+    cursor: pointer;
+    font-size: 3rem;
+    transition: color 0.15s ease, transform 0.15s ease, text-shadow 0.15s ease;
+}
+
+    .delete-btn:hover {
+        color: #ff0000;
+        transform: scale(1.15);
+        text-shadow: 0 0 8px rgba(50,184,255,0.4);
+    }
+
+tr:has(.delete-btn:hover) td {
+    color: #ff0000 !important;
+    background-color: rgba(5, 5, 5, 1.00) !important;
+}
+

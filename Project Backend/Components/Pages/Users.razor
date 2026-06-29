@@ -29,6 +29,7 @@ else
                     <th>Email</th>
                     <th>Orders</th>
                     <th>Last Login</th>
+                    <th>🗑</th>
                 </tr>
             </thead>
 
@@ -48,7 +49,18 @@ else
                         <td>@user.Orders.Count()</td>
 
                         <td>@user.LastLogin.ToString("yyyy-MM-dd HH:mm")</td>
+                        <td class="delete-cell">
 
+                            @if (selectedUser?.Id == user.Id)
+                            {
+                                <button class="delete-btn"
+                                        @onclick:stopPropagation="true"
+                                        @onclick="() => DeleteUser(user)">
+                                    🗑
+                                </button>
+                            }
+
+                        </td>
                     </tr>
                 }
 
@@ -70,5 +82,10 @@ else
     private void SelectUser(User user)
     {
         selectedUser = user;
+    }
+    private async Task DeleteUser(User user)
+    {
+        await UserService.DeleteUserAsync(user.Id!);
+        users?.Remove(user);
     }
 }

@@ -29,5 +29,8 @@ namespace Project_Backend.Models
 
         [BsonElement("lastLogin")]
         public DateTime LastLogin { get; set; }
+
+        [BsonElement("priviledge")]
+        public int Priviledge { get; set; } = 3;
     }
 }

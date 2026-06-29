@@ -74,6 +74,11 @@
                 newStatus);
         }
     }
+    private async Task DeleteOrder(Order order)
+    {
+        await OrderService.DeleteOrderAsync(order.Id!);
+        orders?.Remove(order);
+    }
 }
 
 <PageTitle>Orders</PageTitle>
@@ -98,6 +103,7 @@ else
                     <th>Price</th>
                     <th>Products</th>
                     <th>Status</th>
+                    <th>🗑</th>
                 </tr>
             </thead>
 
@@ -138,6 +144,18 @@ else
                                 }
 
                             </select>
+
+                        </td>
+                        <td class="delete-cell">
+
+                            @if (selectedOrder?.Id == order.Id)
+                            {
+                                <button class="delete-btn"
+                                        @onclick:stopPropagation="true"
+                                        @onclick="() => DeleteOrder(order)">
+                                    🗑
+                                </button>
+                            }
 
                         </td>
 
