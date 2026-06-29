@@ -1,0 +1,215 @@
+﻿
+/* 
+    COLORS
+
+    #505757 hover
+    #555b5b dark background
+    #6b6b6b lighter background
+    #05abab dull cyan
+    #05dbdb hover cyan
+    #05ebeb bright cyan
+    #2a2f36 border
+    #32b8ff glow
+*/
+
+
+h1 {
+    color: #05ebeb;
+    padding: 1rem;
+}
+.page-container {
+    padding: 1rem;
+    color: #05ebeb;
+}
+
+.editor-layout {
+    display: flex;
+    gap: 1rem;
+    width: 100%;
+    min-height: 70vh;
+}
+
+/* BOTH PANELS */
+
+.panel {
+    width: 50%;
+    background: #555b5b;
+    border: 1px solid #2a2f36;
+    border-radius: 14px;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+}
+
+
+/* Json Area */
+
+.panel-title {
+    margin-bottom: 1rem;
+    color: #05ebeb;
+    font-size: 1.4rem;
+}
+
+.panel left-panel {
+    width: 80%
+}
+
+label {
+    color: #05ebeb;
+    margin-top: 1rem;
+    margin-bottom: 0.3rem;
+    display: block;
+}
+
+input,
+textarea {
+    width: 100%;
+    background: #6b6b6b;
+    color: #05ebeb;
+    border: 1px solid #05abab;
+    border-radius: 10px;
+    padding: 0.8rem;
+    box-sizing: border-box;
+}
+
+textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+.specs-section {
+    margin-top: 2rem;
+}
+
+.spec-category {
+    margin-bottom: 2rem;
+    padding: 1rem;
+    background: #505757;
+    border-radius: 12px;
+    border: 1px solid #2a2f36;
+}
+
+    .spec-category h3 {
+        color: #05ebeb;
+        margin-bottom: 1rem;
+    }
+
+.spec-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 0.7rem;
+}
+
+.spec-name {
+    width: 240px;
+    color: #05abab;
+    font-weight: bold;
+    flex-shrink: 0;
+}
+
+.spec-value {
+    flex: 1;
+}
+
+
+
+.image-viewer {
+    flex: 1;
+    width: 100%;
+    min-height: 60vh;
+    background: #6b6b6b;
+    border: 1px solid #2a2f36;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.preview-image {
+    width: 100%;
+    min-height: 60vh;
+    object-fit: contain;
+    border-radius: 10px;
+}
+
+.no-image {
+    color: #05abab;
+    font-size: 1.2rem;
+}
+
+.image-controls {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.nav-btn,
+.save-btn {
+    background-color: #505757;
+    color: #05ebeb;
+    border: 1px solid #2a2f36;
+    margin: 0.4rem;
+    border-radius: 1rem;
+    padding: .5rem;
+    transition: background-color 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
+    cursor: pointer;
+}
+
+    .nav-btn:hover,
+    .save-btn:hover {
+        background-color: #555b5b;
+        color: #05dbdb;
+        box-shadow: 0 0 10px rgba(50, 184, 255, 0.15);
+    }
+
+.nav-btn-next {
+    background-color: #505757;
+    color: #05ebeb;
+    border: 1px solid #2a2f36;
+    margin: 0.4rem;
+    border-radius: 1rem;
+    padding: .5rem;
+    transition: background-color 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
+    cursor: pointer;
+}
+
+    .nav-btn-next:hover {
+        background-color: #555b5b;
+        color: #05dbdb;
+        box-shadow: 0 0 10px rgba(50, 184, 255, 0.15);
+    }
+
+.save-row {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: center;
+}
+
+
+
+
+/* changing style of standard file buttons */
+
+::deep input[type=file]::file-selector-button {
+    background-color: #505757 !important;
+    color: #05ebeb !important;
+    border: 1px solid #2a2f36 !important;
+    margin: 0.4rem !important;
+    border-radius: 1rem !important;
+    padding: .5rem !important;
+    transition: background-color 0.15s ease, color 0.15s ease, box-shadow 0.15s ease !important;
+    cursor: pointer !important;
+}
+
+    ::deep input[type=file]::file-selector-button:hover {
+        background-color: #555b5b !important;
+        color: #05dbdb !important;
+        box-shadow: 0 0 10px rgba(50, 184, 255, 0.15) !important;
+    }
+
+::deep input[type=file] {
+    color: #05ebeb !important;
+}

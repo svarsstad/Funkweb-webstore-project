@@ -13,6 +13,9 @@ namespace Project_Backend.Models
         [BsonElement("displayName")]
         public string DisplayName { get; set; } = string.Empty;
 
+        [BsonElement("userImage")]
+        public string? UserImage { get; set; } = string.Empty;
+
         [BsonElement("email")]
         public string Email { get; set; } = string.Empty;
 
