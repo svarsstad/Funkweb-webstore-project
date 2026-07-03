@@ -233,13 +233,38 @@
     {
         return
             !string.IsNullOrWhiteSpace(TempUser.DisplayName)
-            && !string.IsNullOrWhiteSpace(TempUser.Email)
-            && !string.IsNullOrWhiteSpace(TempUser.Password)
-            && TempUser.Password == ConfirmPassword
+            && IsValidEmail(TempUser.Email)
+            && IsValidPassword(TempUser.Password)
             && TempUser.Priviledge > 0 && TempUser.Priviledge <= 9; //greater than 0 because 0 is banned user,
                                                                     //new user should not be added as banned user,
                                                                     //and less than or equal to 9 because 9 is the max privilege level
                                                                     // 3 is the default user level,6 is clerk level, 9 is the admin level
+    }
+    private bool IsValidEmail(string email)
+    {
+        if (string.IsNullOrWhiteSpace(email))
+            return false;
+
+        try
+        {
+            var addr = new System.Net.Mail.MailAddress(email);
+            return addr.Address == email;
+        }
+        catch
+        {
+            return false;
+        }
+    }
+    private bool IsValidPassword(string password)
+    {
+        if (string.IsNullOrWhiteSpace(password))
+            return false;
+
+        return TempUser.Password == ConfirmPassword 
+        && password.Length >= 6 
+        && password.Length <= 80; // i've never seen anyone with a password longer than 63 and
+                                                                //i don't want to allow anyone to have a password longer than 80 characters, 
+                                                                // because that is just ridiculous
     }
 
     private void CleanupTempImages()
