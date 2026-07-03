@@ -89,7 +89,7 @@
                 <button class="save-btn"
                         @onclick="SaveUser">
 
-                    Save Product
+                    Save New User
 
                 </button>
             }
@@ -220,6 +220,8 @@
 
         TempImagePath = "";
 
+        ConfirmPassword = "";
+
         SaveSuccessful = false;
 
         imageInputKey++;
@@ -265,8 +267,9 @@
                 {
                     File.Delete(file);
                 }
-                catch
+                catch (Exception ex)
                 {
+                    Console.WriteLine(ex.Message);
                 }
             }
         }
