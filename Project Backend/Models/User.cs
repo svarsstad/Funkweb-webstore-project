@@ -33,7 +33,7 @@ namespace Project_Backend.Models
         [BsonElement("lastLogin")]
         public DateTime LastLogin { get; set; }
 
-        [BsonElement("priviledge")]
-        public int Priviledge { get; set; } = 3;
+        [BsonElement("privilege")]
+        public int Privilege { get; set; } = 3;
     }
 }

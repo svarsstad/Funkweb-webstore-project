@@ -43,7 +43,7 @@
                    min="0"
                    max="9"
                    step="1"
-                   @bind="TempUser.Priviledge" />
+                   @bind="TempUser.Privilege" />
 
         </div>
 
@@ -195,7 +195,7 @@
             }
 
             TempUser.LastLogin = DateTime.UtcNow;
-            TempUser.Priviledge = Math.Clamp( TempUser.Priviledge,0,9);
+            TempUser.Privilege = Math.Clamp( TempUser.Privilege,0,9);
             await UserService.CreateUserAsync(TempUser);
 
             SaveSuccessful = true;
@@ -235,7 +235,7 @@
             !string.IsNullOrWhiteSpace(TempUser.DisplayName)
             && IsValidEmail(TempUser.Email)
             && IsValidPassword(TempUser.Password)
-            && TempUser.Priviledge > 0 && TempUser.Priviledge <= 9; //greater than 0 because 0 is banned user,
+            && TempUser.Privilege > 0 && TempUser.Privilege <= 9; //greater than 0 because 0 is banned user,
                                                                     //new user should not be added as banned user,
                                                                     //and less than or equal to 9 because 9 is the max privilege level
                                                                     // 3 is the default user level,6 is clerk level, 9 is the admin level
@@ -262,9 +262,7 @@
 
         return TempUser.Password == ConfirmPassword 
         && password.Length >= 6 
-        && password.Length <= 80; // i've never seen anyone with a password longer than 63 and
-                                                                //i don't want to allow anyone to have a password longer than 80 characters, 
-                                                                // because that is just ridiculous
+        && password.Length <= 80; // upper bound prevents abuse/spam payloads
     }
 
     private void CleanupTempImages()
