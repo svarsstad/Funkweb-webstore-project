@@ -6,18 +6,28 @@ body {
 }
 
 /* TITLE */
-
-h1 {
-    color: #05ebeb;
-    margin-bottom: 0.5rem;
-    text-shadow: 0 0 8px rgba(50, 184, 255, 0.25);
+.users-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
 }
 
-/* SUBTITLE */
+.selected-user-preview {
+    width: 120px;
+    height: 80px;
+    background: #555b5b;
+    border: 1px solid #2a2f36;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
 
-.users-subtitle {
-    color: #05abab;
-    margin-bottom: 1.5rem;
+.selected-user-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 /* TABLE CONTAINER */

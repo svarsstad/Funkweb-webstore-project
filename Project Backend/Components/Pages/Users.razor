@@ -6,11 +6,25 @@
 
 <PageTitle>Users</PageTitle>
 
-<h1>Users</h1>
+<div class="users-header">
 
-<p class="users-subtitle">
-    This component shows users logged in the system
-</p>
+    <div>
+        <h1>Users</h1>
+        <p>This component shows users logged in the system</p>
+    </div>
+
+    <div class="selected-user-preview">
+
+        @if (selectedUser != null
+        && !string.IsNullOrWhiteSpace(selectedUser.UserImage))
+        {
+            <img src="@selectedUser.UserImage"
+                 class="selected-user-image" />
+        }
+
+    </div>
+
+</div>
 
 @if (users == null)
 {
