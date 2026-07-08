@@ -1,4 +1,4 @@
-﻿@page "/add_user"
+﻿@page "/add_order"
 @rendermode InteractiveServer
 @using Project_Backend.Helpers
 @using Project_Backend.Models
@@ -7,294 +7,75 @@
 @using Microsoft.AspNetCore.Components.Forms
 
 @inject UserService UserService
+@inject ProductService ProductService
+@inject OrderService OrderService
 @inject IWebHostEnvironment Env
 
-<PageTitle>Add User</PageTitle>
+<PageTitle>Add Order</PageTitle>
 
-<div class="page-container">
+@if (Users == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <div class="users-list">
+        <input class="search-box"
+               placeholder="Search users..."
+               @bind="UserSearch" />
+        <table class="table">
 
-    <h1>Add User</h1>
+            <thead>
+                <tr>
+                    <th>Display Name</th>
+                    <th>Email</th>
 
-    <div class="editor-layout">
-        <!-- LEFT -->
-        <div class="panel">
+                </tr>
+            </thead>
 
-            <div class="panel-title">
-                User Details
-            </div>
+            <tbody>
 
-            <label>User Name</label>
-            <input @bind="TempUser.DisplayName" />
-
-            <label>Email</label>
-            <input @bind="TempUser.Email" />
-
-            <label>Password</label>
-            <input type="password"
-                   @bind="TempUser.Password" />
-
-            <label>Confirm Password</label>
-            <input type="password"
-                   @bind="ConfirmPassword" />
-
-            <label>Privilege Level</label>
-
-            <input type="number"
-                   min="0"
-                   max="9"
-                   step="1"
-                   @bind="TempUser.Privilege" />
-
-        </div>
-
-        <!-- RIGHT -->
-        <div class="panel">
-
-            <div class="panel-title">
-                User Image
-            </div>
-
-            <div class="image-viewer">
-
-                @if (!string.IsNullOrWhiteSpace(PreviewImage))
+                @foreach (var user in Users.Where(u =>
+    string.IsNullOrWhiteSpace(UserSearch) ||
+    u.Email.Contains(UserSearch, StringComparison.OrdinalIgnoreCase) ||
+    u.DisplayName.Contains(UserSearch, StringComparison.OrdinalIgnoreCase)))
                 {
-                    <img src="@PreviewImage"
-                         class="preview-image" />
-                }
-                else
-                {
-                    <div class="no-image">
-                        No image selected
-                    </div>
+                    <tr class="user-row @(SelectedUser?.Id == user.Id ? "selected-user" : "")"
+                        @onclick="(() => SelectUser(user))">
+                        <td>@user.DisplayName</td>
+                        <td>@user.Email</td>
+
+                    </tr>
                 }
 
-            </div>
+            </tbody>
 
-            <InputFile @key="imageInputKey"
-                       OnChange="HandleImage"
-                       accept="image/*"
-                       class="theme-file-input" />
-
-
-        </div>
+        </table>
 
     </div>
+}
 
-    @if (CanSaveUser())
-    {
-        <div class="save-row">
-
-            @if (!SaveSuccessful)
-            {
-                <button class="save-btn"
-                        @onclick="SaveUser">
-
-                    Save New User
-
-                </button>
-            }
-            else
-            {
-                <button class="save-btn"
-                        @onclick="ClearUser">
-
-                    Saved - Clear Form
-
-                </button>
-            }
-
-        </div>
-    }
-
-</div>
 
 @code {
 
-    private User TempUser = new();
-    private string ConfirmPassword = "";
-    private bool SaveSuccessful = false;
+    private List<User> Users = new();
+    private List<Product> Products = new();
 
-    private string PreviewImage = "";
+    private User? SelectedUser;
 
-    private string TempImagePath = "";
+    private List<OrderItem> SelectedProducts = new();
 
-    private int imageInputKey = 0;
+    private string UserSearch = "";
+    private string ProductSearch = "";
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync() => Users = await UserService.GetAllUsersAsync();
+
+    private void SelectUser(User user)
     {
-        base.OnInitialized();
-
-        CleanupTempImages();
+        SelectedUser = user;
     }
 
-    private async Task HandleImage(InputFileChangeEventArgs e)
+    private async Task SaveOrder()
     {
-        var file = e.File;
-
-        var tempFolder =
-            Path.Combine(
-                Env.WebRootPath,
-                "TempImages");
-
-        if (!Directory.Exists(tempFolder))
-        {
-            Directory.CreateDirectory(tempFolder);
-        }
-
-        var extension =
-            Path.GetExtension(file.Name);
-
-        var fileName =
-            $"{Guid.NewGuid()}{extension}";
-
-        var fullPath =
-            Path.Combine(tempFolder, fileName);
-
-        await using var stream =
-            new FileStream(fullPath, FileMode.Create);
-
-        await file.OpenReadStream(
-            maxAllowedSize: 1024 * 1024 * 50)
-            .CopyToAsync(stream);
-
-        TempImagePath = fullPath;
-
-        PreviewImage = $"/TempImages/{fileName}";
-    }
-
-    private async Task SaveUser()
-    {
-        if (!CanSaveUser())
-            return;
-
-        try
-        {
-
-            if (!string.IsNullOrWhiteSpace(TempImagePath))
-            {
-                var finalFolder =
-                    Path.Combine(
-                        Env.WebRootPath,
-                        "Images");
-
-                if (!Directory.Exists(finalFolder))
-                {
-                    Directory.CreateDirectory(finalFolder);
-                }
-
-                var fileName =
-                    Path.GetFileName(TempImagePath);
-
-                var finalPath =
-                    Path.Combine(finalFolder, fileName);
-
-                File.Move(TempImagePath, finalPath);
-
-                TempUser.UserImage =
-                    $"/Images/{fileName}";
-            }
-
-            TempUser.LastLogin = DateTime.UtcNow;
-            TempUser.Privilege = Math.Clamp( TempUser.Privilege,0,9);
-            await UserService.CreateUserAsync(TempUser);
-
-            SaveSuccessful = true;
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine(ex.Message);
-        }
-    }
-
-    private async Task ClearUser()
-    {
-        if (!string.IsNullOrWhiteSpace(TempImagePath)
-            && File.Exists(TempImagePath))
-        {
-            File.Delete(TempImagePath);
-        }
-
-        TempUser = new();
-
-        PreviewImage = "";
-
-        TempImagePath = "";
-
-        ConfirmPassword = "";
-
-        SaveSuccessful = false;
-
-        imageInputKey++;
-
-        await InvokeAsync(StateHasChanged);
-    }
-
-    private bool CanSaveUser()
-    {
-        return
-            !string.IsNullOrWhiteSpace(TempUser.DisplayName)
-            && IsValidEmail(TempUser.Email)
-            && IsValidPassword(TempUser.Password)
-            && TempUser.Privilege > 0 && TempUser.Privilege <= 9; //greater than 0 because 0 is banned user,
-                                                                    //new user should not be added as banned user,
-                                                                    //and less than or equal to 9 because 9 is the max privilege level
-                                                                    // 3 is the default user level,6 is clerk level, 9 is the admin level
-    }
-    private bool IsValidEmail(string email)
-    {
-        if (string.IsNullOrWhiteSpace(email))
-            return false;
-
-        try
-        {
-            var addr = new System.Net.Mail.MailAddress(email);
-            return addr.Address == email;
-        }
-        catch
-        {
-            return false;
-        }
-    }
-    private bool IsValidPassword(string password)
-    {
-        if (string.IsNullOrWhiteSpace(password))
-            return false;
-
-        return TempUser.Password == ConfirmPassword 
-        && password.Length >= 6 
-        && password.Length <= 80; // upper bound prevents abuse/spam payloads
-    }
-
-    private void CleanupTempImages()
-    {
-        var tempFolder =
-            Path.Combine(
-                Env.WebRootPath,
-                "TempImages");
-
-        if (!Directory.Exists(tempFolder))
-            return;
-
-        var files =
-            Directory.GetFiles(tempFolder);
-
-        foreach (var file in files)
-        {
-            var created =
-                File.GetCreationTimeUtc(file);
-
-            if (DateTime.UtcNow - created
-                > TimeSpan.FromHours(1))
-            {
-                try
-                {
-                    File.Delete(file);
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex.Message);
-                }
-            }
-        }
     }
 }
