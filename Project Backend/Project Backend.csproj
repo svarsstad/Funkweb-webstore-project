@@ -21,4 +21,8 @@
     <Folder Include="wwwroot\tempImages\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="wwwroot\js\RefreshHelper.js" />
+  </ItemGroup>
+
 </Project>

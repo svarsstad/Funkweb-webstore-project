@@ -3,6 +3,10 @@
 @using Project_Backend.Models
 @using Project_Backend.Services
 @inject UserService UserService
+@inject IJSRuntime RefreshHelper
+
+
+
 
 <PageTitle>Users</PageTitle>
 
@@ -11,6 +15,10 @@
     <div>
         <h1>Users</h1>
         <p>This component shows users logged in the system</p>
+        <button class="refresh-btn"
+                @onclick="ForceReloadUsers">
+            ↻ Refresh
+        </button>
     </div>
 
     <div class="selected-user-preview">
@@ -92,7 +100,7 @@ else
 
     private User? selectedUser;
 
-    protected override async Task OnInitializedAsync() => users = await UserService.GetAllUsersAsync();
+    protected override async Task OnInitializedAsync() => await LoadUsers();
 
     private void SelectUser(User user)
     {
@@ -102,5 +110,41 @@ else
     {
         await UserService.DeleteUserAsync(user.Id!);
         users?.Remove(user);
+    }
+    private async Task LoadUsers()
+    {
+
+        users = await UserService.GetAllUsersAsync();
+        StateHasChanged();
+
+    }
+    private async Task ForceReloadUsers()
+    {
+      
+        users = await UserService.GetAllUsersForceReloadAsync();
+        StateHasChanged();
+ 
+    }
+
+    private DotNetObjectReference<Users>? objRef;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            objRef = DotNetObjectReference.Create(this);
+
+            await RefreshHelper.InvokeVoidAsync(
+                "registerRefreshKey",
+                objRef);
+        }
+    }
+
+    [JSInvokable]
+    public async Task RefreshData()
+    {
+
+        await ForceReloadUsers();
+
     }
 }

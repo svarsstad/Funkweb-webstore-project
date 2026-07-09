@@ -32,6 +32,13 @@ namespace Project_Backend.Services
 
             return Users;
         }
+        public async Task<List<User>> GetAllUsersForceReloadAsync()
+        {
+           
+            Users = await _usersCollection.Find(_ => true).ToListAsync();
+
+            return Users;
+        }
 
         // 2. Search function (e.g., search by name)
         public async Task<List<User>> SearchUsersAsync(string searchTerm)
