@@ -175,7 +175,7 @@
                 var finalFolder =
                     Path.Combine(
                         Env.WebRootPath,
-                        "Images");
+                        "userImages");
 
                 if (!Directory.Exists(finalFolder))
                 {
@@ -191,7 +191,7 @@
                 File.Move(TempImagePath, finalPath);
 
                 TempUser.UserImage =
-                    $"/Images/{fileName}";
+                    $"/userImages/{fileName}";
             }
 
             TempUser.LastLogin = DateTime.UtcNow;
