@@ -15,12 +15,14 @@
     <div>
         <h1>Users</h1>
         <p>This component shows users logged in the system</p>
-        <button class="refresh-btn"
+
+    </div>
+    <div>
+        <button class="rfr-btn"
                 @onclick="ForceReloadUsers">
             ↻ Refresh
         </button>
     </div>
-
     <div class="selected-user-preview">
 
         @if (selectedUser != null

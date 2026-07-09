@@ -129,6 +129,25 @@ tr.selected-user:hover td {
     }
 
 
+/* refresh button */
+.rfr-btn {
+    background-color: #505757;
+    color: #05ebeb;
+    border: 1px solid #2a2f36;
+    margin: 0.4rem;
+    border-radius: 1rem;
+    padding: .5rem;
+    transition: background-color 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
+    cursor: pointer;
+    position: center;
+}
+
+    .rfr-btn:hover {
+        background-color: #555b5b;
+        color: #05dbdb;
+        box-shadow: 0 0 10px rgba(50, 184, 255, 0.15);
+    }
+
 /* delete cell */
 .delete-cell {
     width: 50px;
