@@ -13,12 +13,13 @@
 
 <PageTitle>Add Order</PageTitle>
 
-@if (Users == null)
+@if (Users == null || Products == null)
 {
     <p><em>Loading...</em></p>
 }
 else
 {
+    
     <div class="users-list">
         <input class="search-box"
                placeholder="Search users..."
@@ -53,6 +54,40 @@ else
         </table>
 
     </div>
+    <div class="products-list">
+        <input class="search-box"
+               placeholder="Search users..."
+               @bind="ProductSearch" />
+        <table class="table">
+
+            <thead>
+                <tr>
+                    <th>Display Name</th>
+                    <th>Email</th>
+
+                </tr>
+            </thead>
+
+            <tbody>
+
+                @foreach (var product in Products.Where(p =>
+    string.IsNullOrWhiteSpace(ProductSearch) ||
+    p.Id.Contains(ProductSearch, StringComparison.OrdinalIgnoreCase) ||
+    p.productName.Contains(ProductSearch, StringComparison.OrdinalIgnoreCase)))
+                {
+                    <tr class="product-row @(SelectedProduct?.Id == product.Id ? "selected-product" : "")"
+                        @onclick="(() => SelectProduct(product))">
+                        <td>@product.Id</td>
+                        <td>@product.productName</td>
+
+                    </tr>
+                }
+
+            </tbody>
+
+        </table>
+
+    </div>
 }
 
 
@@ -62,6 +97,7 @@ else
     private List<Product> Products = new();
 
     private User? SelectedUser;
+    private Product? SelectedProduct;
 
     private List<OrderItem> SelectedProducts = new();
 
@@ -74,7 +110,10 @@ else
     {
         SelectedUser = user;
     }
-
+    private void SelectProduct(Product product)
+    {
+        SelectedProduct = product;
+    }
     private async Task SaveOrder()
     {
     }
