@@ -144,8 +144,7 @@
         var extension =
             Path.GetExtension(file.Name);
 
-        var fileName =
-            $"{Guid.NewGuid()}{extension}";
+        var fileName = file.Name;
 
         var fullPath =
             Path.Combine(tempFolder, fileName);
@@ -187,9 +186,12 @@
 
                 var finalPath =
                     Path.Combine(finalFolder, fileName);
+                if (!File.Exists(finalPath))
+                {
+                    File.Move(TempImagePath, finalPath);
+                }
 
-                File.Move(TempImagePath, finalPath);
-
+                CleanupTempImages();
                 TempUser.UserImage =
                     $"/userImages/{fileName}";
             }
