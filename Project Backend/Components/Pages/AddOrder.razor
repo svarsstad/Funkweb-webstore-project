@@ -19,7 +19,7 @@
 }
 else
 {
-    
+<div class="order-layout">
     <div class="users-list">
         <input class="search-box"
                placeholder="Search users..."
@@ -56,14 +56,14 @@ else
     </div>
     <div class="products-list">
         <input class="search-box"
-               placeholder="Search users..."
+               placeholder="Search products..."
                @bind="ProductSearch" />
         <table class="table">
 
             <thead>
                 <tr>
-                    <th>Display Name</th>
-                    <th>Email</th>
+                    <th>Product Id</th>
+                    <th>Name</th>
 
                 </tr>
             </thead>
@@ -88,6 +88,7 @@ else
         </table>
 
     </div>
+    </div>
 }
 
 
@@ -104,7 +105,10 @@ else
     private string UserSearch = "";
     private string ProductSearch = "";
 
-    protected override async Task OnInitializedAsync() => Users = await UserService.GetAllUsersAsync();
+    protected override async Task OnInitializedAsync() {
+        Users = await UserService.GetAllUsersAsync();
+        Products = await ProductService.GetAllProductsAsync();
+    }
 
     private void SelectUser(User user)
     {

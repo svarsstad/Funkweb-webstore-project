@@ -16,16 +16,25 @@ body {
 /* TABLE CONTAINER */
 .order-layout {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 40vh 40vh;
-    gap: 1rem;
-    height: calc(100vh - 150px);
+    grid-template-columns: 1fr 1fr; /* Deler skjermen i to like store kolonner */
+    gap: 5px;
 }
 
-.users-list,
+.users-list {
+
+    max-width: 600px;
+    max-height: 550px;
+    overflow-y: auto;
+    background-color: #555b5b;
+    border: 1px solid #2a2f36;
+    border-radius: 10px;
+    padding: 0.5rem;
+    box-shadow: 0 0 12px rgba(50, 184, 255, 0.08);
+}
 .products-list {
-    max-width: 500px;
-    max-height: 750px;
+
+    max-width: 700px;
+    max-height: 550px;
     overflow-y: auto;
     background-color: #555b5b;
     border: 1px solid #2a2f36;
@@ -77,13 +86,14 @@ body {
     }
 
 /* USER ROWS */
-.products-row,
-.user-row {
+.user-row, 
+.products-row {
     background-color: #555b5b !important;
     color: #05abab !important;
     transition: background-color 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
     box-shadow: inset 0 0 0 1px rgba(45, 55, 55, 0.35), inset 0 0 18px rgba(50, 55, 55, 0.12);
 }
+
 
     /* HOVER */
     .products-row:hover td,
@@ -94,7 +104,7 @@ body {
     }
 
 /* SELECTED */
-tr.selected.product td,
+tr.selected-product td,
 tr.selected-user td {
     background-color: #4b5252 !important;
     color: #05ebeb !important;
