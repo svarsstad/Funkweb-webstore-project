@@ -39,12 +39,28 @@ namespace Project_Backend.Models
         [BsonRepresentation(BsonType.ObjectId)]
         public string? ProductId { get; set; }
         [BsonElement("quantity")]
-        public double Quantity { get; set; } = 0;
+        public int Quantity { get; set; } = 0;
         [BsonElement("priceAtPurchase")]
         public double PriceAtPurchase { get; set; } = 0;
         [BsonElement("discountPercentage")]
         public double DiscountPercentage { get; set; } = 0;
 
         public string? ProductName { get; set; } = "";
+        public OrderItem()
+        {
+            this.ProductId = null;
+            this.Quantity = 1;
+            this.PriceAtPurchase = 0;
+            this.DiscountPercentage = 0;    
+            this.ProductName = null;
+        }
+        public OrderItem(string productId, int? quantity, double priceAtPurchase, double discount, string prodName)
+        {
+            this.ProductId = productId;
+            if (quantity == null) { Quantity = 1; } else { Quantity = (int)quantity; }
+            this.PriceAtPurchase = priceAtPurchase;
+            this.DiscountPercentage = discount;
+            this.ProductName = prodName;
+        }
     }
 }

@@ -19,67 +19,117 @@
 }
 else
 {
-<div class="order-layout">
-    <div class="users-list">
-        <input class="search-box"
-               placeholder="Search users..."
-               @bind="UserSearch" />
-        <table class="table">
+    <div class="order-layout">
+        <div class="users-list">
+            <input class="search-box"
+                   placeholder="Search users..."
+                   @bind="UserSearch" />
+            <table class="table">
 
-            <thead>
-                <tr>
-                    <th>Display Name</th>
-                    <th>Email</th>
-
-                </tr>
-            </thead>
-
-            <tbody>
-
-                @foreach (var user in Users.Where(u =>
-    string.IsNullOrWhiteSpace(UserSearch) ||
-    u.Email.Contains(UserSearch, StringComparison.OrdinalIgnoreCase) ||
-    u.DisplayName.Contains(UserSearch, StringComparison.OrdinalIgnoreCase)))
-                {
-                    <tr class="user-row @(SelectedUser?.Id == user.Id ? "selected-user" : "")"
-                        @onclick="(() => SelectUser(user))">
-                        <td>@user.DisplayName</td>
-                        <td>@user.Email</td>
+                <thead>
+                    <tr>
+                        <th>Display Name</th>
+                        <th>Email</th>
 
                     </tr>
-                }
+                </thead>
 
-            </tbody>
+                <tbody>
 
-        </table>
+                    @foreach (var user in Users.Where(u =>
+                        string.IsNullOrWhiteSpace(UserSearch) ||
+                        u.Email.Contains(UserSearch, StringComparison.OrdinalIgnoreCase) ||
+                        u.DisplayName.Contains(UserSearch, StringComparison.OrdinalIgnoreCase)))
+                    {
+                        <tr class="user-row @(SelectedUser?.Id == user.Id ? "selected-user" : "")"
+                            @onclick="(() => SelectUser(user))">
+                            <td>@user.DisplayName</td>
+                            <td>@user.Email</td>
 
+                        </tr>
+                    }
+
+                </tbody>
+
+            </table>
+
+        </div>
+        <div class="products-list">
+            <input class="search-box"
+                   placeholder="Search products..."
+                   @bind="ProductSearch" />
+            <table class="table">
+
+                <thead>
+                    <tr>
+                        <th>Product Id</th>
+                        <th>Name</th>
+                        @if (SelectedProduct != null)
+                        {
+                            <th>-</th>
+                            <th>Quantity</th>
+                            <th>+</th>
+                        }
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    @foreach (var product in Products.Where(p =>
+                        string.IsNullOrWhiteSpace(ProductSearch) ||
+                        p.Id.Contains(ProductSearch, StringComparison.OrdinalIgnoreCase) ||
+                        p.productName.Contains(ProductSearch, StringComparison.OrdinalIgnoreCase)))
+                    {
+                        <tr class="product-row @(SelectedProduct?.Id == product.Id ? "selected-product" : "")"
+                            @onclick="(() => SelectProduct(product))">
+                            <td>@product.Id</td>
+                            <td>@product.productName</td>
+                            @if (SelectedProduct != null)
+                            {
+                                <button class="minus-btn"
+                                        @onclick:stopPropagation="true"
+                                        @onclick="() => SubProductFromOrder(SelectedProduct)">
+                                    -
+                                </button>
+                                <td>
+                                    <InputNumber TValue="int" @bind-Value="currentQuantity" class="quantity-input" />
+                                </td>
+                                <button class="plus-btn"
+                                        @onclick:stopPropagation="true"
+                                        @onclick="() => AddProductToOrder(SelectedProduct)">
+                                    +
+                                </button>
+                            }
+                        </tr>
+                    }
+
+                </tbody>
+
+            </table>
+
+        </div>
     </div>
-    <div class="products-list">
-        <input class="search-box"
-               placeholder="Search products..."
-               @bind="ProductSearch" />
+    <div class="orderItem-list">
+
         <table class="table">
 
             <thead>
                 <tr>
                     <th>Product Id</th>
                     <th>Name</th>
-
+                    <th>Quantity</th>
                 </tr>
             </thead>
 
             <tbody>
 
-                @foreach (var product in Products.Where(p =>
-    string.IsNullOrWhiteSpace(ProductSearch) ||
-    p.Id.Contains(ProductSearch, StringComparison.OrdinalIgnoreCase) ||
-    p.productName.Contains(ProductSearch, StringComparison.OrdinalIgnoreCase)))
+                @foreach (var OItem in OrderItems)
                 {
-                    <tr class="product-row @(SelectedProduct?.Id == product.Id ? "selected-product" : "")"
-                        @onclick="(() => SelectProduct(product))">
-                        <td>@product.Id</td>
-                        <td>@product.productName</td>
-
+                    <tr class="product-row @(SelectedOrderItem?.ProductId == OItem.ProductId ? "selected-product" : "")"
+                        @onclick="(() => SelectOrderItem(OItem))">
+                        <td>@OItem.ProductId</td>
+                        <td>@OItem.ProductName</td>
+                        <td>@OItem.Quantity</td>
                     </tr>
                 }
 
@@ -87,7 +137,6 @@ else
 
         </table>
 
-    </div>
     </div>
 }
 
@@ -96,16 +145,18 @@ else
 
     private List<User> Users = new();
     private List<Product> Products = new();
+    private List<OrderItem> OrderItems = new();
 
     private User? SelectedUser;
     private Product? SelectedProduct;
-
-    private List<OrderItem> SelectedProducts = new();
+    private OrderItem? SelectedOrderItem;
+    private int currentQuantity = 0;
 
     private string UserSearch = "";
     private string ProductSearch = "";
 
-    protected override async Task OnInitializedAsync() {
+    protected override async Task OnInitializedAsync()
+    {
         Users = await UserService.GetAllUsersAsync();
         Products = await ProductService.GetAllProductsAsync();
     }
@@ -117,8 +168,56 @@ else
     private void SelectProduct(Product product)
     {
         SelectedProduct = product;
+        foreach(OrderItem oItem in OrderItems)
+        {
+            if(oItem.ProductId == product.Id)
+            {
+                currentQuantity = oItem.Quantity;
+            }
+        }
     }
+    private void SelectOrderItem(OrderItem orderItem)
+    {
+        SelectedOrderItem = orderItem;
+    }
+    private void AddProductToOrder(Product Item)
+    {
+        bool found = false;
+        foreach (var oItem in OrderItems)
+        {
+            if (oItem.ProductId == Item.Id)
+            {
+                currentQuantity++;
+                oItem.Quantity++;
+                found = true;
+                break;
+            }
+        }
+        if (!found)
+        {
+            OrderItems.Add(new OrderItem(Item.Id, 1,(double)Item.Price,0, Item.productName));
+            currentQuantity = 1;
+        }
+    }
+
+    private void SubProductFromOrder(Product orderItem)
+    {
+        foreach (var oItem in OrderItems)
+        {
+            if (oItem.ProductId == orderItem.Id)
+            {
+                oItem.Quantity--;
+                currentQuantity--;
+            }
+            if (oItem.Quantity <= 0)
+            {
+                OrderItems.Remove(oItem);
+            }
+        }
+    }
+
     private async Task SaveOrder()
+
     {
     }
 }
