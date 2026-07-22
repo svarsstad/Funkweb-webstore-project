@@ -58,5 +58,21 @@ namespace Project_Backend.Services
             await _productsCollection.DeleteOneAsync(
                 p => p.Id == id);
         }
+        public async Task<Product?> GetProductByIdAsync(string productId)
+        {
+            return await _productsCollection.Find(p => p.Id == productId).FirstOrDefaultAsync();
+        }
+        public async Task<bool> ProductQtyZeroOrGrt(string productId)
+        {
+            var product = await GetProductByIdAsync(productId);
+            return product != null && product.Stock > 0;
+        }
+        public async Task<bool> SubtractQuantityAsync(string productId, int quantityToSubtract)
+        {
+            var filter = Builders<Product>.Filter.Eq(p => p.Id, productId);
+            var update = Builders<Product>.Update.Inc(p => p.Stock, -quantityToSubtract);
+            await _productsCollection.UpdateOneAsync(filter, update);
+            return await ProductQtyZeroOrGrt(productId);
+        }
     }
 }

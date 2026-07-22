@@ -55,9 +55,16 @@ else
 
         </div>
         <div class="products-list">
-            <input class="search-box"
-                   placeholder="Search products..."
-                   @bind="ProductSearch" />
+            <div class="filter-bar">
+                <input class="search-box"
+                       placeholder="Search products..."
+                       @bind="ProductSearch" />
+
+                <button class="clear-filter-btn"
+                        @onclick="ClearProductFilter">
+                    ✕
+                </button>
+            </div>
             <table class="table">
 
                 <thead>
@@ -84,7 +91,7 @@ else
                             @onclick="(() => SelectProduct(product))">
                             <td>@product.Id</td>
                             <td>@product.productName</td>
-                            @if (SelectedProduct != null)
+                            @if (SelectedProduct!=null && SelectedProduct == product)
                             {
                                 <button class="minus-btn"
                                         @onclick:stopPropagation="true"
@@ -92,7 +99,7 @@ else
                                     -
                                 </button>
                                 <td>
-                                    <InputNumber TValue="int" @bind-Value="currentQuantity" class="quantity-input" />
+                                    <InputNumber TValue="int" @bind-Value="currentQuantity" @bind-Value:after="() => HandleQtyChange(SelectedProduct, currentQuantity)" class="quantity-input" />
                                 </td>
                                 <button class="plus-btn"
                                         @onclick:stopPropagation="true"
@@ -125,7 +132,8 @@ else
 
                 @foreach (var OItem in OrderItems)
                 {
-                    <tr class="product-row @(SelectedOrderItem?.ProductId == OItem.ProductId ? "selected-product" : "")"
+
+                        <tr class="product-row @(SelectedOrderItem?.ProductId == OItem.ProductId ? "selected-product" : "")"
                         @onclick="(() => SelectOrderItem(OItem))">
                         <td>@OItem.ProductId</td>
                         <td>@OItem.ProductName</td>
@@ -137,6 +145,15 @@ else
 
         </table>
 
+    </div>
+    <div>
+        @if (SelectedUser != null && OrderItems.Count > 0 && !OrderSaved)
+        {
+            <button class="save-btn" @onclick="SaveOrder">Save Order</button>
+        }
+        else if(OrderSaved){
+            <button class="save-btn" @onclick="ResetOrder">Order saved, reset?</button>
+        }
     </div>
 }
 
@@ -151,7 +168,7 @@ else
     private Product? SelectedProduct;
     private OrderItem? SelectedOrderItem;
     private int currentQuantity = 0;
-
+    private bool OrderSaved = false;
     private string UserSearch = "";
     private string ProductSearch = "";
 
@@ -168,9 +185,10 @@ else
     private void SelectProduct(Product product)
     {
         SelectedProduct = product;
+        currentQuantity = 0;
         foreach(OrderItem oItem in OrderItems)
         {
-            if(oItem.ProductId == product.Id)
+            if(oItem.ProductId == product.Id && SelectedProduct.Id == product.Id)
             {
                 currentQuantity = oItem.Quantity;
             }
@@ -179,20 +197,31 @@ else
     private void SelectOrderItem(OrderItem orderItem)
     {
         SelectedOrderItem = orderItem;
+        foreach(Product product in Products)
+        {
+            if (product.Id == orderItem.ProductId)
+            {
+                SelectedProduct = product;
+                ProductSearch = product.productName;
+                currentQuantity = orderItem.Quantity;
+            }
+        }
     }
     private void AddProductToOrder(Product Item)
     {
         bool found = false;
+
         foreach (var oItem in OrderItems)
         {
             if (oItem.ProductId == Item.Id)
             {
-                currentQuantity++;
                 oItem.Quantity++;
                 found = true;
+                currentQuantity = oItem.Quantity;
                 break;
             }
         }
+
         if (!found)
         {
             OrderItems.Add(new OrderItem(Item.Id, 1,(double)Item.Price,0, Item.productName));
@@ -207,11 +236,12 @@ else
             if (oItem.ProductId == orderItem.Id)
             {
                 oItem.Quantity--;
-                currentQuantity--;
+                currentQuantity = oItem.Quantity;
             }
             if (oItem.Quantity <= 0)
             {
                 OrderItems.Remove(oItem);
+                currentQuantity = 0;
             }
         }
     }
@@ -219,5 +249,59 @@ else
     private async Task SaveOrder()
 
     {
+        List<double> prices = new();
+        foreach (var item in OrderItems)
+        {
+            prices.Add((double) Products.First(p => p.Id == item.ProductId).Price);
+            prices[prices.Count-1] -= prices[prices.Count-1] * item.DiscountPercentage * 0.01;
+            foreach(Product product in Products)
+            {
+                if (product.Id == item.ProductId && product.Curruency != "CZK-IID")
+                {
+                    prices[prices.Count-1] *= GetExchangeRate(product.Curruency);
+                }
+            }
+        }
+
+        SaveOrderRequest orderRequest = new SaveOrderRequest(SelectedUser?.Id, OrderItems.ToArray<OrderItem>(), prices.ToArray<double>());
+        await OrderService.SaveOrderAsync(orderRequest);
+        OrderSaved = true;
+    }
+    private void ResetOrder()
+    {
+        SelectedUser = null;
+        SelectedProduct = null;
+        SelectedOrderItem = null;
+        OrderItems.Clear();
+        currentQuantity = 0;
+        OrderSaved = false;
+    }
+    private void HandleQtyChange(Product product, int CurrentQty)
+    {
+        if (CurrentQty < 1) { return; }
+
+        AddProductToOrder(product);
+
+        foreach(OrderItem oItem in OrderItems)
+        {
+            if (oItem.ProductId == product.Id)
+            {
+                oItem.Quantity = CurrentQty;
+                break;
+            }
+        }
+        currentQuantity = CurrentQty;
+    }
+    private void ClearProductFilter()
+    {
+        ProductSearch = "";
+    }
+    private double GetExchangeRate(string currency)
+    {
+        //if reaver bucks-product, demand more
+        if (currency== "RVR-BUCKS"){ return 2; }
+
+        //default:
+        return 1;
     }
 }

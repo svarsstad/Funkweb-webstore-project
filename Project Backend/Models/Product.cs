@@ -46,6 +46,9 @@ namespace Project_Backend.Models
         [BsonElement("price")]
         public decimal Price { get; set; }
 
+        [BsonElement("discount")]
+        public decimal Discount { get; set; } = 0;
+
         [BsonElement("currency")]
         public string Curruency { get; set; } = "CZK-IID";
 
