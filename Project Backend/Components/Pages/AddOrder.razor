@@ -61,7 +61,8 @@ else
                        @bind="ProductSearch" />
 
                 <button class="clear-filter-btn"
-                        @onclick="ClearProductFilter">
+                        @onclick="ClearProductFilter"
+                        disabled="@string.IsNullOrWhiteSpace(ProductSearch)">
                     ✕
                 </button>
             </div>
@@ -73,9 +74,13 @@ else
                         <th>Name</th>
                         @if (SelectedProduct != null)
                         {
-                            <th>-</th>
-                            <th>Quantity</th>
-                            <th>+</th>
+                            <th>
+                                <div class="qty-cell">
+                                    <span>-</span>
+                                    <span>Quantity</span>
+                                    <span>+</span>
+                                </div>
+                            </th>
                         }
                     </tr>
                 </thead>
@@ -91,21 +96,26 @@ else
                             @onclick="(() => SelectProduct(product))">
                             <td>@product.Id</td>
                             <td>@product.productName</td>
-                            @if (SelectedProduct!=null && SelectedProduct == product)
+                            @if (SelectedProduct != null && SelectedProduct == product)
                             {
-                                <button class="minus-btn"
-                                        @onclick:stopPropagation="true"
-                                        @onclick="() => SubProductFromOrder(SelectedProduct)">
-                                    -
-                                </button>
                                 <td>
-                                    <InputNumber TValue="int" @bind-Value="currentQuantity" @bind-Value:after="() => HandleQtyChange(SelectedProduct, currentQuantity)" class="quantity-input" />
+                                    <div class="qty-cell">
+                                        <button class="minus-btn"
+                                             @onclick:stopPropagation ="true"
+                                             @onclick="() => SubProductFromOrder(SelectedProduct)">
+                                            -
+                                        </button>
+
+                                        <InputNumber TValue="int" @bind-Value="currentQuantity" @bind-Value:after="() => HandleQtyChange(SelectedProduct, currentQuantity)" class="quantity-input" />
+
+                                        <button
+                                            class="plus-btn"
+                                            @onclick:stopPropagation="true"
+                                            @onclick="() => AddProductToOrder(SelectedProduct)">
+                                            +
+                                        </button>
+                                    </div>
                                 </td>
-                                <button class="plus-btn"
-                                        @onclick:stopPropagation="true"
-                                        @onclick="() => AddProductToOrder(SelectedProduct)">
-                                    +
-                                </button>
                             }
                         </tr>
                     }
@@ -133,7 +143,7 @@ else
                 @foreach (var OItem in OrderItems)
                 {
 
-                        <tr class="product-row @(SelectedOrderItem?.ProductId == OItem.ProductId ? "selected-product" : "")"
+                    <tr class="product-row @(SelectedOrderItem?.ProductId == OItem.ProductId ? "selected-product" : "")"
                         @onclick="(() => SelectOrderItem(OItem))">
                         <td>@OItem.ProductId</td>
                         <td>@OItem.ProductName</td>
@@ -151,7 +161,8 @@ else
         {
             <button class="save-btn" @onclick="SaveOrder">Save Order</button>
         }
-        else if(OrderSaved){
+        else if (OrderSaved)
+        {
             <button class="save-btn" @onclick="ResetOrder">Order saved, reset?</button>
         }
     </div>
@@ -186,9 +197,9 @@ else
     {
         SelectedProduct = product;
         currentQuantity = 0;
-        foreach(OrderItem oItem in OrderItems)
+        foreach (OrderItem oItem in OrderItems)
         {
-            if(oItem.ProductId == product.Id && SelectedProduct.Id == product.Id)
+            if (oItem.ProductId == product.Id && SelectedProduct.Id == product.Id)
             {
                 currentQuantity = oItem.Quantity;
             }
@@ -197,7 +208,7 @@ else
     private void SelectOrderItem(OrderItem orderItem)
     {
         SelectedOrderItem = orderItem;
-        foreach(Product product in Products)
+        foreach (Product product in Products)
         {
             if (product.Id == orderItem.ProductId)
             {
@@ -224,7 +235,7 @@ else
 
         if (!found)
         {
-            OrderItems.Add(new OrderItem(Item.Id, 1,(double)Item.Price,0, Item.productName));
+            OrderItems.Add(new OrderItem(Item.Id, 1, (double)Item.Price, 0, Item.productName));
             currentQuantity = 1;
         }
     }
@@ -252,13 +263,13 @@ else
         List<double> prices = new();
         foreach (var item in OrderItems)
         {
-            prices.Add((double) Products.First(p => p.Id == item.ProductId).Price);
-            prices[prices.Count-1] -= prices[prices.Count-1] * item.DiscountPercentage * 0.01;
-            foreach(Product product in Products)
+            prices.Add((double)Products.First(p => p.Id == item.ProductId).Price);
+            prices[prices.Count - 1] -= prices[prices.Count - 1] * item.DiscountPercentage * 0.01;
+            foreach (Product product in Products)
             {
                 if (product.Id == item.ProductId && product.Curruency != "CZK-IID")
                 {
-                    prices[prices.Count-1] *= GetExchangeRate(product.Curruency);
+                    prices[prices.Count - 1] *= GetExchangeRate(product.Curruency);
                 }
             }
         }
@@ -282,7 +293,7 @@ else
 
         AddProductToOrder(product);
 
-        foreach(OrderItem oItem in OrderItems)
+        foreach (OrderItem oItem in OrderItems)
         {
             if (oItem.ProductId == product.Id)
             {
@@ -299,7 +310,7 @@ else
     private double GetExchangeRate(string currency)
     {
         //if reaver bucks-product, demand more
-        if (currency== "RVR-BUCKS"){ return 2; }
+        if (currency == "RVR-BUCKS") { return 2; }
 
         //default:
         return 1;

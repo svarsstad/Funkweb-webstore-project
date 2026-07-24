@@ -1,5 +1,6 @@
 ﻿@page "/users"
 @rendermode InteractiveServer
+@using System.Linq
 @using Project_Backend.Models
 @using Project_Backend.Services
 @inject UserService UserService
@@ -42,7 +43,9 @@
 else
 {
     <div class="users-list">
-
+        <input class="search-box"
+               placeholder="Search users..."
+               @bind="UserSearch" />
         <table class="table">
 
             <thead>
@@ -59,7 +62,12 @@ else
 
             <tbody>
 
-                @foreach (var user in users)
+
+                @foreach (var user in users.Where(u =>
+                    string.IsNullOrWhiteSpace(UserSearch) ||
+                    u.Email.Contains(UserSearch, StringComparison.OrdinalIgnoreCase) ||
+                u.DisplayName.Contains(UserSearch, StringComparison.OrdinalIgnoreCase) ||
+                u.Id.Contains(UserSearch, StringComparison.OrdinalIgnoreCase)))
                 {
                     <tr class="user-row @(selectedUser?.Id == user.Id ? "selected-user" : "")"
                         @onclick="(() => SelectUser(user))">
@@ -100,6 +108,8 @@ else
     private List<User>? users;
 
     private User? selectedUser;
+
+    private string UserSearch = "";
 
     protected override async Task OnInitializedAsync() => await LoadUsers();
 
