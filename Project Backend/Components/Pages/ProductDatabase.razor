@@ -3,6 +3,7 @@
 @using Project_Backend.Models
 @using Project_Backend.Services
 @inject ProductService ProductService
+@inject CurrencyService CurrencyService
 
 <PageTitle>Product Database</PageTitle>
 
@@ -36,7 +37,7 @@ else
                             <td>@product.Id</td>
                             <td>@product.productName</td>
                             <td>@product.Stock</td>
-                            <td>$@product.Price</td>
+                            <td>@((double)product.Price)@CurrencyService.GetCreditSymbol(product.Curruency)</td>
                             <td class="delete-cell">
 
                                 @if (selectedProduct?.Id == product.Id)
@@ -174,7 +175,7 @@ else
     private string GetCurrentImageUrl()
     {
         if (selectedProduct?.Images == null || selectedProduct.Images.Count == 0) return "";
-        
+
         string rawPath = selectedProduct.Images[$"{currentImageIndex:D3}"];
         return rawPath;
     }
@@ -186,4 +187,5 @@ else
     {
         products = await ProductService.GetAllProductsAsync();
     }
+
 }

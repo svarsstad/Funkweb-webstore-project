@@ -12,6 +12,45 @@ body {
     align-items: flex-start;
 }
 
+/* sticky toolbar */
+.filter-bar {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    padding: 0.5rem;
+    background: #555b5b;
+    border-bottom: 1px solid #2a2f36;
+}
+
+.search-box {
+    flex: 1;
+    background: #6b6b6b;
+    color: #05ebeb;
+    border: 1px solid #05abab;
+    border-radius: 8px;
+    padding: 0.5rem 0.75rem;
+}
+
+.clear-filter-btn {
+    width: 2rem;
+    height: 2rem;
+    background: #505757;
+    color: #05ebeb;
+    border: 1px solid #2a2f36;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+    .clear-filter-btn:hover {
+        background: #555b5b;
+        color: #05dbdb;
+        box-shadow: 0 0 10px rgba(50, 184, 255, 0.15);
+    }
+
 .selected-user-preview {
     width: 120px;
     height: 80px;

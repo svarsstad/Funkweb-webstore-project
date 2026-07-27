@@ -43,9 +43,16 @@
 else
 {
     <div class="users-list">
-        <input class="search-box"
-               placeholder="Search users..."
-               @bind="UserSearch" />
+        <div class="filter-bar">
+            <input class="search-box"
+                   placeholder="Search users..."
+                   @bind="UserSearch" />
+            <button class="clear-filter-btn"
+                    @onclick="ClearUserFilter"
+                    disabled="@string.IsNullOrWhiteSpace(UserSearch)">
+                ✕
+            </button>
+        </div>
         <table class="table">
 
             <thead>
@@ -131,10 +138,10 @@ else
     }
     private async Task ForceReloadUsers()
     {
-      
+
         users = await UserService.GetAllUsersForceReloadAsync();
         StateHasChanged();
- 
+
     }
 
     private DotNetObjectReference<Users>? objRef;
@@ -157,5 +164,9 @@ else
 
         await ForceReloadUsers();
 
+    }
+    private void ClearUserFilter()
+    {
+        UserSearch = "";
     }
 }

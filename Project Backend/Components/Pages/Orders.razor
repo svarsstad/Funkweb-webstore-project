@@ -5,7 +5,7 @@
 
 @inject ProductService ProductService
 @inject OrderService OrderService
-
+@inject CurrencyService CurrencyService
 @code {
 
     private List<Order>? orders;
@@ -127,7 +127,7 @@ else
 
                         <td>@order.OrderDate</td>
 
-                        <td>@order.TotalOrderValue</td>
+                        <td>@order.TotalOrderValue@CurrencyService.GetCreditSymbol(" ")</td>
 
                         <td>@order.Items.Count()</td>
 

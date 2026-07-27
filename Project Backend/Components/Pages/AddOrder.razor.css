@@ -120,10 +120,10 @@ body {
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
-        max-width: 3rem;
+        max-width: 5rem;
     }
     /* quantity header*/
-.qty-header {
+/*.qty-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -134,13 +134,46 @@ body {
     .qty-header span:last-child {
         width: 2rem;
         text-align: center;
-    }
+    }*/
 .qty-cell {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    gap: .5rem;
-    width: 100%;
+    justify-content: center;
+    gap: 0.4rem;
+}
+
+::deep .quantity-input::-webkit-inner-spin-button,
+::deep .quantity-input::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Firefox */
+::deep .quantity-input {
+    appearance: textfield;
+    -moz-appearance: textfield;
+    width: 3.5rem !important;
+    background: #505757 !important;
+    color: #05ebeb !important;
+    border: 1px solid #2a2f36 !important;
+}
+
+
+.quantity-input:focus {
+    border-color: #05ebeb;
+    box-shadow: 0 0 8px rgba(50, 184, 255, 0.3);
+}
+
+.minus-btn,
+.plus-btn {
+    background-color: #505757;
+    color: #05ebeb;
+    border: 1px solid #2a2f36;
+    margin: 0.4rem;
+    border-radius: 1rem;
+    padding: .5rem;
+    transition: background-color 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
+    cursor: pointer;
 }
 
 /* USER ROWS */

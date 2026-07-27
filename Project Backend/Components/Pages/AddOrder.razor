@@ -6,6 +6,7 @@
 @using System.Text.Json
 @using Microsoft.AspNetCore.Components.Forms
 
+@inject CurrencyService CurrencyService
 @inject UserService UserService
 @inject ProductService ProductService
 @inject OrderService OrderService
@@ -21,9 +22,16 @@ else
 {
     <div class="order-layout">
         <div class="users-list">
+            <div class="filter-bar">
             <input class="search-box"
                    placeholder="Search users..."
                    @bind="UserSearch" />
+            <button class="clear-filter-btn"
+                    @onclick="ClearUserFilter"
+                    disabled="@string.IsNullOrWhiteSpace(UserSearch)">
+                ✕
+            </button>
+            </div>
             <table class="table">
 
                 <thead>
@@ -267,11 +275,12 @@ else
             prices[prices.Count - 1] -= prices[prices.Count - 1] * item.DiscountPercentage * 0.01;
             foreach (Product product in Products)
             {
-                if (product.Id == item.ProductId && product.Curruency != "CZK-IID")
+                if (product.Id == item.ProductId && !product.Curruency.StartsWith("CZK-IID"))
                 {
-                    prices[prices.Count - 1] *= GetExchangeRate(product.Curruency);
+                    prices[prices.Count - 1] *= CurrencyService.GetExchangeRate(product.Curruency);
                 }
             }
+            prices[prices.Count - 1] *= item.Quantity;
         }
 
         SaveOrderRequest orderRequest = new SaveOrderRequest(SelectedUser?.Id, OrderItems.ToArray<OrderItem>(), prices.ToArray<double>());
@@ -307,12 +316,9 @@ else
     {
         ProductSearch = "";
     }
-    private double GetExchangeRate(string currency)
+    private void ClearUserFilter()
     {
-        //if reaver bucks-product, demand more
-        if (currency == "RVR-BUCKS") { return 2; }
-
-        //default:
-        return 1;
+        UserSearch = "";
     }
+
 }
