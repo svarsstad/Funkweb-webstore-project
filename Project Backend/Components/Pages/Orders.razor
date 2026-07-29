@@ -9,7 +9,10 @@
 @code {
 
     private List<Order>? orders;
-
+    /// <summary>
+    /// search filter phrase written into class: search-box
+    /// </summary>
+    private string OrderSearch = "";
     private Order? selectedOrder;
     private OrderItem? selectedProduct = null;
 
@@ -79,6 +82,10 @@
         await OrderService.DeleteOrderAsync(order.Id!);
         orders?.Remove(order);
     }
+    private void ClearOrderFilter()
+    {
+        OrderSearch = "";
+    }
 }
 
 <PageTitle>Orders</PageTitle>
@@ -91,81 +98,103 @@
 }
 else
 {
-    <div class="orders-list">
+    <div class="order-layout">
+        <div class="orders-list">
+            <div class="filter-bar">
+                <input class="search-box"
+                       placeholder="Search orders..."
+                       @bind="OrderSearch" />
+                <button class="clear-filter-btn"
+                        @onclick="ClearOrderFilter"
+                        disabled="@string.IsNullOrWhiteSpace(OrderSearch)">
+                    ✕
+                </button>
+            </div>
+            <table class="table">
 
-        <table class="table">
+                <thead>
+                    <tr>
+                        <th>Order Id</th>
+                        <th>Client Id</th>
+                        <th>Date</th>
+                        <th>Price</th>
+                        <th>Products</th>
+                        <th>Status</th>
+                        <th>🗑</th>
+                    </tr>
+                </thead>
 
-            <thead>
-                <tr>
-                    <th>Order Id</th>
-                    <th>Client Id</th>
-                    <th>Date</th>
-                    <th>Price</th>
-                    <th>Products</th>
-                    <th>Status</th>
-                    <th>🗑</th>
-                </tr>
-            </thead>
+                <tbody>
 
-            <tbody>
+                    @foreach (var order in orders.Where(
+                        u => 
+                        (
+                            u.Id != null &&
+                            u.UserId != null) && 
+                            (
+                                string.IsNullOrWhiteSpace(OrderSearch) ||
+                                u.Id.Contains(OrderSearch, StringComparison.OrdinalIgnoreCase) ||
+                                u.UserId.Contains(OrderSearch, StringComparison.OrdinalIgnoreCase) ||
+                                u.Items.Any(item => item.ProductName != null && item.ProductName.Contains(OrderSearch, StringComparison.OrdinalIgnoreCase))
+                            )
+                        )
+                    )
+                    {
+                        <tr class="order-row @(selectedOrder?.Id == order.Id ? "selected-order" : "")"
+                            @onclick="(() => SelectOrder(order))">
 
-                @foreach (var order in orders)
-                {
-                    <tr class="order-row @(selectedOrder?.Id == order.Id ? "selected-order" : "")"
-                        @onclick="(() => SelectOrder(order))">
+                            <td>@order.Id</td>
 
-                        <td>@order.Id</td>
-
-                        @if (string.IsNullOrWhiteSpace(order.UserId))
-                        {
-                            <td>TEST</td>
-                        }
-                        else
-                        {
-                            <td>@order.UserId</td>
-                        }
-
-                        <td>@order.OrderDate</td>
-
-                        <td>@order.TotalOrderValue@CurrencyService.GetCreditSymbol(" ")</td>
-
-                        <td>@order.Items.Count()</td>
-
-                        <td>
-
-                            <select value="@order.OrderStatus"
-                                    @onchange="(e => OnStatusChanged(e, order))">
-
-                                @foreach (var status in statuses)
-                                {
-                                    <option value="@status">
-                                        @status
-                                    </option>
-                                }
-
-                            </select>
-
-                        </td>
-                        <td class="delete-cell">
-
-                            @if (selectedOrder?.Id == order.Id)
+                            @if (string.IsNullOrWhiteSpace(order.UserId))
                             {
-                                <button class="delete-btn"
-                                        @onclick:stopPropagation="true"
-                                        @onclick="() => DeleteOrder(order)">
-                                    🗑
-                                </button>
+                                <td>TEST</td>
+                            }
+                            else
+                            {
+                                <td>@order.UserId</td>
                             }
 
-                        </td>
+                            <td>@order.OrderDate</td>
 
-                    </tr>
-                }
+                            <td>@order.TotalOrderValue@CurrencyService.GetCreditSymbol(" ")</td>
 
-            </tbody>
+                            <td>@order.Items.Count()</td>
 
-        </table>
+                            <td>
 
+                                <select value="@order.OrderStatus"
+                                        @onchange="(e => OnStatusChanged(e, order))">
+
+                                    @foreach (var status in statuses)
+                                    {
+                                        <option value="@status">
+                                            @status
+                                        </option>
+                                    }
+
+                                </select>
+
+                            </td>
+                            <td class="delete-cell">
+
+                                @if (selectedOrder?.Id == order.Id)
+                                {
+                                    <button class="delete-btn"
+                                            @onclick:stopPropagation="true"
+                                            @onclick="() => DeleteOrder(order)">
+                                        🗑
+                                    </button>
+                                }
+
+                            </td>
+
+                        </tr>
+                    }
+
+                </tbody>
+
+            </table>
+        </div>
     </div>
 }
 
