@@ -64,5 +64,17 @@ namespace Project_Backend.Services
             await _usersCollection.DeleteOneAsync(
                 u => u.Id == id);
         }
+        public async Task<string> GetUserName(string id)
+        {
+            if (Users == null || Users.Count < 1)
+            {
+                await GetAllUsersAsync();
+            }
+            foreach (var user in Users)
+            {
+                if (user.Id == id) { return user.DisplayName; }
+            }
+            return "";
+        }
     }
 }

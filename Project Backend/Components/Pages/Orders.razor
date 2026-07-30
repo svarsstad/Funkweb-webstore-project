@@ -6,6 +6,7 @@
 @inject ProductService ProductService
 @inject OrderService OrderService
 @inject CurrencyService CurrencyService
+@inject UserService UserService
 @code {
 
     private List<Order>? orders;
@@ -14,6 +15,7 @@
     /// </summary>
     private string OrderSearch = "";
     private Order? selectedOrder;
+    private string currentUserName = "";
     private OrderItem? selectedProduct = null;
 
     private List<string> statuses = new()
@@ -54,10 +56,14 @@
         }
     }
 
-    private void SelectOrder(Order order)
+    private async Task SelectOrder(Order order)
     {
         selectedProduct = null;
         selectedOrder = order;
+        if (order.UserId != null)
+        {
+            currentUserName = await UserService.GetUserName(order.UserId);
+        }
     }
     private void SelectProduct(OrderItem product)
     {
@@ -127,10 +133,10 @@ else
                 <tbody>
 
                     @foreach (var order in orders.Where(
-                        u => 
+                        u =>
                         (
                             u.Id != null &&
-                            u.UserId != null) && 
+                            u.UserId != null) &&
                             (
                                 string.IsNullOrWhiteSpace(OrderSearch) ||
                                 u.Id.Contains(OrderSearch, StringComparison.OrdinalIgnoreCase) ||
@@ -207,22 +213,30 @@ else
     else
     {
         <h2>Order Details</h2>
+        <div>
+            <p>
+                <strong>Order:</strong>
+                @selectedOrder.Id
+            </p>
 
-        <p>
-            <strong>Order:</strong>
-            @selectedOrder.Id
-        </p>
+            <p>
+                <strong>Status:</strong>
+                @selectedOrder.OrderStatus
+            </p>
 
-        <p>
-            <strong>Status:</strong>
-            @selectedOrder.OrderStatus
-        </p>
+            <p>
+                <strong>Total:</strong>
+                @selectedOrder.TotalOrderValue
+            </p>
+        </div>
+        <div>
+            <p>
+                <strong>Client:</strong>
+                @currentUserName
+            </p>
 
-        <p>
-            <strong>Total:</strong>
-            @selectedOrder.TotalOrderValue
-        </p>
 
+        </div>
         <h3>Items</h3>
 
         <table class="table">
