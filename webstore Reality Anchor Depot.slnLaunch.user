@@ -1,0 +1,17 @@
+[
+  {
+    "Name": "FullProfile",
+    "Projects": [
+      {
+        "Path": "Project Backend\\Project Backend.csproj",
+        "Action": "Start",
+        "DebugTarget": "https"
+      },
+      {
+        "Path": "Project Frontend\\Project Frontend.csproj",
+        "Action": "Start",
+        "DebugTarget": "https"
+      }
+    ]
+  }
+]

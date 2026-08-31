@@ -1,5 +1,6 @@
 <Solution>
   <Folder Name="/Solution Items/" />
   <Project Path="Project Backend/Project Backend.csproj" Id="63bc6dcd-abc3-4122-9165-b0036f75f2be" />
+  <Project Path="Project Frontend/Project Frontend.csproj" Id="7ee51949-d84e-4868-8bc5-b2f483da9f33" />
   <Project Path="Project Products/Project Products.csproj" Id="9027150a-e5e6-4433-b422-9baa92d36c61" />
 </Solution>

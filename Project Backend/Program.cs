@@ -48,6 +48,10 @@ if (!app.Environment.IsDevelopment())
 app.UseStatusCodePagesWithReExecute("/not-found", createScopeForStatusCodePages: true);
 app.UseHttpsRedirection();
 
+
+// Enable CORS for API requests coming from the storefront
+app.UseCors("AllowFrontendStore");
+
 app.UseAntiforgery();
 
 app.MapStaticAssets();

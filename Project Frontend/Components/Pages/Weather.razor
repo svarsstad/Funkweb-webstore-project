@@ -1,0 +1,46 @@
+﻿@page "/weather"
+@attribute [StreamRendering]
+@inject HttpClient Http
+
+<h3>Reality Anchor Depot Catalog</h3>
+
+@if (products == null)
+{
+    <p><em>Loading dark-market inventory...</em></p>
+}
+else
+{
+    <div class="product-grid">
+        @foreach (var product in products)
+        {
+            <div class="product-card">
+                <h4>@product.ProductName</h4>
+                <p><strong>Style:</strong> @product.ProductStyle</p>
+                <p>@product.Description</p>
+                <p><strong>Price:</strong> @product.Price @product.Currency</p>
+            </div>
+        }
+    </div>
+}
+
+@code {
+    // 1. Updated from Dictionary to List
+    private List<ProductDto>? products;
+
+    protected override async Task OnInitializedAsync()
+    {
+        // 2. Updated deserialization type to List<ProductDto>
+        products = await Http.GetFromJsonAsync<List<ProductDto>>("api/Product");
+    }
+
+    public class ProductDto
+    {
+        public string Id { get; set; } = string.Empty;
+        public string ProductName { get; set; } = string.Empty;
+        public string ProductStyle { get; set; } = string.Empty;
+        public string Description { get; set; } = string.Empty;
+        public decimal Price { get; set; }
+        public string Currency { get; set; } = string.Empty;
+    }
+}
+
