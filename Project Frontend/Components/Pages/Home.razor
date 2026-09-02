@@ -1,7 +1,65 @@
 ﻿@page "/"
+@inject HttpClient Http
 
-<PageTitle>Home</PageTitle>
+<PageTitle>Reality Anchor Depot</PageTitle>
 
-<h1>Hello, world!</h1>
+<!-- Banner Container with Overlay Layering -->
+<section class="banner-container">
+    <!-- Tentacle Overlay Layer -->
+    <img src="images/Title_foreground.png" alt="" class="banner-overlay-foreground" />
 
-Welcome to your new app.
+    <!-- Central Station Logo -->
+    <img src="images/Title.png" alt="The Reality Anchor Depot Banner" class="banner-image" />
+</section>
+
+@if (products == null)
+{
+    <div class="loading-state">
+        <p>DECRYPTION IN PROGRESS... CONNECTING TO DEPOT MAINFRAME</p>
+    </div>
+}
+else
+{
+    <div class="product-grid">
+        @foreach (var item in products)
+        {
+            <div class="product-card">
+                <div class="card-header">
+                    <span class="card-badge">@item.ProductStyle</span>
+                </div>
+                <div class="card-body">
+                    <h3 class="product-title">@item.ProductName</h3>
+                    <p class="product-desc">@item.Description</p>
+
+                    <div class="price-row">
+                        <span class="price-amount">@item.Price.ToString("N2")</span>
+                        <span class="price-currency">@item.Currency</span>
+                    </div>
+
+                    <button class="action-btn buy-btn" type="button">
+                        PURCHASE ITEM
+                    </button>
+                </div>
+            </div>
+        }
+    </div>
+}
+
+@code {
+    private List<ProductDto>? products;
+
+    protected override async Task OnInitializedAsync()
+    {
+        products = await Http.GetFromJsonAsync<List<ProductDto>>("api/Product");
+    }
+
+    public class ProductDto
+    {
+        public string Id { get; set; } = string.Empty;
+        public string ProductName { get; set; } = string.Empty;
+        public string ProductStyle { get; set; } = string.Empty;
+        public string Description { get; set; } = string.Empty;
+        public decimal Price { get; set; }
+        public string Currency { get; set; } = string.Empty;
+    }
+}

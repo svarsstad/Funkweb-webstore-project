@@ -1,23 +1,71 @@
 ﻿@inherits LayoutComponentBase
 
-<div class="page">
-    <div class="sidebar">
-        <NavMenu />
+<div class="store-container">
+    <!-- Sticky Header Wrapper Keeps the Navigation Bar Fixed on Scroll -->
+    <div class="sticky-header-wrapper">
+        <header class="navbar-top">
+            <!-- Mini-Banner Brand Button -->
+            <a class="navbar-brand brand-button" href="/">
+                <img src="images/Title_only.png" alt="Reality Anchor Depot" class="brand-title-img" />
+                <img src="images/Title_foreground.png" alt="" class="brand-overlay-foreground" />
+            </a>
+
+            <div class="navbar-search">
+                <input type="text" placeholder="Search void tech, engrams, constructs..." />
+                <button class="action-btn search-btn" type="button">SEARCH</button>
+            </div>
+
+            <div class="navbar-actions">
+                <button class="action-btn user-btn" type="button" @onclick="ToggleLoginState">
+                    @if (!string.IsNullOrEmpty(userAvatarUrl))
+                    {
+                        <img src="@userAvatarUrl" class="user-avatar" alt="Profile" />
+                    }
+                    <span class="btn-text">@(isLoggedIn ? userName : "NEURAL LOG IN")</span>
+                </button>
+
+                <a href="/cart" class="action-btn cart-btn">
+                    <span class="cart-icon">🛒</span>
+                    <span class="cart-count">@cartCount</span>
+                </a>
+            </div>
+        </header>
+
+        <nav class="category-bar">
+            <a href="/catalog" class="nav-chip">ALL GEAR</a>
+            <a href="/catalog?style=cyberpunk" class="nav-chip">CYBERPUNK</a>
+            <a href="/catalog?style=steampunk" class="nav-chip">STEAMPUNK</a>
+            <a href="/catalog?style=reaver-tech" class="nav-chip">REAVER-TECH</a>
+            <a href="/catalog?style=bio-punk" class="nav-chip">BIO-PUNK</a>
+        </nav>
     </div>
 
-    <main>
-        <div class="top-row px-4">
-            <a href="https://learn.microsoft.com/aspnet/core/" target="_blank">About</a>
-        </div>
-
-        <article class="content px-4">
-            @Body
-        </article>
+    <main class="store-body">
+        @Body
     </main>
+
+    <footer class="store-footer">
+        <p>&copy; 2026 REALITY ANCHOR DEPOT. ALL RIGHTS RESERVED ACROSS TIMELINES.</p>
+    </footer>
 </div>
 
-<div id="blazor-error-ui" data-nosnippet>
-    An unhandled error has occurred.
-    <a href="." class="reload">Reload</a>
-    <span class="dismiss">🗙</span>
-</div>
+@code {
+    private bool isLoggedIn = false;
+    private string? userAvatarUrl = null;
+    private string userName = "OPERATIVE";
+    private int cartCount = 0;
+
+    private void ToggleLoginState()
+    {
+        isLoggedIn = !isLoggedIn;
+        if (isLoggedIn)
+        {
+            userName = "CYBER_RUNNER";
+            userAvatarUrl = "images/user_avatar.png";
+        }
+        else
+        {
+            userAvatarUrl = null;
+        }
+    }
+}
