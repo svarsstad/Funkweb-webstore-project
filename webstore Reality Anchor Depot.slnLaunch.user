@@ -12,6 +12,12 @@
         "Action": "Start",
         "DebugTarget": "https"
       }
+      ,
+      {
+        "Path": "Project Products\\Project Products.csproj",
+        "Action": "Start",
+        "DebugTarget": "Exe"
+      }
     ]
   }
 ]

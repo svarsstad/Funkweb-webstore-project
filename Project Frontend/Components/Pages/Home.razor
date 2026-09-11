@@ -1,16 +1,25 @@
 ﻿@page "/"
-@inject HttpClient Http
+
 
 <PageTitle>Reality Anchor Depot</PageTitle>
 
-<!-- Banner Container with Overlay Layering -->
 <section class="banner-container">
-    <!-- Tentacle Overlay Layer -->
-    <img src="images/Title_foreground.png" alt="" class="banner-overlay-foreground" />
-
-    <!-- Central Station Logo -->
-    <img src="images/Title.png" alt="The Reality Anchor Depot Banner" class="banner-image" />
+    <img src="images/Title.png" alt="The Reality Anchor Depot" class="banner-image" />
+    <img src="images/tentacles-overlay.png" alt="" class="banner-overlay-tentacles" />
 </section>
+
+<!-- Currency Selector Controls -->
+<div class="currency-selector">
+    <label>SELECT CURRENCY SHIFT:</label>
+    <select @onchange="OnCurrencyChanged" value="@selectedCurrency">
+        <option value="DEFAULT">Standard Credits</option>
+        <option value="CZK - IID">Imperial IID</option>
+        <option value="SCR-P">Scrap-P (Reaver Bucks)</option>
+        <option value="REA-P">Reaver-P</option>
+        <option value="SPLI-C">Splice-C</option>
+        <option value="IND-MET">Industrial Metal</option>
+    </select>
+</div>
 
 @if (products == null)
 {
@@ -23,17 +32,20 @@ else
     <div class="product-grid">
         @foreach (var item in products)
         {
+            <!-- Calculate converted price using current exchange rate -->
+            var convertedPrice = (double)item.Price * exchangeRate;
+
             <div class="product-card">
                 <div class="card-header">
-                    <span class="card-badge">@item.ProductStyle</span>
+                    <span class="card-badge">@item.ProductCategory</span>
                 </div>
                 <div class="card-body">
-                    <h3 class="product-title">@item.ProductName</h3>
-                    <p class="product-desc">@item.Description</p>
+                    <h3 class="product-title">@item.productName</h3>
+                    <p class="product-desc">@item.description</p>
 
                     <div class="price-row">
-                        <span class="price-amount">@item.Price.ToString("N2")</span>
-                        <span class="price-currency">@item.Currency</span>
+                        <span class="price-symbol">@currencySymbol</span>
+                        <span class="price-amount">@convertedPrice.ToString("N2")</span>
                     </div>
 
                     <button class="action-btn buy-btn" type="button">
@@ -46,20 +58,27 @@ else
 }
 
 @code {
-    private List<ProductDto>? products;
+    
+    private List<Project_Backend.Models.Product>? products;
+    private string selectedCurrency = "DEFAULT";
+    private string currencySymbol = "⌬";
+    private double exchangeRate = 1.0;
 
     protected override async Task OnInitializedAsync()
     {
-        products = await Http.GetFromJsonAsync<List<ProductDto>>("api/Product");
+        //products = await ProductApi.GetAllProductsAsync();
+        await UpdateCurrencyData(selectedCurrency);
     }
 
-    public class ProductDto
+    private async Task OnCurrencyChanged(ChangeEventArgs e)
     {
-        public string Id { get; set; } = string.Empty;
-        public string ProductName { get; set; } = string.Empty;
-        public string ProductStyle { get; set; } = string.Empty;
-        public string Description { get; set; } = string.Empty;
-        public decimal Price { get; set; }
-        public string Currency { get; set; } = string.Empty;
+        selectedCurrency = e.Value?.ToString() ?? "DEFAULT";
+        await UpdateCurrencyData(selectedCurrency);
+    }
+
+    private async Task UpdateCurrencyData(string currencyCode)
+    {
+        //currencySymbol = await CurrencyApi.GetCreditSymbolAsync(currencyCode);
+        //exchangeRate = await CurrencyApi.GetExchangeRateAsync(currencyCode);
     }
 }

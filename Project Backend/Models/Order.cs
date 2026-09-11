@@ -9,7 +9,7 @@ namespace Project_Backend.Models
         /// <summary>
         /// This is the main class for orders, it contains the user id of the user who made the order, the date of the order, the status of the order, an array of OrderItems and the total value of the order
         /// </summary>
-        private OrderItem[] items = new OrderItem[0];
+        private OrderItem[] items = Array.Empty<OrderItem>();
 
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]

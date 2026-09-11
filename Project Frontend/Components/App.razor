@@ -5,11 +5,12 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <base href="/" />
-    <ResourcePreloader />
-    <link rel="stylesheet" href="@Assets["lib/bootstrap/dist/css/bootstrap.min.css"]" />
-    <link rel="stylesheet" href="@Assets["app.css"]" />
-    <link rel="stylesheet" href="@Assets["Project_Frontend.styles.css"]" />
-    <ImportMap />
+    <!-- ResourcePreloader and ImportMap rely on the static web assets pipeline
+         which required a generated manifest; replaced asset helpers with static
+         paths so the app can run without static web assets manifest. -->
+    <link rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/app.css" />
+    <link rel="stylesheet" href="/Project_Frontend.styles.css" />
     <link rel="icon" type="image/png" href="favicon.png" />
     <HeadOutlet />
 </head>
@@ -17,7 +18,7 @@
 <body>
     <Routes />
     <ReconnectModal />
-    <script src="@Assets["_framework/blazor.web.js"]"></script>
+    <script src="/_framework/blazor.web.js"></script>
 </body>
 
 </html>
