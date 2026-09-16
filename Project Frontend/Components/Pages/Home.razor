@@ -1,6 +1,7 @@
 ﻿@page "/"
-
-
+@rendermode InteractiveServer
+@inject Project_Backend.Services.CurrencyService CurrencyService
+@inject Project_Frontend.Services.PublicProductService ProductApi
 <PageTitle>Reality Anchor Depot</PageTitle>
 
 <section class="banner-container">
@@ -12,7 +13,7 @@
 <div class="currency-selector">
     <label>SELECT CURRENCY SHIFT:</label>
     <select @onchange="OnCurrencyChanged" value="@selectedCurrency">
-        <option value="DEFAULT">Standard Credits</option>
+        <option value="Any">Any</option>
         <option value="CZK - IID">Imperial IID</option>
         <option value="SCR-P">Scrap-P (Reaver Bucks)</option>
         <option value="REA-P">Reaver-P</option>
@@ -33,7 +34,6 @@ else
         @foreach (var item in products)
         {
             <!-- Calculate converted price using current exchange rate -->
-            var convertedPrice = (double)item.Price * exchangeRate;
 
             <div class="product-card">
                 <div class="card-header">
@@ -44,8 +44,16 @@ else
                     <p class="product-desc">@item.description</p>
 
                     <div class="price-row">
-                        <span class="price-symbol">@currencySymbol</span>
-                        <span class="price-amount">@convertedPrice.ToString("N2")</span>
+                        @if(currencySymbolAny==true)
+                        {
+                            <span class="price-symbol">@CurrencyService.GetCreditSymbol(item.Curruency)</span>
+                            <span class="price-amount">@item.Price.ToString("N2")</span>
+                        }
+                        else
+                        {
+                            <span class="price-symbol">@CurrencyService.GetCreditSymbol(selectedCurrency)</span>
+                            <span class="price-amount">@CurrencyService.ExchangePrice((double)item.Price, item.Curruency, selectedCurrency).ToString("N2")</span>
+                        }
                     </div>
 
                     <button class="action-btn buy-btn" type="button">
@@ -58,21 +66,28 @@ else
 }
 
 @code {
-    
+
     private List<Project_Backend.Models.Product>? products;
-    private string selectedCurrency = "DEFAULT";
-    private string currencySymbol = "⌬";
-    private double exchangeRate = 1.0;
+    private string selectedCurrency = "Any";
+    private bool currencySymbolAny = true;
 
     protected override async Task OnInitializedAsync()
     {
-        //products = await ProductApi.GetAllProductsAsync();
+        products = await ProductApi.GetAllProductsAsync();
         await UpdateCurrencyData(selectedCurrency);
     }
 
     private async Task OnCurrencyChanged(ChangeEventArgs e)
     {
-        selectedCurrency = e.Value?.ToString() ?? "DEFAULT";
+        if(e.Value?.ToString() == "Any")
+        {
+            currencySymbolAny = true;
+        }
+        else
+        {
+            currencySymbolAny = false;
+        }
+        selectedCurrency = e.Value?.ToString() ?? "Any";
         await UpdateCurrencyData(selectedCurrency);
     }
 

@@ -11,14 +11,17 @@
   <!-- Removed ProjectReference to backend so frontend will compile linked model sources directly -->
 
   <ItemGroup>
+	<Compile Include="..\Project Backend\Services\CurrencyService.cs" Link="Services\CurrencyService.cs" />
     <Compile Include="..\Project Backend\Models\Order.cs" Link="Models\Order.cs" />
     <Compile Include="..\Project Backend\Models\User.cs" Link="Models\User.cs" />
     <Compile Include="..\Project Backend\Models\Product.cs" Link="Models\Product.cs" />
     <Compile Include="..\Project Backend\Models\SaveOrderRequest.cs" Link="Models\SaveOrderRequest.cs" />
+	<None Update="appsettings.private.json">
+		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	</None>
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Services\" />
     <Folder Include="wwwroot\lib\bootstrap\dist\css\" />
   </ItemGroup>
 

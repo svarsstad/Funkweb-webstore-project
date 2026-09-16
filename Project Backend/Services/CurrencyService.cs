@@ -19,6 +19,10 @@ namespace Project_Backend.Services
             //default:
             return 1;
         }
+        public double ExchangePrice(double value,string startCurrency,string endCurrency)
+        {
+            return value * GetExchangeRate(startCurrency) / GetExchangeRate(endCurrency);  
+        }
         public string GetCreditSymbol(string cur)
         {
             if (cur.StartsWith("CZK - IID"))
