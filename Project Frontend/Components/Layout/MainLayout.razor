@@ -6,8 +6,8 @@
         <header class="navbar-top">
             <!-- Mini-Banner Brand Button -->
             <a class="navbar-brand brand-button" href="/">
-                <img src="images/Title_foreground.png" alt="" class="brand-overlay-foreground" />
-                <img src="images/Title_only.png" alt="Reality Anchor Depot" class="brand-title-img" />
+                <img src=@(imagePath + "/Images/Title_foreground.png") alt="" class="brand-overlay-foreground" />
+                <img src=@(imagePath + "/Images/Title_only.png") alt="Reality Anchor Depot" class="brand-title-img" />
             </a>
 
             <div class="navbar-search">
@@ -49,19 +49,25 @@
     </footer>
 </div>
 
+@inject IConfiguration Configuration
 @code {
     private bool isLoggedIn = false;
     private string? userAvatarUrl = null;
     private string userName = "OPERATIVE";
     private int cartCount = 0;
+    private string? imagePath;
 
+    protected override async Task OnInitializedAsync()
+    {
+        imagePath = Configuration["ImagePath"];
+    }
     private void ToggleLoginState()
     {
         isLoggedIn = !isLoggedIn;
         if (isLoggedIn)
         {
             userName = "CYBER_RUNNER";
-            userAvatarUrl = "images/user_avatar.png";
+            userAvatarUrl = imagePath + "/Images/user_avatar.png";
         }
         else
         {

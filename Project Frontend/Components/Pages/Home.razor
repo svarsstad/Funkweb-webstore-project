@@ -5,8 +5,8 @@
 <PageTitle>Reality Anchor Depot</PageTitle>
 
 <section class="banner-container">
-    <img src="images/Title.png" alt="The Reality Anchor Depot" class="banner-image" />
-    <img src="images/tentacles-overlay.png" alt="" class="banner-overlay-tentacles" />
+    <img src=@(imagePath+"/Images/Title.png") alt="The Reality Anchor Depot" class="banner-image" />
+    <img src=@(imagePath+"Images/tentacles-overlay.png") alt="" class="banner-overlay-tentacles" />
 </section>
 
 <!-- Currency Selector Controls -->
@@ -40,8 +40,9 @@ else
                     <span class="card-badge">@item.ProductCategory</span>
                 </div>
                 <div class="card-body">
+                <div class="card-body-container">
                     <h3 class="product-title">@item.productName</h3>
-                    <p class="product-desc">@item.description</p>
+                    <img src=@(imagePath+item.Images.ElementAt(0))  class="card-image" />
 
                     <div class="price-row">
                         @if(currencySymbolAny==true)
@@ -56,23 +57,27 @@ else
                         }
                     </div>
 
-                    <button class="action-btn buy-btn" type="button">
+                    <button class="action-btn buy-btn" type="button" onclick="alert('Item purchased!')">
                         PURCHASE ITEM
                     </button>
+                    </div>
                 </div>
             </div>
         }
     </div>
 }
-
+@inject IConfiguration Configuration
 @code {
 
     private List<Project_Backend.Models.Product>? products;
     private string selectedCurrency = "Any";
     private bool currencySymbolAny = true;
 
+    private string? imagePath;
+
     protected override async Task OnInitializedAsync()
     {
+        imagePath = Configuration["ImagePath"];
         products = await ProductApi.GetAllProductsAsync();
         await UpdateCurrencyData(selectedCurrency);
     }
