@@ -42,7 +42,7 @@ else
                 <div class="card-body">
                 <div class="card-body-container">
                     <h3 class="product-title">@item.productName</h3>
-                    <img src=@(imagePath+item.Images.ElementAt(0))  class="card-image" />
+                    <img src=@(imagePath+item.Images.ElementAt(0).Value)  class="card-image" />
 
                     <div class="price-row">
                         @if(currencySymbolAny==true)
