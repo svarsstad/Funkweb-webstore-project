@@ -1,6 +1,7 @@
 .banner-container {
     position: relative;
     width: 100%;
+    height: 200px;
     /* Radial gradient: Bright cyan in the center transitioning to purple at the edges */
     background: radial-gradient(ellipse at center, #00f0ff 20%, #7e22ce 75%, #3b0764 100%);
     /* Purple border with subtle glow */
@@ -16,17 +17,19 @@
 }
 
 /* 1. Title logo capped at 200px max-height */
-.banner-image {
-    position: relative;
+.banner-background {
+    position: center;
+    top: 0;
+    left: 0;
+    width: 60%;
+    height: 90%;
+    object-fit: fill; /* Forces entire tentacle frame to stretch edge-to-edge over cyan banner */
+    pointer-events: none;
     z-index: 1;
-    max-height: 200px;
-    width: auto;
-    object-fit: contain;
-    display: block;
 }
 
 /* 3. Foreground overlay pulled out of flex flow & scaled to fill full container bounds */
-.banner-overlay-foreground {
+.banner-overlay-tentacles {
     position: absolute;
     top: 0;
     left: 0;
@@ -44,15 +47,19 @@
     font-weight: 700;
     letter-spacing: 1px;
 }
-
 .product-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
     gap: 24px;
 }
 
+
+/* =========================
+   PRODUCT CARD
+   ========================= */
+
 .product-card {
-    background: linear-gradient(180deg, #120b24 0%, #0a0614 100%);
+    background: linear-gradient( 180deg, #120b24 0%, #0a0614 100% );
     border: 2px solid #2e1d52;
     border-radius: 8px;
     display: flex;
@@ -67,8 +74,13 @@
         box-shadow: 0 0 15px rgba(0, 240, 255, 0.3);
     }
 
+
+/* =========================
+   HEADER
+   ========================= */
+
 .card-header {
-    padding: 12px 16px 0 16px;
+    padding: 12px 16px 0;
     display: flex;
     justify-content: flex-end;
 }
@@ -77,12 +89,17 @@
     background-color: #2e1d52;
     color: #a855f7;
     border: 1px solid #7e22ce;
+    border-radius: 4px;
     padding: 3px 8px;
     font-size: 0.7rem;
     font-weight: 800;
     text-transform: uppercase;
-    border-radius: 4px;
 }
+
+
+/* =========================
+   BODY
+   ========================= */
 
 .card-body {
     padding: 16px;
@@ -91,70 +108,71 @@
     flex-grow: 1;
 }
 
-        
-.card-image {
-    width: 100%;
-    height: 160px;
-    object-fit: cover;
-    border-radius: 4px;
-    margin-bottom: 12px;
-}
+
+/* =========================
+   TITLE
+   ========================= */
 
 .product-title {
     font-size: 1.1rem;
     font-weight: 800;
     color: #cff4fc;
-    margin: 0 0 10px 0;
+    margin: 0 0 12px 0;
+    min-height: 2.6em;
+    display: flex;
+    align-items: flex-start;
 }
 
 
-/* Container to enforce uniform height across all product cards */
-.card-body-container {
-    position: relative;
+/* =========================
+   IMAGE
+   ========================= */
+
+.card-image-container {
     width: 100%;
-    height: 180px;
+    height: 220px;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: radial-gradient(circle at center, #1b1035 0%, #080612 85%);
+    background: radial-gradient( circle at center, #1b1035 0%, #080612 85% );
     border-bottom: 1px solid #7e22ce;
     overflow: hidden;
     padding: 12px;
+    box-sizing: border-box;
 }
 
-/* Image scaling and neon drop-shadow styling */
 .card-image {
     max-width: 100%;
     max-height: 100%;
     width: auto;
     height: auto;
-    object-fit: contain; /* Ensures full gear item is visible without stretching or cropping */
-    filter: drop-shadow(0 0 6px rgba(0, 240, 255, 0.3));
-    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), filter 0.3s ease;
+    object-fit: contain;
+    filter: drop-shadow( 0 0 6px rgba(0, 240, 255, 0.3) );
+    transition: transform 0.3s ease, filter 0.3s ease;
 }
 
-/* Interactive hover zoom and holographic glow shift */
-.product-card:hover .product-image {
-    transform: scale(1.08) translateY(-2px);
-    filter: drop-shadow(0 0 14px rgba(0, 240, 255, 0.75));
+.product-card:hover .card-image {
+    transform: scale(1.08);
+    filter: drop-shadow( 0 0 14px rgba(0, 240, 255, 0.75) );
 }
 
-/* Optional scanline overlay effect for product preview */
-.product-image-container::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: linear-gradient( 180deg, rgba(255, 255, 255, 0) 50%, rgba(0, 0, 0, 0.25) 50% );
-    background-size: 100% 4px;
-    pointer-events: none;
-    opacity: 0.6;
-}
+
+/* =========================
+   PRICE
+   ========================= */
 
 .price-row {
+    margin-top: 14px;
     margin-bottom: 16px;
     display: flex;
     align-items: baseline;
     gap: 6px;
+}
+
+.price-symbol {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #a78bfa;
 }
 
 .price-amount {
@@ -164,22 +182,22 @@
     text-shadow: 0 0 8px rgba(0, 240, 255, 0.4);
 }
 
-.price-currency {
-    font-size: 0.8rem;
-    color: #a78bfa;
-    font-weight: 700;
-}
+
+/* =========================
+   PURCHASE BUTTON
+   ========================= */
 
 .buy-btn {
     width: 100%;
-    background: linear-gradient(180deg, #9333ea 0%, #6b21a8 100%);
+    margin-top: auto;
+    background: linear-gradient( 180deg, #9333ea 0%, #6b21a8 100% );
     color: #cff4fc;
     border: 2px solid #a855f7;
     box-shadow: 0 4px 0 #3b0764, 0 0 10px rgba(168, 85, 247, 0.3);
 }
 
     .buy-btn:hover {
-        background: linear-gradient(180deg, #00f0ff 0%, #00a8b5 100%);
+        background: linear-gradient( 180deg, #00f0ff 0%, #00a8b5 100% );
         color: #080612;
         border-color: #00f0ff;
         transform: translateY(-2px);

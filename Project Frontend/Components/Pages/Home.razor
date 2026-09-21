@@ -5,8 +5,8 @@
 <PageTitle>Reality Anchor Depot</PageTitle>
 
 <section class="banner-container">
-    <img src=@(imagePath+"/Images/Title.png") alt="The Reality Anchor Depot" class="banner-image" />
-    <img src=@(imagePath+"Images/tentacles-overlay.png") alt="" class="banner-overlay-tentacles" />
+    <img src=@(imagePath+"/Images/Title.png") alt="The Reality Anchor Depot" class="banner-background" />
+    <img src=@(imagePath+"/Images/Title_foreground.png") alt="" class="banner-overlay-tentacles" />
 </section>
 
 <!-- Currency Selector Controls -->
@@ -30,41 +30,69 @@
 }
 else
 {
-    <div class="product-grid">
-        @foreach (var item in products)
-        {
-            <!-- Calculate converted price using current exchange rate -->
+   <div class="product-grid">
 
-            <div class="product-card">
-                <div class="card-header">
-                    <span class="card-badge">@item.ProductCategory</span>
-                </div>
-                <div class="card-body">
-                <div class="card-body-container">
-                    <h3 class="product-title">@item.productName</h3>
-                    <img src=@(imagePath+item.Images.ElementAt(0).Value)  class="card-image" />
+    @foreach (var item in products)
+    {
+        <div class="product-card">
 
-                    <div class="price-row">
-                        @if(currencySymbolAny==true)
-                        {
-                            <span class="price-symbol">@CurrencyService.GetCreditSymbol(item.Curruency)</span>
-                            <span class="price-amount">@item.Price.ToString("N2")</span>
-                        }
-                        else
-                        {
-                            <span class="price-symbol">@CurrencyService.GetCreditSymbol(selectedCurrency)</span>
-                            <span class="price-amount">@CurrencyService.ExchangePrice((double)item.Price, item.Curruency, selectedCurrency).ToString("N2")</span>
-                        }
-                    </div>
-
-                    <button class="action-btn buy-btn" type="button" onclick="alert('Item purchased!')">
-                        PURCHASE ITEM
-                    </button>
-                    </div>
-                </div>
+            <div class="card-header">
+                <span class="card-badge">@item.ProductCategory</span>
             </div>
-        }
-    </div>
+
+            <div class="card-body">
+
+                <h3 class="product-title">
+                    @item.productName
+                </h3>
+
+                <div class="card-image-container">
+                    <img src="@(imagePath + item.Images.ElementAt(0).Value)"
+                         class="card-image" />
+                </div>
+
+                <div class="price-row">
+
+                    @if (currencySymbolAny)
+                    {
+                        <span class="price-symbol">
+                            @CurrencyService.GetCreditSymbol(item.Curruency)
+                        </span>
+
+                        <span class="price-amount">
+                            @item.Price.ToString("N2")
+                        </span>
+                    }
+                    else
+                    {
+                        <span class="price-symbol">
+                            @CurrencyService.GetCreditSymbol(selectedCurrency)
+                        </span>
+
+                        <span class="price-amount">
+                            @CurrencyService
+                                .ExchangePrice(
+                                    (double)item.Price,
+                                    item.Curruency,
+                                    selectedCurrency)
+                                .ToString("N2")
+                        </span>
+                    }
+
+                </div>
+
+                <button class="action-btn buy-btn"
+                        type="button"
+                        onclick="alert('Item purchased!')">
+                    PURCHASE ITEM
+                </button>
+
+            </div>
+
+        </div>
+    }
+
+</div>
 }
 @inject IConfiguration Configuration
 @code {
