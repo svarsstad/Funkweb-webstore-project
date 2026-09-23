@@ -16,7 +16,7 @@
             </div>
 
             <div class="navbar-actions">
-                <button class="action-btn user-btn" type="button" @onclick="ToggleLoginState">
+                <button class="action-btn user-btn" type="button" @onclick="OpenLogin">
                     @if (!string.IsNullOrEmpty(userAvatarUrl))
                     {
                         <img src="@userAvatarUrl" class="user-avatar" alt="Profile" />
@@ -44,6 +44,103 @@
         @Body
     </main>
 
+    @if (ShowLogin)
+    {
+        <!-- BACKDROP -->
+        <div class="login-overlay"
+             @onclick="CloseLogin">
+
+            <!-- LOGIN BOX -->
+            <div class="login-box"
+                 @onclick:stopPropagation="true">
+
+                <button class="login-close"
+                        @onclick="CloseLogin">
+                    ×
+                </button>
+
+                <h2>Login</h2>
+
+                <div class="login-field">
+                    <label>Email</label>
+                    <input type="email"
+                           @bind="LoginEmail"
+                           placeholder="Email..." />
+                </div>
+
+                <div class="login-field">
+                    <label>Password</label>
+                    <input type="password"
+                           @bind="LoginPassword"
+                           placeholder="Password..." />
+                </div>
+
+                <button class="login-submit"
+                        @onclick="Login">
+                    Login
+                </button>
+
+                <button class="forgot-password"
+                        @onclick="ForgotPassword">
+                    Forgot Password?
+                </button>
+
+            </div>
+
+        </div>
+    }
+    @if (ShowForgotPassword)
+    {
+        <!-- BACKDROP -->
+        <div class="forgot-password-overlay"
+             @onclick="CloseForgotPassword">
+
+            <!-- LOGIN BOX -->
+            <div class="login-box"
+                 @onclick:stopPropagation="true">
+
+                <button class="login-close"
+                        @onclick="CloseLogin">
+                    ×
+                </button>
+
+                <h2>Login</h2>
+
+                <div class="login-field">
+                    <label>Email</label>
+                    <input type="email"
+                           @bind="LoginEmail"
+                           placeholder="Email..." />
+                </div>
+
+                <div class="login-field">
+                    <label>Password</label>
+                    <input type="password"
+                           @bind="LoginPassword"
+                           placeholder="Password..." />
+                </div>
+                <div class="login-field">
+                    <label>Password</label>
+                    <input type="password"
+                           @bind="RepeatPassword"
+                           placeholder="Password..." />
+                </div>
+
+                <button class="login-submit"
+                        @onclick="Create">
+                    Create Account
+                </button>
+
+                <button class="forgot-password"
+                        @onclick="ForgotPassword">
+                    Forgot Password?
+                </button>
+
+            </div>
+
+        </div>
+    }
+
     <footer class="store-footer">
         <p>&copy; 2026 REALITY ANCHOR DEPOT. ALL RIGHTS RESERVED ACROSS TIMELINES.</p>
     </footer>
@@ -51,15 +148,49 @@
 
 @inject IConfiguration Configuration
 @code {
+    private string LoginEmail { get; set; } = string.Empty;
     private bool isLoggedIn = false;
+    private bool ShowLogin = false;
+    private bool ShowForgotPassword = false;
     private string? userAvatarUrl = null;
     private string userName = "OPERATIVE";
     private int cartCount = 0;
     private string? imagePath;
-
+    private string LoginPassword { get; set; } = string.Empty;
+    private string RepeatPassword { get; set; } = string.Empty;
     protected override async Task OnInitializedAsync()
     {
         imagePath = Configuration["ImagePath"];
+    }
+    private void OpenLogin()
+    {
+        ShowLogin = true;
+    }
+    private void CloseLogin()
+    {
+        ShowLogin = false;
+    }
+    private void Login()
+    {
+        // Implement your login logic here
+        // For demonstration, we'll just toggle the login state
+        ToggleLoginState();
+        ShowLogin = false;
+    }
+    private void ForgotPassword()
+    {
+        ShowForgotPassword = true;
+    }
+    private void CloseForgotPassword()
+    {
+        ShowForgotPassword = false;
+    }
+    private void Create()
+    {
+        // Implement your account creation logic here
+        // For demonstration, we'll just toggle the login state
+        ToggleLoginState();
+        ShowForgotPassword = false;
     }
     private void ToggleLoginState()
     {

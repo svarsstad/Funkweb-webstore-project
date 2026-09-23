@@ -69,7 +69,7 @@
     object-fit: fill;
     pointer-events: none;
     z-index: 2;
-    opacity: 0;
+    opacity: 1;
     transition: opacity 0.3s ease;
 }
 
@@ -222,3 +222,144 @@
     color: #6b7280;
     border-top: 1px solid #1f153d;
 }
+
+
+.login-button {
+    background: #505757;
+    color: #05ebeb;
+    border: 1px solid #2a2f36;
+    border-radius: 1rem;
+    padding: 0.6rem 1.2rem;
+    cursor: pointer;
+    transition: background-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+    .login-button:hover {
+        background: #626969;
+        box-shadow: 0 0 10px rgba(5, 235, 235, 0.25);
+    }
+
+
+/* Everything behind the popup */
+
+.login-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.65);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
+
+
+/* Popup itself */
+
+.login-box {
+    position: relative;
+    width: 360px;
+    max-width: 90vw;
+    background: #120b24;
+    border: 2px solid #05ebeb;
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 0 25px rgba(5, 235, 235, 0.25), 0 0 40px rgba(168, 85, 247, 0.2);
+    color: #cff4fc;
+}
+
+
+    /* Title */
+
+    .login-box h2 {
+        margin-top: 0;
+        margin-bottom: 1.5rem;
+        color: #05ebeb;
+    }
+
+
+/* X button */
+
+.login-close {
+    position: absolute;
+    top: 0.6rem;
+    right: 0.7rem;
+    background: transparent;
+    border: none;
+    color: #05ebeb;
+    font-size: 1.8rem;
+    line-height: 1;
+    cursor: pointer;
+}
+
+    .login-close:hover {
+        color: #a855f7;
+    }
+
+
+/* Fields */
+
+.login-field {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+}
+
+    .login-field label {
+        margin-bottom: 0.35rem;
+        color: #05ebeb;
+        font-weight: 600;
+    }
+
+    .login-field input {
+        box-sizing: border-box;
+        width: 100%;
+        background: #505757;
+        color: #05ebeb;
+        border: 1px solid #2a2f36;
+        border-radius: 8px;
+        padding: 0.7rem;
+    }
+
+        .login-field input:focus {
+            outline: none;
+            border-color: #05ebeb;
+            box-shadow: 0 0 8px rgba(5, 235, 235, 0.3);
+        }
+
+
+/* Login button */
+
+.login-submit {
+    width: 100%;
+    margin-top: 0.5rem;
+    padding: 0.7rem;
+    background: linear-gradient( 180deg, #9333ea 0%, #6b21a8 100% );
+    color: #cff4fc;
+    border: 2px solid #a855f7;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 700;
+}
+
+    .login-submit:hover {
+        background: linear-gradient( 180deg, #05ebeb 0%, #00a8b5 100% );
+        color: #080612;
+        border-color: #05ebeb;
+    }
+
+
+/* Forgot password */
+
+.forgot-password {
+    width: 100%;
+    margin-top: 1rem;
+    background: transparent;
+    border: none;
+    color: #a855f7;
+    cursor: pointer;
+}
+
+    .forgot-password:hover {
+        color: #05ebeb;
+        text-decoration: underline;
+    }
