@@ -249,7 +249,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 9999;
+    z-index: 999;
 }
 
 
@@ -362,4 +362,109 @@
     .forgot-password:hover {
         color: #05ebeb;
         text-decoration: underline;
+    }
+
+.forgotpass-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.65);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
+
+
+/* Popup itself */
+
+.forgotpass-box {
+    position: relative;
+    width: 360px;
+    max-width: 90vw;
+    background: #120b24;
+    border: 2px solid #05ebeb;
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 0 25px rgba(5, 235, 235, 0.25), 0 0 40px rgba(168, 85, 247, 0.2);
+    color: #cff4fc;
+}
+
+
+    /* Title */
+
+    .forgotpass-box h2 {
+        margin-top: 0;
+        margin-bottom: 1.5rem;
+        color: #05ebeb;
+    }
+
+
+/* X button */
+
+.forgotpass-close {
+    position: absolute;
+    top: 0.6rem;
+    right: 0.7rem;
+    background: transparent;
+    border: none;
+    color: #05ebeb;
+    font-size: 1.8rem;
+    line-height: 1;
+    cursor: pointer;
+}
+
+    .forgotpass-close:hover {
+        color: #a855f7;
+    }
+
+
+/* Fields */
+
+.forgotpass-field {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+}
+
+    .forgotpass-field label {
+        margin-bottom: 0.35rem;
+        color: #05ebeb;
+        font-weight: 600;
+    }
+
+    .forgotpass-field input {
+        box-sizing: border-box;
+        width: 100%;
+        background: #505757;
+        color: #05ebeb;
+        border: 1px solid #2a2f36;
+        border-radius: 8px;
+        padding: 0.7rem;
+    }
+
+        .forgotpass-field input:focus {
+            outline: none;
+            border-color: #05ebeb;
+            box-shadow: 0 0 8px rgba(5, 235, 235, 0.3);
+        }
+
+
+/* forgotpass button */
+
+.forgotpass-submit {
+    width: 100%;
+    margin-top: 0.5rem;
+    padding: 0.7rem;
+    background: linear-gradient( 180deg, #9333ea 0%, #6b21a8 100% );
+    color: #cff4fc;
+    border: 2px solid #a855f7;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 700;
+}
+
+    .forgotpass-submit:hover {
+        background: linear-gradient( 180deg, #05ebeb 0%, #00a8b5 100% );
+        color: #080612;
+        border-color: #05ebeb;
     }

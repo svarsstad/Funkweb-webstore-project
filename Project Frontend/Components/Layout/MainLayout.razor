@@ -1,5 +1,4 @@
 ﻿@inherits LayoutComponentBase
-
 <div class="store-container">
     <!-- Sticky Header Wrapper Keeps the Navigation Bar Fixed on Scroll -->
     <div class="sticky-header-wrapper">
@@ -44,11 +43,10 @@
         @Body
     </main>
 
-    @if (ShowLogin)
-    {
+  @if(ShowLogin){
         <!-- BACKDROP -->
-        <div class="login-overlay"
-             @onclick="CloseLogin">
+        <div class="login-overlay">
+             <!--onclick="CloseLogin"-->
 
             <!-- LOGIN BOX -->
             <div class="login-box"
@@ -92,41 +90,41 @@
     @if (ShowForgotPassword)
     {
         <!-- BACKDROP -->
-        <div class="forgot-password-overlay"
+        <div class="forgotpass-overlay"
              @onclick="CloseForgotPassword">
 
             <!-- LOGIN BOX -->
-            <div class="login-box"
+            <div class="forgotpass-box"
                  @onclick:stopPropagation="true">
 
-                <button class="login-close"
+                <button class="forgotpass-close"
                         @onclick="CloseLogin">
                     ×
                 </button>
 
-                <h2>Login</h2>
+                <h2>forgotpass</h2>
 
-                <div class="login-field">
+                <div class="forgotpass-field">
                     <label>Email</label>
                     <input type="email"
                            @bind="LoginEmail"
                            placeholder="Email..." />
                 </div>
 
-                <div class="login-field">
+                <div class="forgotpass-field">
                     <label>Password</label>
                     <input type="password"
                            @bind="LoginPassword"
                            placeholder="Password..." />
                 </div>
-                <div class="login-field">
+                <div class="forgotpass-field">
                     <label>Password</label>
                     <input type="password"
                            @bind="RepeatPassword"
                            placeholder="Password..." />
                 </div>
 
-                <button class="login-submit"
+                <button class="forgotpass-submit"
                         @onclick="Create">
                     Create Account
                 </button>
