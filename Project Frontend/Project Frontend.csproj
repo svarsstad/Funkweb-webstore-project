@@ -15,6 +15,7 @@
     <Compile Include="..\Project Backend\Models\Order.cs" Link="Models\Order.cs" />
     <Compile Include="..\Project Backend\Models\User.cs" Link="Models\User.cs" />
     <Compile Include="..\Project Backend\Models\Product.cs" Link="Models\Product.cs" />
+	  <Compile Include="..\Project Backend\Models\LoginRequest.cs" Link="Models\LoginRequest.cs" />
     <Compile Include="..\Project Backend\Models\SaveOrderRequest.cs" Link="Models\SaveOrderRequest.cs" />
 	<None Update="appsettings.private.json">
 		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

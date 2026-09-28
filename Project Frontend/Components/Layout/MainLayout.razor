@@ -1,4 +1,5 @@
 ﻿@inherits LayoutComponentBase
+@inject Project_Frontend.Services.CartStateService CartState
 <div class="store-container">
     <!-- Sticky Header Wrapper Keeps the Navigation Bar Fixed on Scroll -->
     <div class="sticky-header-wrapper">
@@ -15,8 +16,10 @@
             </div>
 
             <div class="navbar-actions">
-                <button class="action-btn user-btn" type="button" @onclick="OpenLogin">
-                    @if (!string.IsNullOrEmpty(userAvatarUrl))
+                <button class="action-btn user-btn @(isLoggedIn && !string.IsNullOrEmpty(userAvatarUrl) ? "has-avatar" : "")"
+                        type="button"
+                        @onclick="OpenLogin">
+                    @if (isLoggedIn && !string.IsNullOrEmpty(userAvatarUrl))
                     {
                         <img src="@userAvatarUrl" class="user-avatar" alt="Profile" />
                     }
@@ -145,6 +148,7 @@
 </div>
 
 @inject IConfiguration Configuration
+@inject Project_Frontend.Services.UserApiClientService UserApiClient
 @code {
     private string LoginEmail { get; set; } = string.Empty;
     private bool isLoggedIn = false;
@@ -156,6 +160,8 @@
     private string? imagePath;
     private string LoginPassword { get; set; } = string.Empty;
     private string RepeatPassword { get; set; } = string.Empty;
+    private string? errorMessage;
+    private bool isAuthenticating = false;
     protected override async Task OnInitializedAsync()
     {
         imagePath = Configuration["ImagePath"];
@@ -168,12 +174,31 @@
     {
         ShowLogin = false;
     }
-    private void Login()
+    private async Task Login()
     {
-        // Implement your login logic here
-        // For demonstration, we'll just toggle the login state
-        ToggleLoginState();
-        ShowLogin = false;
+        errorMessage = null;
+        isAuthenticating = true;
+
+        var result = await UserApiClient.LoginAsync(LoginEmail, LoginPassword);
+
+        if (result.Success)
+        {
+            isLoggedIn = true;
+            userName = result.UserName ?? "OPERATIVE";
+            userAvatarUrl = imagePath+result.AvatarUrl;
+            ShowLogin = false;
+
+            // Clear inputs
+            LoginEmail = "";
+            LoginPassword = "";
+        }
+        else
+        {
+            errorMessage = result.Message;
+        }
+
+        isAuthenticating = false;
+    
     }
     private void ForgotPassword()
     {

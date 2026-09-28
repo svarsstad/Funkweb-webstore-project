@@ -20,6 +20,10 @@ builder.Services.AddScoped(sp => new HttpClient
 builder.Services.AddScoped<PublicProductService>();
 // Register CurrencyService so components that inject Project_Backend.Services.CurrencyService can resolve it
 builder.Services.AddSingleton<CurrencyService>();
+builder.Services.AddScoped<UserApiClientService>();
+builder.Services.AddScoped<CartStateService>();
+
+// Note: UserApiClientService depends on a scoped HttpClient, so it must be registered as scoped to avoid consuming a scoped service from a singleton.
 
 var app = builder.Build();
 

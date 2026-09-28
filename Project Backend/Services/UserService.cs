@@ -76,5 +76,56 @@ namespace Project_Backend.Services
             }
             return "";
         }
+        public async Task<AuthResponse> AuthenticateAsync(string email, string password)
+        {
+            bool isValidPassword = false;
+            // 1. Fetch user by email
+            var user = await _usersCollection
+                .Find(u => u.Email.ToLower() == email.ToLower())
+                .FirstOrDefaultAsync();
+
+            if (user == null)
+            {
+                return new AuthResponse { Success = false, Message = "OPERATIVE NOT FOUND IN MAINFRAME" };
+            }
+            if (user.Password == password)
+            {
+                isValidPassword = true;
+
+                // Hash the password and upgrade MongoDB record in-place
+                string hashedPassword = BCrypt.Net.BCrypt.HashPassword(password);
+
+                var filter = Builders<User>.Filter.Eq(u => u.Id, user.Id);
+                var update = Builders<User>.Update.Set(u => u.Password, hashedPassword);
+
+                await _usersCollection.UpdateOneAsync(filter, update);
+            }
+            else
+            {
+                // 2. Standard BCrypt verification for already-upgraded hashes
+                try
+                {
+                    isValidPassword = BCrypt.Net.BCrypt.Verify(password, user.Password);
+                }
+                catch (BCrypt.Net.SaltParseException)
+                {
+                    // Stored password wasn't a valid BCrypt hash and didn't match plain text
+                    isValidPassword = false;
+                }
+            }
+
+            if (!isValidPassword)
+            {
+                return new AuthResponse { Success = false, Message = "ACCESS DENIED: INVALID CREDENTIALS" };
+            }
+
+            return new AuthResponse
+            {
+                Success = true,
+                Message = "AUTHENTICATION SUCCESSFUL",
+                UserName = user.DisplayName,
+                AvatarUrl = user.UserImage
+            };
+        }
     }
 }

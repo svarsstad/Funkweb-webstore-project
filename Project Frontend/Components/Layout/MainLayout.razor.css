@@ -138,6 +138,7 @@
     align-items: center;
 }
 
+/* Standard Button State (Not Logged In) */
 .user-btn {
     background: linear-gradient(180deg, #a855f7 0%, #6b21a8 100%);
     color: #e0f2fe;
@@ -155,12 +156,45 @@
         box-shadow: 0 1px 0 #3b0764;
     }
 
+    /* Logged-In State with Large Avatar */
+    .user-btn.has-avatar {
+        position: relative;
+        padding-left: 80px; /* Space reserved for avatar overlay */
+        min-height: 48px;
+        overflow: visible;
+    }
+
+        .user-btn.has-avatar .user-avatar {
+            position: absolute;
+            left: -10px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 75px;
+            height: 75px;
+            max-height: none;
+            max-width: none;
+            border-radius: 25%;
+            border: 2px solid #00f0ff;
+            object-fit: cover;
+            box-shadow: 0 0 12px rgba(0, 240, 255, 0.6);
+            pointer-events: none;
+        }
+
 .user-avatar {
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    border: 1px solid #00f0ff;
+    position: absolute;
+    left: -10px; /* Pulls image left for a Cyberpunk badge overlay effect */
+    top: 50%;
+    transform: translateY(-50%); /* Vertically centers avatar relative to the button */
+
+    width: 75px !important;
+    height: 75px !important;
+    max-height: none !important;
+    max-width: none !important;
+    border-radius: 25%;
+    border: 2px solid #00f0ff;
     object-fit: cover;
+    box-shadow: 0 0 12px rgba(0, 240, 255, 0.6);
+    pointer-events: none; /* Lets button clicks pass through the image area */
 }
 
 .cart-btn {

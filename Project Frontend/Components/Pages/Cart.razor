@@ -1,0 +1,81 @@
+﻿@page "/cart"
+@rendermode InteractiveServer
+@implements IDisposable
+@inject Project_Frontend.Services.CartStateService CartState
+
+<PageTitle>Cart // Reality Anchor Depot</PageTitle>
+
+<div class="cart-wrapper">
+    <div class="cart-header">
+        <h1 class="cart-title">SLOT INVENTORY <span class="cart-badge">[@CartState.TotalCount ITEMS]</span></h1>
+    </div>
+
+    @if (!CartState.Items.Any())
+    {
+        <div class="empty-cart-card">
+            <div class="empty-icon">⚠️</div>
+            <h2>DATA SLOT EMPTY</h2>
+            <p>No gear or void tech detected in active buffer.</p>
+            <a href="/catalog" class="action-btn browse-btn">BROWSE CATALOG</a>
+        </div>
+    }
+    else
+    {
+        <div class="cart-layout">
+            <div class="cart-items-list">
+                @foreach (var item in CartState.Items)
+                {
+                    <div class="cart-item-card">
+                        <div class="item-media">
+                            <img src="@($"/Images/items/{item.Product.Images.First().Value}")" alt="@item.Product.productName" class="item-img" />
+                        </div>
+
+                        <div class="item-details">
+                            <span class="item-style">@item.Product.ProductStyle.ToUpper()</span>
+                            <h3 class="item-name">@item.Product.productName</h3>
+                        </div>
+
+                        <div class="item-quantity">
+                            <button class="qty-btn" @onclick="() => CartState.UpdateQuantity(item.Product.Id, -1)">-</button>
+                            <span class="qty-val">@item.Quantity</span>
+                            <button class="qty-btn" @onclick="() => CartState.UpdateQuantity(item.Product.Id, 1)">+</button>
+                        </div>
+
+                        <div class="item-pricing">
+                            <div class="line-total">@((item.Product.Price * item.Quantity).ToString("N0")) CREDITS</div>
+                        </div>
+
+                        <button class="remove-btn" @onclick="() => CartState.RemoveItem(item.Product.Id)">×</button>
+                    </div>
+                }
+
+                <button class="purge-btn" @onclick="CartState.ClearCart">PURGE ALL ITEMS</button>
+            </div>
+
+            <!-- Summary Card -->
+            <div class="cart-summary-card">
+                <h2 class="summary-title">TRANSMISSION SUMMARY</h2>
+                <div class="summary-row">
+                    <span>Subtotal</span>
+                    <span>@CartState.SubTotal.ToString("N0") CREDITS</span>
+                </div>
+                <div class="summary-row total-row">
+                    <span>TOTAL REQUIRED</span>
+                    <span class="total-price">@((CartState.SubTotal * 1.05m).ToString("N0")) CREDITS</span>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+@code {
+    protected override void OnInitialized()
+    {
+        CartState.OnChange += StateHasChanged;
+    }
+
+    public void Dispose()
+    {
+        CartState.OnChange -= StateHasChanged;
+    }
+}

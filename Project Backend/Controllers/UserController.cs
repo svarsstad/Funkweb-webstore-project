@@ -71,5 +71,22 @@ namespace Project_Backend.Controllers
 
             return Ok();
         }
+        [HttpPost("login")]
+        public async Task<ActionResult<AuthResponse>> Login([FromBody] LoginRequest request)
+        {
+            if (string.IsNullOrWhiteSpace(request.Email) || string.IsNullOrWhiteSpace(request.Password))
+            {
+                return BadRequest(new AuthResponse { Success = false, Message = "EMAIL AND PASSWORD REQUIRED" });
+            }
+
+            var result = await _userService.AuthenticateAsync(request.Email, request.Password);
+
+            if (!result.Success)
+            {
+                return Unauthorized(result);
+            }
+
+            return Ok(result);
+        }
     }
 }
