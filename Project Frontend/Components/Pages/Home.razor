@@ -80,7 +80,7 @@ else
                         }
 
                     </div>
-                    @if (itemQuantity[item.i] == 0 || itemQuantity == null)
+                    @if (itemQuantity == null || itemQuantity[item.i] == 0)
                     {
                         <button class="action-btn buy-btn"
                                 type="button"
@@ -96,7 +96,12 @@ else
                             -
                         </button>
 
-                        <InputNumber class="cart-qty-input" @bind-value="@(itemQuantity[item.i])" />
+                        <!-- Standard HTML input instead of InputNumber -->
+                        <input type="number"
+                               class="cart-qty-input"
+                               min="0"
+                               value="@itemQuantity[item.i]"
+                               @onchange="(e) => updateProductqty(item.value.Id, item.i, itemQuantity[item.i])" />
 
                         <button class="action-btn buy-btn-plus"
                                 type="button"
