@@ -5,11 +5,13 @@ namespace Project_Frontend.Services
 {
     public class CartStateService
     {
+        public event Action? OnChange;
+
+        private void NotifyStateChanged() => OnChange?.Invoke();
         // Active cart items state
-        public List<CartItem> Items { get; private set; } = new();
+        public List<CartItem> Items = new();
 
         // Event raised whenever cart data changes
-        public event Action? OnChange;
 
         public int TotalCount => Items.Sum(i => i.Quantity);
         public decimal SubTotal => Items.Sum(i => i.Product.Price * i.Quantity);
@@ -47,6 +49,18 @@ namespace Project_Frontend.Services
             Items.RemoveAll(i => i.Product.Id == productId);
             NotifyStateChanged();
         }
+        public int FindItem(string productId)
+        {
+            var existing = Items.FirstOrDefault(i => i.Product.Id == productId);
+            if (existing != null)
+            {
+               return existing.Quantity;
+            }
+            else
+            {
+                return 0;
+            }
+        }
 
         public void ClearCart()
         {
@@ -54,7 +68,7 @@ namespace Project_Frontend.Services
             NotifyStateChanged();
         }
 
-        private void NotifyStateChanged() => OnChange?.Invoke();
+        
     }
 
     public class CartItem

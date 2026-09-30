@@ -69,6 +69,7 @@ namespace Project_Backend.Services
             if (Users == null || Users.Count < 1)
             {
                 await GetAllUsersAsync();
+                if( Users == null || Users.Count < 1) { return ""; }
             }
             foreach (var user in Users)
             {
