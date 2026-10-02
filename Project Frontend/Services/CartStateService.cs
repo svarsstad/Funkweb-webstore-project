@@ -6,8 +6,8 @@ namespace Project_Frontend.Services
     public class CartStateService
     {
         public event Action? OnChange;
-
         private void NotifyStateChanged() => OnChange?.Invoke();
+
         // Active cart items state
         public List<CartItem> Items = new();
 
@@ -16,7 +16,7 @@ namespace Project_Frontend.Services
         public int TotalCount => Items.Sum(i => i.Quantity);
         public decimal SubTotal => Items.Sum(i => i.Product.Price * i.Quantity);
 
-        public void AddProduct(Product product, int quantity = 1)
+        public void addQuantity(Product product, PublicProductService publicProductService, int quantity = 1)
         {
             var existing = Items.FirstOrDefault(i => i.Product.Id == product.Id);
             if (existing != null)
@@ -30,17 +30,31 @@ namespace Project_Frontend.Services
             NotifyStateChanged();
         }
 
-        public void UpdateQuantity(string productId, int delta)
+        public async void UpdateQuantity(string productId, int value, PublicProductService publicProductService)
         {
             var item = Items.FirstOrDefault(i => i.Product.Id == productId);
             if (item != null)
             {
-                item.Quantity += delta;
+                item.Quantity = value;
                 if (item.Quantity <= 0)
                 {
                     Items.Remove(item);
                 }
                 NotifyStateChanged();
+            }
+            else
+            {
+                Product? newProduct = await publicProductService.GetProductByIdAsync(productId);
+
+                // 2. Safely check for null before adding
+                if (newProduct != null)
+                {
+                    addQuantity(newProduct, publicProductService, value);
+                }
+                else
+                {
+                        // Handle case where product was not found (e.g., log error or alert user)
+                }
             }
         }
 

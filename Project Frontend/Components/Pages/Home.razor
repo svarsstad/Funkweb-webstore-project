@@ -1,7 +1,7 @@
 ﻿@page "/"
 @rendermode InteractiveServer
 @inject Project_Backend.Services.CurrencyService CurrencyService
-@inject Project_Frontend.Services.PublicProductService ProductApi
+@inject Project_Frontend.Services.PublicProductService publicProductService
 @inject Project_Frontend.Services.CartStateService cartService
 <PageTitle>Reality Anchor Depot</PageTitle>
 
@@ -129,7 +129,7 @@ else
     protected override async Task OnInitializedAsync()
     {
         imagePath = Configuration["ImagePath"];
-        products = await ProductApi.GetAllProductsAsync();
+        products = await publicProductService.GetAllProductsAsync();
         itemQuantity = new int[products.Count];
         foreach (var item in products.Select((value, i) => new { i, value }))
         {
@@ -152,14 +152,25 @@ else
 
     }
 
-    private void addProductqty(string id, int i, int qty)
+    private async void addProductqty(string id, int i, int qty)
     {
         if (itemQuantity == null || i < 0 || i >= itemQuantity.Length)
         {
             return;
         }
-        cartService.UpdateQuantity(id, qty);
-        itemQuantity[i] += qty;
+        Project_Backend.Models.Product? newProduct = await publicProductService.GetProductByIdAsync(id);
+
+        // 2. Safely check for null before adding
+        if (newProduct != null)
+        {
+            cartService.addQuantity(newProduct, publicProductService, qty);
+            itemQuantity[i] += qty;
+        }
+        else
+        {
+            // Handle case where product was not found (e.g., log error or alert user)
+        }
+        
     }
     private void updateProductqty(string id, int i, int qty)
     {
@@ -167,7 +178,7 @@ else
         {
             return;
         }
-        cartService.UpdateQuantity(id, qty);
+        cartService.UpdateQuantity(id, qty, publicProductService);
         itemQuantity[i] = qty;
     }
 }

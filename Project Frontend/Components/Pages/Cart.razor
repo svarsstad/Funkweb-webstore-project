@@ -2,6 +2,7 @@
 @rendermode InteractiveServer
 @implements IDisposable
 @inject Project_Frontend.Services.CartStateService CartState
+@inject Project_Frontend.Services.PublicProductService publicProductService
 
 <PageTitle>Cart // Reality Anchor Depot</PageTitle>
 
@@ -36,9 +37,9 @@
                         </div>
 
                         <div class="item-quantity">
-                            <button class="qty-btn" @onclick="() => CartState.UpdateQuantity(item.Product.Id, -1)">-</button>
+                            <button class="qty-btn" @onclick="() => CartState.UpdateQuantity(item.Product.Id, -1, publicProductService)">-</button>
                             <span class="qty-val">@item.Quantity</span>
-                            <button class="qty-btn" @onclick="() => CartState.UpdateQuantity(item.Product.Id, 1)">+</button>
+                            <button class="qty-btn" @onclick="() => CartState.UpdateQuantity(item.Product.Id, 1, publicProductService)">+</button>
                         </div>
 
                         <div class="item-pricing">
