@@ -1,5 +1,6 @@
 ﻿// Services/CartStateService.cs
 using Project_Backend.Models;
+using Project_Frontend.Components.Pages;
 
 namespace Project_Frontend.Services
 {
@@ -53,8 +54,12 @@ namespace Project_Frontend.Services
                 }
                 else
                 {
-                        // Handle case where product was not found (e.g., log error or alert user)
+                    // Handle case where product was not found (e.g., log error or alert user)
                 }
+            }
+            if (item.Quantity <= 0)
+            {
+                RemoveItem(item.Product.Id);
             }
         }
 

@@ -170,7 +170,7 @@ else
         {
             // Handle case where product was not found (e.g., log error or alert user)
         }
-        
+        InvokeAsync(StateHasChanged);
     }
     private void updateProductqty(string id, int i, int qty)
     {
@@ -180,5 +180,6 @@ else
         }
         cartService.UpdateQuantity(id, qty, publicProductService);
         itemQuantity[i] = qty;
+        InvokeAsync(StateHasChanged);
     }
 }

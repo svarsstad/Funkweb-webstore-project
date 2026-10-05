@@ -3,6 +3,7 @@
 @implements IDisposable
 @inject Project_Frontend.Services.CartStateService CartState
 @inject Project_Frontend.Services.PublicProductService publicProductService
+@inject IConfiguration Configuration
 
 <PageTitle>Cart // Reality Anchor Depot</PageTitle>
 
@@ -28,7 +29,10 @@
                 {
                     <div class="cart-item-card">
                         <div class="item-media">
-                            <img src="@($"/Images/items/{item.Product.Images.First().Value}")" alt="@item.Product.productName" class="item-img" />
+                            @if (item.Product.Images != null && item.Product.Images.Any())
+                            {
+                                <img src="@(imagePath+ item.Product.Images.First().Value)" alt="@item.Product.productName" class="item-img" />                    
+                            }
                         </div>
 
                         <div class="item-details">
@@ -37,16 +41,16 @@
                         </div>
 
                         <div class="item-quantity">
-                            <button class="qty-btn" @onclick="() => CartState.UpdateQuantity(item.Product.Id, -1, publicProductService)">-</button>
+                            <button class="qty-btn" @onclick="() => UpdateQuantity(item.Product, -1, publicProductService)">-</button>
                             <span class="qty-val">@item.Quantity</span>
-                            <button class="qty-btn" @onclick="() => CartState.UpdateQuantity(item.Product.Id, 1, publicProductService)">+</button>
+                            <button class="qty-btn" @onclick="() => UpdateQuantity(item.Product, 1, publicProductService)">+</button>
                         </div>
 
                         <div class="item-pricing">
                             <div class="line-total">@((item.Product.Price * item.Quantity).ToString("N0")) CREDITS</div>
                         </div>
 
-                        <button class="remove-btn" @onclick="() => CartState.RemoveItem(item.Product.Id)">×</button>
+                        <button class="remove-btn" @onclick="() => RemoveItem(item.Product.Id)">×</button>
                     </div>
                 }
 
@@ -70,14 +74,29 @@
 </div>
 
 @code {
-
+    private string? imagePath = "";
     protected override void OnInitialized()
     {
+        imagePath = Configuration["ImagePath"];
         CartState.OnChange += StateHasChanged;
     }
 
     public void Dispose()
     {
         CartState.OnChange -= StateHasChanged;
+    }
+    public void UpdateQuantity(Project_Backend.Models.Product product, int qty,Project_Frontend.Services.PublicProductService publicProductService)
+    {
+        CartState.addQuantity(product, publicProductService, qty);
+        if(CartState.FindItem(product.Id) <= 0)
+        {
+            CartState.RemoveItem(product.Id);
+        }
+        InvokeAsync(StateHasChanged);
+    }
+    public void RemoveItem(string Id)
+    {
+        CartState.RemoveItem(Id);
+        InvokeAsync(StateHasChanged);
     }
 }
