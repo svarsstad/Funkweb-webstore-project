@@ -8,7 +8,11 @@ namespace Project_Frontend.Services
     {
         public event Action? OnChange;
         private void NotifyStateChanged() => OnChange?.Invoke();
-
+        Project_Frontend.Components.Layout.MainLayout? mainLayout = null;
+        public void SetMainLayout(Project_Frontend.Components.Layout.MainLayout ML)
+        {
+            mainLayout = ML;
+        }
         // Active cart items state
         public List<CartItem> Items = new();
 
@@ -17,7 +21,7 @@ namespace Project_Frontend.Services
         public int TotalCount => Items.Sum(i => i.Quantity);
         public decimal SubTotal => Items.Sum(i => i.Product.Price * i.Quantity);
 
-        public void addQuantity(Product product, PublicProductService publicProductService, int quantity = 1)
+        public Task addQuantity(Product product, PublicProductService publicProductService, int quantity = 1)
         {
             var existing = Items.FirstOrDefault(i => i.Product.Id == product.Id);
             if (existing != null)
@@ -28,10 +32,21 @@ namespace Project_Frontend.Services
             {
                 Items.Add(new CartItem { Product = product, Quantity = quantity });
             }
+
+            int tot = Items.Sum(c => c.Quantity);
+            if (mainLayout != null)
+            {
+                mainLayout.UpdateCartCount(tot);
+            }
+
+            // Do not call component instance methods from a service.
+            // Notify subscribers; components should call StateHasChanged / InvokeAsync themselves.
             NotifyStateChanged();
+
+            return Task.CompletedTask;
         }
 
-        public async void UpdateQuantity(string productId, int value, PublicProductService publicProductService)
+        public async Task UpdateQuantity(string productId, int value, PublicProductService publicProductService)
         {
             var item = Items.FirstOrDefault(i => i.Product.Id == productId);
             if (item != null)
@@ -47,19 +62,24 @@ namespace Project_Frontend.Services
             {
                 Product? newProduct = await publicProductService.GetProductByIdAsync(productId);
 
-                // 2. Safely check for null before adding
                 if (newProduct != null)
                 {
-                    addQuantity(newProduct, publicProductService, value);
+                    await addQuantity(newProduct, publicProductService, value);
                 }
                 else
                 {
-                    // Handle case where product was not found (e.g., log error or alert user)
+                    // Product not found — handle as needed
                 }
             }
-            if (item.Quantity <= 0)
+
+            // Only operate on item if it's not null
+            if (item != null && item.Quantity <= 0)
             {
                 RemoveItem(item.Product.Id);
+            }
+            if(mainLayout != null)
+            {
+                mainLayout.UpdateCartCount(Items.Sum(c => c.Quantity));
             }
         }
 

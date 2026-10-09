@@ -90,24 +90,25 @@ else
                     }
                     else
                     {
-                        <button class="action-btn buy-btn-minus"
-                                type="button"
-                                @onclick="() => addProductqty(item.value.Id, item.i, -1)">
-                            -
-                        </button>
+                        <div class="qty-control-row">
+                            <button class="action-btn buy-btn-minus"
+                                    type="button"
+                                    @onclick="() => addProductqty(item.value.Id, item.i, -1)">
+                                -
+                            </button>
 
-                        <!-- Standard HTML input instead of InputNumber -->
-                        <input type="number"
-                               class="cart-qty-input"
-                               min="0"
-                               value="@itemQuantity[item.i]"
-                               @onchange="(e) => updateProductqty(item.value.Id, item.i, itemQuantity[item.i])" />
+                            <input type="number"
+                                   class="cart-qty-input"
+                                   min="0"
+                                   @bind="itemQuantity[item.i]"
+                                   @bind:after="() => updateProductqty(item.value.Id, item.i)" />
 
-                        <button class="action-btn buy-btn-plus"
-                                type="button"
-                                @onclick="() => addProductqty(item.value.Id, item.i, 1)">
-                            +
-                        </button>
+                            <button class="action-btn buy-btn-plus"
+                                    type="button"
+                                    @onclick="() => addProductqty(item.value.Id, item.i, 1)">
+                                +
+                            </button>
+                        </div>
                     }
 
                 </div>
@@ -172,12 +173,14 @@ else
         }
         InvokeAsync(StateHasChanged);
     }
-    private void updateProductqty(string id, int i, int qty)
+    private void updateProductqty(string id, int i)
     {
+        
         if (itemQuantity == null || i < 0 || i >= itemQuantity.Length)
         {
-            return;
+            return; //should never get here but just in case, if it does something else is wrong
         }
+        int qty = itemQuantity[i];
         cartService.UpdateQuantity(id, qty, publicProductService);
         itemQuantity[i] = qty;
         InvokeAsync(StateHasChanged);

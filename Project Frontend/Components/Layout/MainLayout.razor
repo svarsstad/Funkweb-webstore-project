@@ -164,6 +164,7 @@
     private bool isAuthenticating = false;
     protected override async Task OnInitializedAsync()
     {
+        setupSubPageState();
         imagePath = Configuration["ImagePath"];
     }
     private void OpenLogin()
@@ -198,7 +199,7 @@
         }
 
         isAuthenticating = false;
-    
+
     }
     private void ForgotPassword()
     {
@@ -228,4 +229,14 @@
             userAvatarUrl = null;
         }
     }
+    public void UpdateCartCount(int tots)
+    {
+        cartCount = tots;
+        InvokeAsync(StateHasChanged);
+    }
+    public void setupSubPageState()
+    {
+        CartState.SetMainLayout(this);
+    }
+
 }
