@@ -16,7 +16,7 @@ namespace Project_Frontend.Services
         public async Task<AuthResponse> LoginAsync(string email, string password)
         {
             var request = new Project_Backend.Models.LoginRequest { Email = email, Password = password };
-    
+
             var response = await _http.PostAsJsonAsync("api/User/login", request);
 
             if (response.IsSuccessStatusCode)
@@ -28,5 +28,22 @@ namespace Project_Frontend.Services
             var errorResult = await response.Content.ReadFromJsonAsync<AuthResponse>();
             return errorResult ?? new AuthResponse { Success = false, Message = "AUTHENTICATION FAILED" };
         }
+        public async Task<RegisterResponse> RegisterAsync(string email, string password)
+
+        {
+            var request = new Project_Backend.Models.RegisterRequest { Email = email, Password = password };
+
+            var response = await _http.PostAsJsonAsync("api/User/register", request);
+
+            if (response.IsSuccessStatusCode)
+            {
+                return await response.Content.ReadFromJsonAsync<RegisterResponse>()
+                       ?? new RegisterResponse { Success = false, Message = "EMPTY RESPONSE" };
+            }
+
+            var errorResult = await response.Content.ReadFromJsonAsync<RegisterResponse>();
+            return errorResult ?? new RegisterResponse { Success = false, Message = "REGISTRATION FAILED" };
+        }
+
     }
 }

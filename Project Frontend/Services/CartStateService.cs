@@ -1,14 +1,48 @@
 ﻿// Services/CartStateService.cs
 using Project_Backend.Models;
 using Project_Frontend.Components.Pages;
+using static System.Net.WebRequestMethods;
 
 namespace Project_Frontend.Services
 {
     public class CartStateService
     {
+
         public event Action? OnChange;
         private void NotifyStateChanged() => OnChange?.Invoke();
         Project_Frontend.Components.Layout.MainLayout? mainLayout = null;
+        private readonly HttpClient _http;
+
+
+        public CartStateService(HttpClient http)
+        {
+            _http = http;
+        }
+
+
+        public async Task<PayResponse> PayRequestAsync(string userId, string email, string password)
+
+        {
+            var cartItems = Items.Select(i => new OrderItem
+            {
+                ProductId = i.Product.Id,
+                Quantity = i.Quantity,
+                ProductName = i.Product.productName
+            }).ToList();
+            var request = new Project_Backend.Models.PayRequest { UserId = userId, Email = email, Password = password, cart = cartItems };
+
+            var response = await _http.PostAsJsonAsync("api/pay", request);
+
+            if (response.IsSuccessStatusCode)
+            {
+                return await response.Content.ReadFromJsonAsync<PayResponse>()
+                       ?? new PayResponse { Success = false, Message = "EMPTY RESPONSE" };
+            }
+
+            var errorResult = await response.Content.ReadFromJsonAsync<PayResponse>();
+            return errorResult ?? new PayResponse { Success = false, Message = "PAYMENT FAILED" };
+        }
+
         public void SetMainLayout(Project_Frontend.Components.Layout.MainLayout ML)
         {
             mainLayout = ML;
@@ -77,7 +111,7 @@ namespace Project_Frontend.Services
             {
                 RemoveItem(item.Product.Id);
             }
-            if(mainLayout != null)
+            if (mainLayout != null)
             {
                 mainLayout.UpdateCartCount(Items.Sum(c => c.Quantity));
             }
@@ -93,7 +127,7 @@ namespace Project_Frontend.Services
             var existing = Items.FirstOrDefault(i => i.Product.Id == productId);
             if (existing != null)
             {
-               return existing.Quantity;
+                return existing.Quantity;
             }
             else
             {
@@ -107,12 +141,14 @@ namespace Project_Frontend.Services
             NotifyStateChanged();
         }
 
-        
+
     }
 
     public class CartItem
     {
         public Product Product { get; set; } = new();
         public int Quantity { get; set; } = 1;
+
     }
 }
+
