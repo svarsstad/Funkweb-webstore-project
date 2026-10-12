@@ -70,12 +70,7 @@ else
                             </span>
 
                             <span class="price-amount">
-                                @CurrencyService
-                                .ExchangePrice(
-                                (double)item.Price,
-                                item.Curruency,
-                                selectedCurrency)
-                                .ToString("N2")
+                                @(CurrencyService.ExchangePrice((double)item.value.Price,item.value.Curruency,selectedCurrency).ToString("N2"))
                             </span>
                         }
 
