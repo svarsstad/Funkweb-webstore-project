@@ -68,6 +68,12 @@
                     <span>TOTAL REQUIRED</span>
                     <span class="total-price">@((CartState.SubTotal * 1.05m).ToString("N0")) CREDITS</span>
                 </div>
+                @if (CartState.TotalCount != 0)
+                {
+                    <div>
+                        <button class="checkout-btn" @onclick="() => GoToPay()">Pay / Checkout</button>
+                </div>
+                }
             </div>
         </div>
     }
@@ -93,6 +99,10 @@
             CartState.RemoveItem(product.Id);
         }
         InvokeAsync(StateHasChanged);
+    }
+    public void GoToPay()
+    {
+        
     }
     public void RemoveItem(string Id)
     {
