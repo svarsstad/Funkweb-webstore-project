@@ -7,7 +7,7 @@ namespace Project_Backend.Services
 {
     public class CurrencyService
     {
-
+        public string currentCurrency = "CZK - IID";
         public double GetExchangeRate(string currency)
         {
             //if reaver bucks(scrap)-product, demand much more
